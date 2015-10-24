@@ -41,5 +41,11 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.5.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.12.1.1</version>
+        </dependency>
+
     </dependencies>
 </project>
