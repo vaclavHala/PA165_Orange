@@ -1,10 +1,10 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Ivan Kralik
@@ -14,16 +14,14 @@ public class Environment implements Serializable {
     
     @Id
     @GeneratedValue
-    @Column
     private Long id;
     
-    @Column
+    @NotNull
     private String name;
     
-    @Column
     private String description;
     
-    @Column
+    @NotNull
     private Long maxAnimalConut;
 
     public Long getId() {
@@ -52,5 +50,35 @@ public class Environment implements Serializable {
 
     public void setMaxAnimalConut(Long maxAnimalConut) {
         this.maxAnimalConut = maxAnimalConut;
+    }
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        
+        return prime + ((name == null) ? 0 : name.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        
+        if (obj == null) {
+            return false;
+        }
+        
+        if (!(obj instanceof Environment)) {
+            return false;
+        }
+        
+        Environment other = (Environment) obj;
+        
+        if (name == null) {
+            return other.getName() == null;
+        }
+        
+        return name.equals(other.getName());
     }
 }
