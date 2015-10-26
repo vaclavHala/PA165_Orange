@@ -27,6 +27,11 @@ public class AnimalEaten {
     @OneToOne
     private Animal prey;
 
+    public AnimalEaten(Animal predator, Animal prey) {
+        this.predator = predator;
+        this.prey = prey;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof AnimalEaten)) {
