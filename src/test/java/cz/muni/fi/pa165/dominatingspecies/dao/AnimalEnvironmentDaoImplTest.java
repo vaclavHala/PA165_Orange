@@ -17,6 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author Vaclav Hala 422551
+ */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DominatingSpeciesConfig.class})

@@ -13,8 +13,8 @@ public interface EnvironmentDao {
     /**
      * Persist instance of Environment
      * @param enviro Environment to be persisted
-     * @throws IllegalArgumentException if id is already set for enviro
-     * @throws DataAccessException      if any data-access related exception occurs
+     * @throws DataAccessException if id is already set for enviro
+     *                             or any data-access related exception occurs
      */
     void persist(Environment enviro) throws DataAccessException;
 
@@ -26,19 +26,10 @@ public interface EnvironmentDao {
     Environment findById(Long id) throws DataAccessException;
 
     /**
-     * Updates state of the persisted Environment to enviro
-     * @param enviro Environment with updated fields, must have id set
-     * @throws IllegalArgumentException if enviro does not have id set
-     *                                  or no Environment with id equal to id of enviro exists
-     * @throws DataAccessException      if any data-access related exception occurs
-     */
-    void update(Environment enviro) throws DataAccessException;
-
-    /**
      * Remove enviro from persistent storage
      * @param enviro Environment to be removed from persistent storage, must have id set
-     * @throws IllegalArgumentException if enviro does not have id set
-     * @throws DataAccessException      if any data-access related exception occurs
+     * @throws DataAccessException if enviro does not have id set
+     *                             or any data-access related exception occurs
      */
     void delete(Environment enviro) throws DataAccessException;
 
