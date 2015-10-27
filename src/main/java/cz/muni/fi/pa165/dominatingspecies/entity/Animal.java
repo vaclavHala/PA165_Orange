@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
-import com.sun.istack.internal.Nullable;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,10 +24,8 @@ public class Animal implements Serializable {
     @NotNull
     private String species;
     
-    @Nullable
     private double foodNeeded;
     
-    @Nullable
     private double reproductionRate;
 
     public Animal() {
