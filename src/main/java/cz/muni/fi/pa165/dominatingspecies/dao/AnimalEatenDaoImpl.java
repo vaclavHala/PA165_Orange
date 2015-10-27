@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author Daniel Minarik
  */
 
@@ -35,10 +34,5 @@ public class AnimalEatenDaoImpl implements AnimalEatenDao {
     @Override
     public void remove(AnimalEaten animalEaten) {
         em.remove(animalEaten);
-    }
-
-    @Override
-    public void update(AnimalEaten animalEaten) {
-        em.merge(animalEaten);
     }
 }

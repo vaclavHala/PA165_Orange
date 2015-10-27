@@ -1,14 +1,11 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
+import com.sun.istack.internal.Nullable;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,29 +25,19 @@ public class Animal implements Serializable {
     @NotNull
     private String species;
     
-    @NotNull
+    @Nullable
     private double foodNeeded;
     
-    @NotNull
+    @Nullable
     private double reproductionRate;
-
-    @OneToMany(mappedBy="animalsEaten")
-    private Set<AnimalEaten> animalsEaten;
-
-    @OneToMany(mappedBy="animalEnvironments")
-    private Set<AnimalEnvironment> animalEnvironments;
 
     public Animal() {
     }
 
-    public Animal(Long id, String name, String species, double foodNeeded, double reproductionRate) {
+    public Animal(Long id, String name, String species) {
         this.id = id;
         this.name = name;
         this.species = species;
-        this.foodNeeded = foodNeeded;
-        this.reproductionRate = reproductionRate;
-        this.animalsEaten = new HashSet<>();
-        this.animalEnvironments = new HashSet<>();
     }
 
     @Override
@@ -115,21 +102,5 @@ public class Animal implements Serializable {
 
     public void setReproductionRate(double reproductionRate) {
         this.reproductionRate = reproductionRate;
-    }
-
-    public void addAnimalEaten(AnimalEaten animalEaten) {
-        this.animalsEaten.add(animalEaten);
-    }
-    
-    public Set<AnimalEaten> getAnimalsEaten() {
-        return Collections.unmodifiableSet(animalsEaten);
-    }
-
-    public void addAnimalEnviroment(AnimalEnvironment animalEnvironment) {
-        this.animalEnvironments.add(animalEnvironment);
-    }
-    
-    public Set<AnimalEnvironment> getAnimalEnviroments() {
-        return Collections.unmodifiableSet(animalEnvironments);
     }
 }
