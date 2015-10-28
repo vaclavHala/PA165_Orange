@@ -18,7 +18,7 @@ public class AnimalEnvironment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST) //víc Animal mít jeden AnimalEnvironment
     @JoinColumn(nullable = false)
     private Animal animal;
 
