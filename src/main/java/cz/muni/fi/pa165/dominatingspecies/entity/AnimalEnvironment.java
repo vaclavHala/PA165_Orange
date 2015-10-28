@@ -3,29 +3,35 @@ package cz.muni.fi.pa165.dominatingspecies.entity;
 import javax.persistence.*;
 
 /**
- * Created by Petr on 25. 10. 2015.
+ * Created by Petr Domkař on 25. 10. 2015.
  */
 
+/**
+ * Entity representing relationship between Animal and Environment.
+ * Property percentage determines, how many environment animal needed.
+ * @author Petr Domkař
+ */
 @Entity
 public class AnimalEnvironment {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     @OneToOne
     @JoinColumn(nullable = false)
     private Animal animal;
 
-    @Column
     @OneToOne
     @JoinColumn(nullable = false)
     private Environment environment;
 
-    @Column
-    private float percentage;
+    private double percentage;
+
+    public AnimalEnvironment(Animal animal, Environment environment) {
+        this.animal = animal;
+        this.environment = environment;
+    }
 
 
     @Override
@@ -88,11 +94,11 @@ public class AnimalEnvironment {
         this.environment = environment;
     }
 
-    public float getPercentage() {
+    public double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(float percentage) {
+    public void setPercentage(double percentage) {
         this.percentage = percentage;
     }
 }
