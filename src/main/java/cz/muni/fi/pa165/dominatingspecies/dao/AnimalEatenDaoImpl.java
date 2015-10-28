@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,22 +18,22 @@ public class AnimalEatenDaoImpl implements AnimalEatenDao {
     private EntityManager em;
 
     @Override
-    public void create(AnimalEaten animalEaten) {
+    public void create(AnimalEaten animalEaten) throws DataAccessException {
         em.persist(animalEaten);
     }
 
     @Override
-    public List<AnimalEaten> findAll() {
+    public List<AnimalEaten> findAll() throws DataAccessException {
         return em.createQuery("SELECT a FROM AnimalEaten a", AnimalEaten.class).getResultList();
     }
 
     @Override
-    public AnimalEaten findById(Long id) {
+    public AnimalEaten findById(Long id) throws DataAccessException {
         return em.find(AnimalEaten.class, id);
     }
 
     @Override
-    public void remove(AnimalEaten animalEaten) {
+    public void remove(AnimalEaten animalEaten) throws DataAccessException {
         em.remove(animalEaten);
     }
 }
