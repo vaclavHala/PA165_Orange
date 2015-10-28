@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -34,6 +35,9 @@ public class AnimalEatenDaoImpl implements AnimalEatenDao {
 
     @Override
     public void remove(AnimalEaten animalEaten) throws DataAccessException {
+        if (!em.contains(animalEaten)) {
+            throw new DataRetrievalFailureException("Entity " + animalEaten + " does not exist in the persistent storage");
+        }
         em.remove(animalEaten);
     }
 }

@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Petr Domkař on 25. 10. 2015.
@@ -12,18 +13,21 @@ import javax.persistence.*;
  * @author Petr Domkař
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"fk_animal_id", "fk_environment_id"}))
 public class AnimalEnvironment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) //víc Animal mít jeden AnimalEnvironment
-    @JoinColumn(nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "fk_animal_id")
+    @NotNull
     private Animal animal;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "fk_environment_id")
+    @NotNull
     private Environment environment;
 
     private double percentage;

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
+import javax.validation.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 
 
@@ -45,7 +46,7 @@ public class AnimalEatenDaoImplTest {
         Animal a1 = new Animal("Slon", "Savec");
         animalDao.create(a1);
         AnimalEaten ae1 = new AnimalEaten(a1, null);        
-        expectedException.expect(DataAccessException.class);
+        expectedException.expect(ConstraintViolationException.class);
         animalEatenDao.create(ae1);
     }
     
