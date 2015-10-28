@@ -87,7 +87,7 @@ public class EnvironmentDaoImplTest {
         assertTrue(dao.listAll().isEmpty());
     }
 
-    @Test//(expected = DataAccessException.class)
+    @Test(expected = DataAccessException.class)
     public void testDeleteNonExistingEnvironment() {
         dao.delete(new Environment());
     }
