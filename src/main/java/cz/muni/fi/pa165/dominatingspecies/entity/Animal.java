@@ -23,16 +23,15 @@ public class Animal implements Serializable {
 
     @NotNull
     private String species;
-    
+
     private double foodNeeded;
-    
+
     private double reproductionRate;
 
     public Animal() {
     }
 
-    public Animal(Long id, String name, String species) {
-        this.id = id;
+    public Animal(String name, String species) {
         this.name = name;
         this.species = species;
     }
@@ -54,9 +53,9 @@ public class Animal implements Serializable {
             return false;
         }
         Animal other = (Animal) obj;
-        return ((id == other.getId()) && 
-                (name.equals(other.getName())) && 
-                (species.equals(other.getSpecies())) && 
+        return ((id == other.getId()) &&
+                (name.equals(other.getName())) &&
+                (species.equals(other.getSpecies())) &&
                 (foodNeeded == other.getFoodNeeded()) &&
                 (reproductionRate == other.getReproductionRate()));
     }

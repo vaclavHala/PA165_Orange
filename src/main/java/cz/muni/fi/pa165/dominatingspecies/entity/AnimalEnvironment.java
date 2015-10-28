@@ -18,15 +18,17 @@ public class AnimalEnvironment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
     private Animal animal;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
     private Environment environment;
 
     private double percentage;
+
+    public AnimalEnvironment() {}
 
     public AnimalEnvironment(Animal animal, Environment environment) {
         this.animal = animal;
