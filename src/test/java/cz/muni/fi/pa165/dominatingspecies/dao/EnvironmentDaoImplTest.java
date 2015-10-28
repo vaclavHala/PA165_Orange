@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dominatingspecies.DominatingSpeciesConfig;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.Collection;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
@@ -45,11 +46,10 @@ public class EnvironmentDaoImplTest {
         assertEquals(null, dao.findById(1000L));
     }
 
-    @Test
+    @Test(expected = ConstraintViolationException.class)
     public void testCreateWithMissingData() {
         Environment e = new Environment();
-
-        expectedException.expect(DataAccessException.class);
+        e.setName(null);
         dao.persist(e);
     }
 
@@ -87,13 +87,8 @@ public class EnvironmentDaoImplTest {
         assertTrue(dao.listAll().isEmpty());
     }
 
-    @Test
+    @Test//(expected = DataAccessException.class)
     public void testDeleteNonExistingEnvironment() {
-        Environment e1 = new Environment();
-        e1.setName("env1");
-        e1.setDescription("desc1");
-        e1.setMaxAnimalConut(1L);
-        expectedException.expect(DataAccessException.class);
-        dao.delete(e1);
+        dao.delete(new Environment());
     }
 }

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @author Ivan Kralik
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Environment implements Serializable {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     
     @NotNull
