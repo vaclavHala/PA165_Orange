@@ -40,4 +40,8 @@ public interface EnvironmentDao {
      */
     Collection<Environment> listAll() throws DataAccessException;
 
+    /*
+     * In future will contain methods which use AnimalEnvironmentDao to provide methods
+     * such as possibleAnimalsLivingIn(Environment), mostCommonAnimalLivingIn(Environment) etc.
+     */
 }

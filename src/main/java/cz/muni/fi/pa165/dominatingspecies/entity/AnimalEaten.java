@@ -8,8 +8,17 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
+/**
+ * Entity representing one animal eating another animal, predator eats prey.
+ * Observations about approximate count of animals eaten per month is represented by the animalCount
+ * @author Vaclav Hala 422551
+ */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"fk_predator_id", "fk_prey_id"}))
 public class AnimalEaten {
 
     @Id
@@ -19,12 +28,14 @@ public class AnimalEaten {
 
     private double animalCount;
 
-    @JoinColumn(nullable = false)
     @OneToOne
+    @NotNull
+    @JoinColumn(name = "fk_predator_id")
     private Animal predator;
 
-    @JoinColumn(nullable = false)
     @OneToOne
+    @NotNull
+    @JoinColumn(name = "fk_prey_id")
     private Animal prey;
 
     public AnimalEaten(Animal predator, Animal prey) {

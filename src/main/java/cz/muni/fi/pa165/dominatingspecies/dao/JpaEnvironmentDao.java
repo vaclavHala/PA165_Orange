@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,6 +26,9 @@ public class JpaEnvironmentDao implements EnvironmentDao {
 
     @Override
     public void delete(Environment enviro) throws DataAccessException {
+        if (!em.contains(enviro)) {
+            throw new DataRetrievalFailureException("Entity " + enviro + " does not exist in the persistent storage");
+        }
         em.remove(enviro);
     }
 

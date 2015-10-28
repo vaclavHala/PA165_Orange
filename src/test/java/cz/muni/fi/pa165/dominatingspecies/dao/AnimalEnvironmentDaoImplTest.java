@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.Collection;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
@@ -63,7 +64,7 @@ public class AnimalEnvironmentDaoImplTest {
         ae.setAnimal(dog());
         ae.setEnvironment(null);
 
-        expectedException.expect(DataAccessException.class);
+        expectedException.expect(ConstraintViolationException.class);
         dao.create(ae);
     }
 
@@ -71,12 +72,8 @@ public class AnimalEnvironmentDaoImplTest {
     public void testExceptionOnSameAnimaEnvironmentTwice() {
         Animal a = dog();
         Environment e = environment();
-        AnimalEnvironment aeFirst = new AnimalEnvironment();
-        aeFirst.setAnimal(a);
-        aeFirst.setEnvironment(e);
-        AnimalEnvironment aeSecond = new AnimalEnvironment();
-        aeSecond.setAnimal(a);
-        aeSecond.setEnvironment(e);
+        AnimalEnvironment aeFirst = new AnimalEnvironment(a, e);
+        AnimalEnvironment aeSecond = new AnimalEnvironment(a, e);
 
         dao.create(aeFirst);
         expectedException.expect(DataAccessException.class);
@@ -131,13 +128,11 @@ public class AnimalEnvironmentDaoImplTest {
     }
 
     private static Animal dog() {
-        Animal a = new Animal();
-        return a;
+        return new Animal("dog", "dogs");
     }
 
     private static Animal cat() {
-        Animal a = new Animal();
-        return a;
+        return new Animal("cat", "cats");
     }
 
     private static Environment environment() {
