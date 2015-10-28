@@ -7,47 +7,117 @@ package cz.muni.fi.pa165.dominatingspecies.dao;
 import cz.muni.fi.pa165.dominatingspecies.DominatingSpeciesConfig;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.testng.annotations.BeforeMethod;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.inject.Inject;
+import java.util.List;
+
+
+
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+
 
 /**
  * @author Petr Domkař
  */
 
 @Transactional
-@ContextConfiguration(classes = DominatingSpeciesConfig.class)
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-public class AnimalEatenDaoImplTest extends AbstractTestNGSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {DominatingSpeciesConfig.class})
+public class AnimalEatenDaoImplTest {
 
-    @PersistenceContext
-    public EntityManager em;
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
-    private Animal a1;
-    private Animal a2;
-    private Animal a3;
-    private Animal a4;
-
-    private AnimalEaten ae1;
-    private AnimalEaten ae2;
-    private AnimalEaten ae3;
+    @Inject
+    private AnimalDao animalDao;
+    @Inject
+    private AnimalEatenDao animalEatenDao;
 
 
-    @BeforeMethod
-    public void createEntities() {
-        a1 = new Animal("Slon", "Savec");
-        a2 = new Animal("Veverka", "Savec");
-        a3 = new Animal("Štika", "Ryba");
-        a4 = new Animal("Nosorožec", "Savec");
-        ae1 = new AnimalEaten(a1, a2);
+    @Test
+    public void testInitFindAllEmpty() {
+        assertTrue(animalEatenDao.findAll().isEmpty());
+    }
+
+    @Test
+    public void testFindAllAnimalEaten() {
+        Animal a1 = new Animal("Slon", "Savec");
+        Animal a2 = new Animal("Štika", "Ryba");
+        Animal a3 = new Animal("Veverka", "Savec");
+        animalDao.create(a1);
+        animalDao.create(a2);
+        animalDao.create(a3);
+
+        AnimalEaten ae1 = new AnimalEaten(a1, a2);
+        AnimalEaten ae2 = new AnimalEaten(a2, a3);
+        animalEatenDao.create(ae1);
+        animalEatenDao.create(ae2);
+
+        List<AnimalEaten> animalEatenList = animalEatenDao.findAll();
+
+        assertEquals(animalEatenList.size(), 2);
+        assertTrue(animalEatenList.contains(ae1));
+        assertTrue(animalEatenList.contains(ae2));
     }
 
 
+    @Test
+    public void testFindByNotExistId() {
+        assertEquals(null, animalEatenDao.findById(50L));
+    }
+
+
+    @Test
+    public void testFindById() {
+        Animal a1 = new Animal("Slon", "Savec");
+        Animal a2 = new Animal("Štika", "Ryba");
+        Animal a3 = new Animal("Veverka", "Savec");
+        animalDao.create(a1);
+        animalDao.create(a2);
+        animalDao.create(a3);
+
+        AnimalEaten ae1 = new AnimalEaten(a1, a2);
+        AnimalEaten ae2 = new AnimalEaten(a2, a3);
+        animalEatenDao.create(ae1);
+        animalEatenDao.create(ae2);
+
+        AnimalEaten animalEaten = animalEatenDao.findById(ae1.getId());
+        assertEquals(animalEaten, ae1);
+    }
+
+
+
+    @Test
+    public void testRemoveAnimalEaten() {
+        Animal a1 = new Animal("Slon", "Savec");
+        Animal a2 = new Animal("Štika", "Ryba");
+        Animal a3 = new Animal("Veverka", "Savec");
+        animalDao.create(a1);
+        animalDao.create(a2);
+        animalDao.create(a3);
+
+        AnimalEaten ae1 = new AnimalEaten(a1, a2);
+        AnimalEaten ae2 = new AnimalEaten(a2, a3);
+        animalEatenDao.create(ae1);
+        animalEatenDao.create(ae2);
+
+        assertEquals(animalEatenDao.findAll().size(), 2);
+        animalEatenDao.remove(ae1);
+        assertEquals(animalEatenDao.findAll().size(), 1);
+        assertEquals(animalEatenDao.findAll().get(0), ae2);
+        animalEatenDao.remove(ae2);
+        assertEquals(animalEatenDao.findAll().size(), 0);
+    }
 
 }

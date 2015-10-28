@@ -53,8 +53,7 @@ public class Animal implements Serializable {
             return false;
         }
         Animal other = (Animal) obj;
-        return ((id == other.getId()) &&
-                (name.equals(other.getName())) &&
+        return ((name.equals(other.getName())) &&
                 (species.equals(other.getSpecies())) &&
                 (foodNeeded == other.getFoodNeeded()) &&
                 (reproductionRate == other.getReproductionRate()));
