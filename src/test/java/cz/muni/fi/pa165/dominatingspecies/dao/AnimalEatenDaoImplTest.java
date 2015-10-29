@@ -40,6 +40,10 @@ public class AnimalEatenDaoImplTest {
     private AnimalDao animalDao;
     @Inject
     private AnimalEatenDao animalEatenDao;
+    
+    Animal a1;
+    Animal a2;
+    Animal a3;
 
     @Test
     public void testCreateAnimalEatenWithoutFillRequiredData() {
@@ -52,12 +56,7 @@ public class AnimalEatenDaoImplTest {
     
     @Test
     public void testCreateAnimalEaten() {
-        Animal a1 = new Animal("Slon", "Savec");
-        Animal a2 = new Animal("Štika", "Ryba");
-        Animal a3 = new Animal("Veverka", "Savec");
-        animalDao.create(a1);
-        animalDao.create(a2);
-        animalDao.create(a3);
+        createAnimal();
 
         AnimalEaten ae1 = new AnimalEaten(a1, a2);
         assertTrue(animalEatenDao.findAll().isEmpty());
@@ -73,12 +72,7 @@ public class AnimalEatenDaoImplTest {
 
     @Test
     public void testFindAllAnimalEaten() {
-        Animal a1 = new Animal("Slon", "Savec");
-        Animal a2 = new Animal("Štika", "Ryba");
-        Animal a3 = new Animal("Veverka", "Savec");
-        animalDao.create(a1);
-        animalDao.create(a2);
-        animalDao.create(a3);
+        createAnimal();
 
         AnimalEaten ae1 = new AnimalEaten(a1, a2);
         AnimalEaten ae2 = new AnimalEaten(a2, a3);
@@ -101,12 +95,7 @@ public class AnimalEatenDaoImplTest {
 
     @Test
     public void testFindById() {
-        Animal a1 = new Animal("Slon", "Savec");
-        Animal a2 = new Animal("Štika", "Ryba");
-        Animal a3 = new Animal("Veverka", "Savec");
-        animalDao.create(a1);
-        animalDao.create(a2);
-        animalDao.create(a3);
+        createAnimal();
 
         AnimalEaten ae1 = new AnimalEaten(a1, a2);
         AnimalEaten ae2 = new AnimalEaten(a2, a3);
@@ -121,10 +110,7 @@ public class AnimalEatenDaoImplTest {
     
     @Test
     public void testRemoveNotExistingAnimalEaten() {
-        Animal a1 = new Animal("Slon", "Savec");
-        Animal a2 = new Animal("Štika", "Ryba");
-        animalDao.create(a1);
-        animalDao.create(a2);
+        createAnimal();
 
         AnimalEaten ae1 = new AnimalEaten(a1, a2);
         expectedException.expect(DataAccessException.class);
@@ -133,12 +119,7 @@ public class AnimalEatenDaoImplTest {
 
     @Test
     public void testRemoveAnimalEaten() {
-        Animal a1 = new Animal("Slon", "Savec");
-        Animal a2 = new Animal("Štika", "Ryba");
-        Animal a3 = new Animal("Veverka", "Savec");
-        animalDao.create(a1);
-        animalDao.create(a2);
-        animalDao.create(a3);
+        createAnimal();
 
         AnimalEaten ae1 = new AnimalEaten(a1, a2);
         AnimalEaten ae2 = new AnimalEaten(a2, a3);
@@ -153,4 +134,12 @@ public class AnimalEatenDaoImplTest {
         assertEquals(animalEatenDao.findAll().size(), 0);
     }
 
+    private void createAnimal() {
+        a1 = new Animal("Slon", "Savec");
+        a2 = new Animal("Štika", "Ryba");
+        a3 = new Animal("Veverka", "Savec");
+        animalDao.create(a1);
+        animalDao.create(a2);
+        animalDao.create(a3);
+    }
 }
