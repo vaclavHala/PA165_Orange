@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,6 +33,10 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
 
     @Override
     public void remove(AnimalEnvironment environment) {
+        if (!em.contains(environment)) {
+            throw new DataRetrievalFailureException("Entity " + environment + " does not exist in the persistent storage");
+        }
+        
         em.remove(environment);
     }
 }

@@ -101,6 +101,13 @@ public class AnimalDaoImplTest {
         dao.remove(animal);
     }
     
+    @Test(expected = DataAccessException.class)
+    public void testRemoveNonPersistent() {
+        Animal animal = createAnimal("Mačka domáca", "Mačky", 100d, 20d);
+        
+        dao.remove(animal);
+    }
+    
     private Animal createAnimal(String name, String species, Double foodNeeded, Double reproductionRate) {
         Animal animal = new Animal();
         
