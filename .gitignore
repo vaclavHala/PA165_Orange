@@ -3,3 +3,6 @@ nbactions.xml
 *.log
 /DominatingSpecies.iml
 /.idea
+/DominatingSpeciesDao/target/
+/DominatingSpeciesApi/target/
+/DominatingSpeciesService/target/
