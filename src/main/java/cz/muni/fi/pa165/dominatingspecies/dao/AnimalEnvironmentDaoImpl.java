@@ -39,4 +39,9 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
         
         em.remove(environment);
     }
+
+    @Override
+    public void update(AnimalEnvironment environment) {
+        em.merge(environment);
+    }
 }

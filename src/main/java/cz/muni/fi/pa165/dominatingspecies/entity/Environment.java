@@ -57,7 +57,7 @@ public class Environment implements Serializable {
     public int hashCode() {
         final int prime = 31;
         
-        return prime + ((name == null) ? 0 : name.hashCode());
+        return prime + ((getId() == null) ? 0 : getId().hashCode());
     }
 
     @Override
@@ -76,10 +76,6 @@ public class Environment implements Serializable {
         
         Environment other = (Environment) obj;
         
-        if (name == null) {
-            return other.getName() == null;
-        }
-        
-        return name.equals(other.getName());
+        return getId() != null && other.getId() != null && getId().equals(other.getId());
     }
 }
