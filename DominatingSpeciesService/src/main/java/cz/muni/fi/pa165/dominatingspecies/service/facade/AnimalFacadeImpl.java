@@ -4,8 +4,10 @@ import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
+import cz.muni.fi.pa165.dominatingspecies.service.AnimalEatenService;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalService;
 import cz.muni.fi.pa165.dominatingspecies.service.BeanMappingService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -14,6 +16,9 @@ import javax.inject.Inject;
 public class AnimalFacadeImpl implements AnimalFacade{
     @Inject
     private AnimalService animalService;
+    
+    @Inject
+    private AnimalEatenService animalEatenService;
     
     @Inject
     private BeanMappingService beanMappingService;
@@ -34,7 +39,12 @@ public class AnimalFacadeImpl implements AnimalFacade{
 
     @Override
     public void updateAnimal(AnimalDetailDTO updatedAnimal) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Animal anim = animalService.findById(updatedAnimal.getId());
+        anim.setName(updatedAnimal.getName());
+        anim.setSpecies(updatedAnimal.getSpecies());
+        anim.setReproductionRate(updatedAnimal.getRepreductionRate());
+        anim.setFoodNeeded(updatedAnimal.getFoodNeeded());
+        animalService.update(anim);
     }
 
     @Override
@@ -49,12 +59,15 @@ public class AnimalFacadeImpl implements AnimalFacade{
 
     @Override
     public List<AnimalBriefDTO> findPredatorsOf(long animalId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<AnimalBriefDTO> findPreyOf(long animalId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<AnimalBriefDTO> prey = new ArrayList<>();
+        Animal a = animalService.findById(animalId);
+        prey.addAll(beanMappingService.map(animalEatenService.findPreyOf(a), AnimalBriefDTO.class));        
+        return prey;
     }
 
 }

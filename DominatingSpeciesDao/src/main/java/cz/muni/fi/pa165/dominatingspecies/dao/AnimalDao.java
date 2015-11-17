@@ -19,14 +19,14 @@ public interface AnimalDao {
      * @param animal Animal to be create in persistent layer
      * @throws DataAccessException If id is already set of Animal or any data-access related exception occurs
      */
-    void create(Animal animal) throws DataAccessException;
+    public void create(Animal animal) throws DataAccessException;
 
     /**
      * Returns List of stored Animal
      * @return List of Animal
      * @throws DataAccessException If any data-access related exception occurs
      */
-    List<Animal> findAll() throws DataAccessException;
+    public List<Animal> findAll() throws DataAccessException;
 
     /**
      * Return Animal which has required id
@@ -34,12 +34,20 @@ public interface AnimalDao {
      * @return Animal with required id
      * @throws DataAccessException If any data-access related exception occurs
      */
-    Animal getById(Long id) throws DataAccessException;
+    public Animal getById(Long id) throws DataAccessException;
 
     /**
      * Remove specified Animal from persistent layer
      * @param animal Instance of Animal with a set id which is supposed to be remove from persistent layer
      * @throws DataAccessException If is not set id of Animal or any data-access related exception occurs
      */
-    void remove(Animal animal) throws DataAccessException;
+    public void remove(Animal animal) throws DataAccessException;
+    
+    /**
+     * Updates record for specified animal in persistent storage
+     * 
+     * @param animal to update
+     * @throws DataAccessException 
+     */
+    public void update(Animal animal) throws DataAccessException;
 }

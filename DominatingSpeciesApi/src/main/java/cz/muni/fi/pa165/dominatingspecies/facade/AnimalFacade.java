@@ -6,18 +6,50 @@ import java.util.List;
 
 public interface AnimalFacade {
 
+    /**
+     * Create new Animal
+     * @param newAnimal
+     * @return 
+     */
     long createAnimal(AnimalBriefDTO newAnimal);
 
+    /**
+     * Find animal by anmailId
+     * @param animalId
+     * @return 
+     */
     AnimalDetailDTO findAnimal(long animalId);
 
+    /**
+     * Update data of animal
+     * @param updatedAnimal 
+     */
     void updateAnimal(AnimalDetailDTO updatedAnimal);
 
+    /**
+     * Delete animal
+     * @param animalId 
+     */
     void deleteAnimal(long animalId);
 
+    /**
+     * List all animals
+     * @return 
+     */
     List<AnimalBriefDTO> findAllAnimals();
 
+    /**
+     * List all animals, which animal with animalId eat
+     * @param animalId
+     * @return 
+     */
     List<AnimalBriefDTO> findPredatorsOf(long animalId);
 
+    /**
+     * List all animals, which are eaten by animal with animalId
+     * @param animalId
+     * @return 
+     */
     List<AnimalBriefDTO> findPreyOf(long animalId);
 
 }
