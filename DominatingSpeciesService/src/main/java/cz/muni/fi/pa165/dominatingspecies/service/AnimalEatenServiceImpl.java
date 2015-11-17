@@ -32,7 +32,7 @@ public class AnimalEatenServiceImpl implements AnimalEatenService{
         List<Animal> filtered = new ArrayList<>();
         for(AnimalEaten a : animalsEaten) {
             if(!a.getPredator().equals(animal)) {
-                filtered.add(a.getPredator());
+                filtered.add(a.getPrey());
             }
         }
         return filtered;
