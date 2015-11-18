@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.dominatingspecies.service.facade;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalEatenService;
@@ -70,4 +71,10 @@ public class AnimalFacadeImpl implements AnimalFacade{
         return prey;
     }
 
+    @Override
+    public void createAnimalEaten(AnimalEatenDTO animalEatenDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }

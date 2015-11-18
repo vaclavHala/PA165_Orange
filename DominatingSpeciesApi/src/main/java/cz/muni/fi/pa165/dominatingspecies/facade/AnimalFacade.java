@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.dominatingspecies.facade;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
 import java.util.List;
 
 public interface AnimalFacade {
@@ -52,4 +53,9 @@ public interface AnimalFacade {
      */
     List<AnimalBriefDTO> findPreyOf(long animalId);
 
+    /**
+     * Create new AnimalEaten
+     * @param animalEatenDTO 
+     */
+    void createAnimalEaten(AnimalEatenDTO animalEatenDTO);
 }

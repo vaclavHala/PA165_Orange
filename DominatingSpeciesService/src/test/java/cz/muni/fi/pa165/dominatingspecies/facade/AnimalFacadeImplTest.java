@@ -3,12 +3,11 @@ package cz.muni.fi.pa165.dominatingspecies.facade;
 
 import cz.muni.fi.pa165.dominatingspecies.DominatingSpeciesConfig;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
+import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.junit.runner.RunWith;
@@ -22,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DominatingSpeciesConfig.class})
+@ContextConfiguration(classes = {DominatingSpeciesServiceConfig.class})
 public class AnimalFacadeImplTest {
     
     @Inject
@@ -42,7 +41,7 @@ public class AnimalFacadeImplTest {
      }
      
      @Test
-     public void findAllanimals() {
+     public void findAllanimalsTest() {
          AnimalBriefDTO animalDTO1 = new AnimalBriefDTO();
          animalDTO1.setName("Zirafa");
          animalDTO1.setSpecies("Savec");
@@ -54,4 +53,31 @@ public class AnimalFacadeImplTest {
          
          assertEquals(animalFacade.findAllAnimals().size(), 2);
      }
+     
+     @Test
+     public void findPredatorsOfTest() {
+         AnimalBriefDTO animalDTO1 = new AnimalBriefDTO();
+         animalDTO1.setName("Zirafa");
+         animalDTO1.setSpecies("Savec");
+         AnimalBriefDTO animalDTO2 = new AnimalBriefDTO();
+         animalDTO2.setName("Pes");
+         animalDTO2.setSpecies("Savec");
+         animalFacade.createAnimal(animalDTO1);
+         animalFacade.createAnimal(animalDTO2);
+         
+         AnimalEatenDTO animalEatenDTO1 = new AnimalEatenDTO();
+         animalEatenDTO1.setPredator(animalDTO1);
+         animalEatenDTO1.setPrey(animalDTO2);
+         animalFacade.createAnimalEaten(animalEatenDTO1);
+         
+         AnimalEatenDTO animalEatenDTO2 = new AnimalEatenDTO();
+         animalEatenDTO2.setPredator(animalDTO1);
+         animalEatenDTO2.setPrey(animalDTO1);
+         animalFacade.createAnimalEaten(animalEatenDTO2);
+         
+         List<AnimalBriefDTO> list = new ArrayList<>();
+         list.add(animalDTO1);
+         assertEquals(list, animalFacade.findPredatorsOf(animalDTO2.getId()));    
+     }
 }
+

@@ -12,11 +12,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Petr
  */
+@Service
 public class AnimalEatenServiceImpl implements AnimalEatenService{
     @Inject
     private AnimalEatenDao animalEatenDao;
@@ -28,7 +30,7 @@ public class AnimalEatenServiceImpl implements AnimalEatenService{
 
     @Override
     public Collection<Animal> findPreyOf(Animal animal) {
-        List<AnimalEaten> animalsEaten = animalEatenDao.findAll(); //nechat jen ty co predator = animal
+        List<AnimalEaten> animalsEaten = animalEatenDao.findAll();
         List<Animal> filtered = new ArrayList<>();
         for(AnimalEaten a : animalsEaten) {
             if(!a.getPredator().equals(animal)) {
@@ -36,6 +38,21 @@ public class AnimalEatenServiceImpl implements AnimalEatenService{
             }
         }
         return filtered;
+    }
+    
+    @Override
+    public void createAnimalEaten(AnimalEaten animalEaten) {
+        animalEatenDao.create(animalEaten);
+    }
+    
+    @Override
+    public void update(AnimalEaten animalEaten) {
+        
+    }
+    
+    @Override
+    public void remove(AnimalEaten animalEaten) {
+        animalEatenDao.remove(animalEaten);
     }
     
 }

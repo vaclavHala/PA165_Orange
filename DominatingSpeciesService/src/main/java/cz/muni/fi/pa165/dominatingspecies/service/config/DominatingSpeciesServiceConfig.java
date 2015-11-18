@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Import;
 @Import(DominatingSpeciesServiceConfig.class)
 @ComponentScan(basePackages = "cz.muni.fi.pa165.dominatingspecies.service")
 public class DominatingSpeciesServiceConfig {
-    
+     
 }

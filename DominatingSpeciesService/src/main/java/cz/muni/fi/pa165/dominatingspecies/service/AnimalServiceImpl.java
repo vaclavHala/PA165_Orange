@@ -5,11 +5,13 @@ import cz.muni.fi.pa165.dominatingspecies.dao.AnimalDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import java.util.Collection;
 import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Petr
  */
+@Service
 public class AnimalServiceImpl implements AnimalService {
     @Inject
     private AnimalDao animalDao;
