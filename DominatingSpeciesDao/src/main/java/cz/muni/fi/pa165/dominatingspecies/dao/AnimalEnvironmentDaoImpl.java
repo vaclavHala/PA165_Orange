@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
@@ -17,22 +18,22 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     private EntityManager em;
     
     @Override
-    public void create(AnimalEnvironment environment) {
+    public void create(AnimalEnvironment environment) throws DataAccessException {
         em.persist(environment);
     }
 
     @Override
-    public AnimalEnvironment findById(Long id) {
+    public AnimalEnvironment findById(Long id) throws DataAccessException {
         return em.find(AnimalEnvironment.class, id);
     }
 
     @Override
-    public List<AnimalEnvironment> findAll() {
+    public List<AnimalEnvironment> findAll() throws DataAccessException {
         return em.createQuery("from AnimalEnvironment ae", AnimalEnvironment.class).getResultList();
     }
 
     @Override
-    public void remove(AnimalEnvironment environment) {
+    public void remove(AnimalEnvironment environment) throws DataAccessException {
         if (!em.contains(environment)) {
             throw new DataRetrievalFailureException("Entity " + environment + " does not exist in the persistent storage");
         }
@@ -41,7 +42,7 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     }
 
     @Override
-    public void update(AnimalEnvironment environment) {
+    public void update(AnimalEnvironment environment) throws DataAccessException {
         em.merge(environment);
     }
 }
