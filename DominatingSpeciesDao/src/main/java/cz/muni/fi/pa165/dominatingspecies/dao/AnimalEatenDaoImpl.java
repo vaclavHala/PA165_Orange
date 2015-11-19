@@ -40,4 +40,10 @@ public class AnimalEatenDaoImpl implements AnimalEatenDao {
         }
         em.remove(animalEaten);
     }
+
+    @Override
+    public void update(AnimalEaten animalEaten) throws DataAccessException {
+        em.merge(animalEaten);
+    }
+
 }

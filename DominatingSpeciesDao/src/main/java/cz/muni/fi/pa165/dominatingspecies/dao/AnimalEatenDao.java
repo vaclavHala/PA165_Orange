@@ -32,4 +32,11 @@ public interface AnimalEatenDao {
      * @param animalEaten Instance of AnimalEaten
      */
     public void remove(AnimalEaten animalEaten);
+    
+    /**
+     * Updates record for AnimalEaten in persistent storage
+     * @param animal
+     */
+    public void update(AnimalEaten animal);
+
 }
