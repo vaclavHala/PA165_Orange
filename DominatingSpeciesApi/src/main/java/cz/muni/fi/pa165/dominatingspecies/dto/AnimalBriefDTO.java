@@ -4,15 +4,23 @@ import java.util.Objects;
 
 public class AnimalBriefDTO {
 
-    private long id;
+    private Long id;
     private String name;
     private String species;
 
-    public long getId() {
+    public AnimalBriefDTO() {
+    }
+
+    public AnimalBriefDTO(String name, String species) {
+        this.name = name;
+        this.species = species;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -30,6 +38,30 @@ public class AnimalBriefDTO {
 
     public void setSpecies(String species) {
         this.species = species;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AnimalBriefDTO)) {
+            return false;
+        }
+        AnimalBriefDTO other = (AnimalBriefDTO) obj;
+        return this.name.equals(other.getName())
+            && this.species.equals(other.species);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, species);
+    }
+
+    @Override
+    public String toString() {
+        return "AnimalBriefDTO{"
+            + "id=" + id
+            + ", name=" + name
+            + ", species=" + species
+            + '}';
     }
 
 }

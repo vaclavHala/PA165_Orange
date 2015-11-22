@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -10,7 +11,6 @@ import javax.validation.constraints.NotNull;
 /**
  * @author Daniel Minarik
  */
-
 @Entity
 public class Animal implements Serializable {
 
@@ -38,23 +38,16 @@ public class Animal implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+        return Objects.hash(id);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
         if (!(obj instanceof Animal)) {
             return false;
         }
         Animal other = (Animal) obj;
-        return (getId() != null && other.getId() != null)
-                && (getId().equals(other.getId()));
+        return this.id.equals(other.getId());
     }
 
     public Long getId() {
@@ -96,4 +89,16 @@ public class Animal implements Serializable {
     public void setReproductionRate(double reproductionRate) {
         this.reproductionRate = reproductionRate;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{"
+            + "id=" + id
+            + ", name=" + name
+            + ", species=" + species
+            + ", foodNeeded=" + foodNeeded
+            + ", reproductionRate=" + reproductionRate
+            + '}';
+    }
+
 }

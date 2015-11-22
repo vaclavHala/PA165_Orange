@@ -1,15 +1,8 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -38,6 +31,9 @@ public class AnimalEaten {
     @JoinColumn(name = "fk_prey_id")
     private Animal prey;
 
+    public AnimalEaten() {
+    }
+
     public AnimalEaten(Animal predator, Animal prey) {
         this.predator = predator;
         this.prey = prey;
@@ -58,7 +54,7 @@ public class AnimalEaten {
         return Objects.hash(predator, prey);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.dominatingspecies.service.facade;
+package cz.muni.fi.pa165.dominatingspecies.facade;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
@@ -103,7 +103,7 @@ public class EnvironmentFacadeImplTest {
     public void testAddAnimalEnvironment() {
         AnimalBriefDTO fish = createAnimal("Ryba", "Ryby");
         fish.setId(animalFacade.createAnimal(fish));
-        assertAnimalDataEquals(fish, animalFacade.findAnimal(fish.getId()));
+        assertAnimalDataEquals(fish, animalFacade.findAnimalDetail(fish.getId()));
         
         EnvironmentDTO freshWater = createEnvironment("Sladká voda", 10);
         freshWater.setId(facade.createEnvironment(freshWater));

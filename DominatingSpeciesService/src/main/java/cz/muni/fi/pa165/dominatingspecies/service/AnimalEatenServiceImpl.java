@@ -19,40 +19,57 @@ import org.springframework.stereotype.Service;
  * @author Petr
  */
 @Service
-public class AnimalEatenServiceImpl implements AnimalEatenService{
+public class AnimalEatenServiceImpl implements AnimalEatenService {
+
     @Inject
     private AnimalEatenDao animalEatenDao;
-    
+
     @Override
     public Collection<Animal> findPredatorOf(Animal animal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Animal> predators = new ArrayList<>();
+        for (AnimalEaten ae : animalEatenDao.findAll()) {
+            if (ae.getPrey().equals(animal)) {
+                predators.add(ae.getPrey());
+            }
+        }
+        return predators;
     }
 
     @Override
     public Collection<Animal> findPreyOf(Animal animal) {
         List<AnimalEaten> animalsEaten = animalEatenDao.findAll();
         List<Animal> filtered = new ArrayList<>();
-        for(AnimalEaten a : animalsEaten) {
-            if(!a.getPredator().equals(animal)) {
-                filtered.add(a.getPrey());
+        for (AnimalEaten ae : animalsEaten) {
+            if (ae.getPredator().equals(animal)) {
+                filtered.add(ae.getPrey());
             }
         }
         return filtered;
     }
-    
+
     @Override
     public void createAnimalEaten(AnimalEaten animalEaten) {
         animalEatenDao.create(animalEaten);
     }
-    
+
     @Override
     public void update(AnimalEaten animalEaten) {
-        
+
     }
-    
+
     @Override
     public void remove(AnimalEaten animalEaten) {
         animalEatenDao.remove(animalEaten);
     }
-    
+
+    @Override
+    public void removeAllFor(Animal animal) {
+        for (AnimalEaten ae : animalEatenDao.findAll()) {
+            if (ae.getPredator().equals(animal)
+                || ae.getPrey().equals(animal)) {
+                animalEatenDao.remove(ae);
+            }
+        }
+    }
+
 }

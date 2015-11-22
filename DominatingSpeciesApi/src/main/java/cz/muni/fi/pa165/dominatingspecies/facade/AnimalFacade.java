@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.dominatingspecies.facade;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
 import java.util.List;
 
 public interface AnimalFacade {
@@ -10,52 +9,53 @@ public interface AnimalFacade {
     /**
      * Create new Animal
      * @param newAnimal
-     * @return 
+     * @return
      */
     long createAnimal(AnimalBriefDTO newAnimal);
 
     /**
-     * Find animal by anmailId
+     * Find animal detail by anmailId
      * @param animalId
-     * @return 
+     * @return
      */
-    AnimalDetailDTO findAnimal(long animalId);
+    AnimalDetailDTO findAnimalDetail(long animalId);
+
+    /**
+     * Find animal brief by anmailId
+     * @param animalId
+     * @return
+     */
+    AnimalBriefDTO findAnimalBrief(long animalId);
 
     /**
      * Update data of animal
-     * @param updatedAnimal 
+     * @param updatedAnimal
      */
     void updateAnimal(AnimalDetailDTO updatedAnimal);
 
     /**
      * Delete animal
-     * @param animalId 
+     * @param animalId
      */
     void deleteAnimal(long animalId);
 
     /**
      * List all animals
-     * @return 
+     * @return
      */
     List<AnimalBriefDTO> findAllAnimals();
 
     /**
      * List all animals, which animal with animalId eat
      * @param animalId
-     * @return 
+     * @return
      */
     List<AnimalBriefDTO> findPredatorsOf(long animalId);
 
     /**
      * List all animals, which are eaten by animal with animalId
      * @param animalId
-     * @return 
+     * @return
      */
     List<AnimalBriefDTO> findPreyOf(long animalId);
-
-    /**
-     * Create new AnimalEaten
-     * @param animalEatenDTO 
-     */
-    void createAnimalEaten(AnimalEatenDTO animalEatenDTO);
 }

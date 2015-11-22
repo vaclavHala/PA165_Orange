@@ -1,4 +1,3 @@
-
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Objects;
@@ -8,10 +7,18 @@ import java.util.Objects;
  * @author Petr
  */
 public class AnimalEatenDTO {
+
     private Long id;
-    private double animalCount;
-    private AnimalBriefDTO predator;
-    private AnimalBriefDTO prey;
+    private Double animalCount;
+    private AnimalBriefDTO other;
+
+    public AnimalEatenDTO() {
+    }
+
+    public AnimalEatenDTO(double animalCount, AnimalBriefDTO other) {
+        this.animalCount = animalCount;
+        this.other = other;
+    }
 
     public Long getId() {
         return id;
@@ -21,7 +28,15 @@ public class AnimalEatenDTO {
         this.id = id;
     }
 
-    public double getAnimalCount() {
+    public AnimalBriefDTO getOther() {
+        return other;
+    }
+
+    public void setOther(AnimalBriefDTO other) {
+        this.other = other;
+    }
+
+    public Double getAnimalCount() {
         return animalCount;
     }
 
@@ -29,50 +44,17 @@ public class AnimalEatenDTO {
         this.animalCount = animalCount;
     }
 
-    public AnimalBriefDTO getPredator() {
-        return predator;
-    }
-
-    public void setPredator(AnimalBriefDTO predator) {
-        this.predator = predator;
-    }
-
-    public AnimalBriefDTO getPrey() {
-        return prey;
-    }
-
-    public void setPrey(AnimalBriefDTO prey) {
-        this.prey = prey;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, predator, prey);
+        return Objects.hash(other);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == this) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
         if (!(obj instanceof AnimalEatenDTO)) {
             return false;
         }
-        final AnimalEatenDTO other = (AnimalEatenDTO) obj;
-        if (!Objects.equals(this.getId(), other.getId())) {
-            return false;
-        }
-        if (!Objects.equals(this.getPredator(), other.getPredator())) {
-            return false;
-        }
-        if (!Objects.equals(this.getPrey(), other.getPrey())) {
-            return false;
-        }
-        return true;
+        return ((AnimalEatenDTO) obj).getOther().equals(this.other);
     }
-    
-    
+
 }

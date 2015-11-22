@@ -9,36 +9,39 @@ import java.util.Collection;
  * @author Petr
  */
 public interface AnimalEatenService {
-    
+
     /**
      * Create new animalEaten
-     * @param animalEaten 
+     * @param animalEaten
      */
     public void createAnimalEaten(AnimalEaten animalEaten);
-    
+
     /**
      * Remove animalEaton
-     * @param animalEaten 
+     * @param animalEaten
      */
     public void remove(AnimalEaten animalEaten);
-    
+
+    public void removeAllFor(Animal animal);
+
     /**
      * Update animalEaton
-     * @param animalEaten 
+     * @param animalEaten
      */
     public void update(AnimalEaten animalEaten);
-    
+
     /**
      * Find All animals which are predator of animal
      * @param animal
-     * @return 
+     * @return
      */
     public Collection<Animal> findPredatorOf(Animal animal);
-    
+
     /**
      * Find All animals which are prey of animal
      * @param animal
-     * @return 
+     * @return
      */
     public Collection<Animal> findPreyOf(Animal animal);
+
 }
