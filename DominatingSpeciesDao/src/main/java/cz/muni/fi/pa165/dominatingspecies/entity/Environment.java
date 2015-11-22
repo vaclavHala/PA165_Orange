@@ -23,10 +23,14 @@ public class Environment implements Serializable {
     private String description;
     
     @NotNull
-    private Long maxAnimalConut;
+    private Long maxAnimalCount;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -45,12 +49,12 @@ public class Environment implements Serializable {
         this.description = description;
     }
 
-    public Long getMaxAnimalConut() {
-        return maxAnimalConut;
+    public Long getMaxAnimalCount() {
+        return maxAnimalCount;
     }
 
-    public void setMaxAnimalConut(Long maxAnimalConut) {
-        this.maxAnimalConut = maxAnimalConut;
+    public void setMaxAnimalCount(Long maxAnimalCount) {
+        this.maxAnimalCount = maxAnimalCount;
     }
     
     @Override

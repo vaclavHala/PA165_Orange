@@ -32,6 +32,14 @@ public interface EnvironmentDao {
      *                             or any data-access related exception occurs
      */
     void delete(Environment enviro) throws DataAccessException;
+    
+    /**
+     * Updates enviro in persistent storage
+     * @param enviro Environment to be updated in persistent storage, must have id set
+     * @throws DataAccessException if enviro does not have id set
+     *                             or any data-access related exception occurs
+     */
+    void update(Environment enviro) throws DataAccessException;
 
     /**
      * List all persisted Environments, order is not defined

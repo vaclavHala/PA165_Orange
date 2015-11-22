@@ -5,12 +5,15 @@ import javax.inject.Inject;
 import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import java.util.Collection;
+import javax.inject.Named;
 
 /**
  * Implementation of the AnimalEnvironment service.
  * @author Daniel Minarik
  */
+@Named
 public class AnimalEnvironmentServiceImpl implements AnimalEnvironmentService {
+    
     @Inject
     private AnimalEnvironmentDao animalEnvironmentDao;
 

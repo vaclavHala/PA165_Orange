@@ -35,7 +35,7 @@ public class EnvironmentDaoImplTest {
         Environment e = new Environment();
         e.setName("env1");
         e.setDescription("desc1");
-        e.setMaxAnimalConut(10L);
+        e.setMaxAnimalCount(10L);
         dao.persist(e);
 
         assertEquals(e, dao.findById(e.getId()));
@@ -63,11 +63,11 @@ public class EnvironmentDaoImplTest {
         Environment e1 = new Environment();
         e1.setName("env1");
         e1.setDescription("desc1");
-        e1.setMaxAnimalConut(1L);
+        e1.setMaxAnimalCount(1L);
         Environment e2 = new Environment();
         e2.setName("env2");
         e2.setDescription("desc2");
-        e2.setMaxAnimalConut(19L);
+        e2.setMaxAnimalCount(19L);
         dao.persist(e1);
         dao.persist(e2);
 
@@ -81,7 +81,7 @@ public class EnvironmentDaoImplTest {
         Environment e1 = new Environment();
         e1.setName("env1");
         e1.setDescription("desc1");
-        e1.setMaxAnimalConut(1L);
+        e1.setMaxAnimalCount(1L);
         dao.persist(e1);
         dao.delete(e1);
         assertTrue(dao.listAll().isEmpty());

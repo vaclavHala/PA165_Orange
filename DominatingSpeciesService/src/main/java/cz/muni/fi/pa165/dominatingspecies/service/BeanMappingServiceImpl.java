@@ -13,15 +13,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BeanMappingServiceImpl implements BeanMappingService{
-
-    @Inject
-    private Mapper mapper;
+    
     @Inject
     private Mapper dozer;
     
     @Override
     public <T> T map(Object u, Class<T> mapToClass) {
-        return mapper.map(u, mapToClass);
+        return dozer.map(u, mapToClass);
     }
     
     @Override

@@ -37,4 +37,8 @@ public class JpaEnvironmentDao implements EnvironmentDao {
         return em.createQuery("FROM Environment e", Environment.class).getResultList();
     }
 
+    @Override
+    public void update(Environment enviro) throws DataAccessException {
+        em.merge(enviro);
+    }
 }

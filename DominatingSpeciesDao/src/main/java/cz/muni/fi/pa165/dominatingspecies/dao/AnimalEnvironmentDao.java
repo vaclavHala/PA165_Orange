@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dominatingspecies.dao;
 
+import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
+import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -49,4 +51,22 @@ public interface AnimalEnvironmentDao {
      * @throws DataAccessException On persistent storage error
      */
     public void update(AnimalEnvironment environment);
+    
+    /**
+     * Finds records for specified animal
+     * 
+     * @param animal The animal to find records for
+     * 
+     * @return Animal environments for the animal
+     */
+    public List<AnimalEnvironment> findByAnimal(Animal animal);
+    
+    /**
+     * Finds records for specified environment
+     * 
+     * @param environment The environment to find records for
+     * 
+     * @return Animal environments for specified environment
+     */
+    public List<AnimalEnvironment> findByEnvironment(Environment environment);
 }

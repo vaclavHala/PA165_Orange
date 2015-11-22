@@ -11,9 +11,12 @@ import cz.muni.fi.pa165.dominatingspecies.service.BeanMappingService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Named;
+import org.springframework.transaction.annotation.Transactional;
 
 
-
+@Named
+@Transactional
 public class AnimalFacadeImpl implements AnimalFacade{
     @Inject
     private AnimalService animalService;

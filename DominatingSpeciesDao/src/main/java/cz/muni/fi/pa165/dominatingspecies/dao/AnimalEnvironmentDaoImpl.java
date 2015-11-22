@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dominatingspecies.dao;
 
+import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
+import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,5 +46,15 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     @Override
     public void update(AnimalEnvironment environment) throws DataAccessException {
         em.merge(environment);
+    }
+
+    @Override
+    public List<AnimalEnvironment> findByAnimal(Animal animal) {
+        return em.createQuery("from AnimalEnvironment ae where ae.animal = :animal", AnimalEnvironment.class).setParameter("animal", animal).getResultList();
+    }
+
+    @Override
+    public List<AnimalEnvironment> findByEnvironment(Environment environment) {
+        return em.createQuery("from AnimalEnvironment ae where ae.environment = :environment", AnimalEnvironment.class).setParameter("environment", environment).getResultList();
     }
 }

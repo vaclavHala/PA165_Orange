@@ -50,15 +50,17 @@ public interface EnvironmentFacade {
      * Assigns specified environment to specified animal with specified data
      * 
      * @param animalEnvironment The animal, environment and assignment data
+     * 
+     * @return Identifier of created animal environment
      */
-    public void addAnimalEnvironment(AnimalEnvironmentDTO animalEnvironment);
+    public long addAnimalEnvironment(AnimalEnvironmentDTO animalEnvironment);
     
     /**
-     * Removes specified environment from specified animal
+     * Removes animal environment record for specified identifier
      * 
-     * @param animalEnvironment The animal and environment to remove
+     * @param id Identifier of animal environment
      */
-    public void removeAnimalEnvironment(AnimalEnvironmentDTO animalEnvironment);
+    public void removeAnimalEnvironment(long id);
     
     /**
      * Finds and returns animals assigned to environment with specified identifier

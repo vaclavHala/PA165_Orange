@@ -138,7 +138,7 @@ public class AnimalEnvironmentDaoImplTest {
     private static Environment environment() {
         Environment e = new Environment();
         e.setName("Forest");
-        e.setMaxAnimalConut(100L);
+        e.setMaxAnimalCount(100L);
         return e;
     }
 
