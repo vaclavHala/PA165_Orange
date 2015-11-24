@@ -8,9 +8,35 @@ import java.util.Collection;
  * @author Daniel Minarik
  */
 public interface AnimalEnvironmentService {
+    /**
+     * Creates record for specified animalEnvironment
+     * @param animalEnvironment The environment to create
+     * @throws IllegalArgumentException If parameter is null
+     */
     public void create(AnimalEnvironment animalEnvironment);
+
+    /**
+     * Returns animalEnvironment for id
+     * @param id Id of AnimalEnvironment
+     */
     public AnimalEnvironment findById(long id);
+
+    /**
+     * Returns all AnimalEnvironments from storage
+     */
     public Collection<AnimalEnvironment> findAll();
+
+    /**
+     * Removes specified animalEnvironment
+     * @param animalEnvironment The environment to remove
+     * @throws IllegalArgumentException If parameter is null
+     */
     public void remove(AnimalEnvironment animalEnvironment);
+
+    /**
+     * Updates specified animalEnvironment
+     * @param animalEnvironment The environment to update
+     * @throws IllegalArgumentException If parameter is null
+     */
     public void update(AnimalEnvironment animalEnvironment);
 }

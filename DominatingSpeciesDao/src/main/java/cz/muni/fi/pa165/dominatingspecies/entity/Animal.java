@@ -43,11 +43,21 @@ public class Animal implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        
+        if (obj == null) {
+            return false;
+        }
+        
         if (!(obj instanceof Animal)) {
             return false;
         }
+        
         Animal other = (Animal) obj;
-        return this.id.equals(other.getId());
+        
+        return this.getId() != null && other.getId() != null && this.getId().equals(other.getId());
     }
 
     public Long getId() {

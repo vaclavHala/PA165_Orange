@@ -13,6 +13,7 @@ public interface EnvironmentService {
      * Creates record for specified environment
      * 
      * @param environment The environment to create
+     * @throws IllegalArgumentException If parameter is null
      */
     public void create(Environment environment);
     
@@ -36,6 +37,7 @@ public interface EnvironmentService {
      * Updates record for specified environment
      * 
      * @param environment The environment to update
+     * @throws IllegalArgumentException If parameter is null
      */
     public void update(Environment environment);
     
@@ -43,6 +45,7 @@ public interface EnvironmentService {
      * Removes record for specified environment
      * 
      * @param environment The environment to remove
+     * @throws IllegalArgumentException If parameter is null
      */
     public void remove(Environment environment);
     
@@ -52,6 +55,7 @@ public interface EnvironmentService {
      * @param animal The animal to find environments for
      * 
      * @return Environments for specified animal
+     * @throws IllegalArgumentException If parameter is null
      */
     public Collection<Environment> findEnvironmentsForAnimal(Animal animal);
     
@@ -61,6 +65,7 @@ public interface EnvironmentService {
      * @param environment The environment to find animals for
      * 
      * @return Animals for specified environment
+     * @throws IllegalArgumentException If parameter is null
      */
     public Collection<Animal> findAnimalsForEnvironment(Environment environment);
 }

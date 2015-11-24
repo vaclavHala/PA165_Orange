@@ -226,7 +226,7 @@ public class EnvironmentFacadeImplTest {
     }
     
     private void assertAnimalDataEquals(AnimalBriefDTO expected, AnimalDetailDTO actual) {
-        assertEquals(expected.getId(), actual.getId());
+        assertEquals((Long)expected.getId(), (Long)actual.getId());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSpecies(), actual.getSpecies());
     }

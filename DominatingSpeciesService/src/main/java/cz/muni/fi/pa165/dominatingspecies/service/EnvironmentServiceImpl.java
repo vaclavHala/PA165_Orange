@@ -22,6 +22,9 @@ public class EnvironmentServiceImpl implements EnvironmentService {
     
     @Override
     public void create(Environment environment) {
+        if (environment == null) {
+            throw new IllegalArgumentException("Environment can not be created, parameter null.");
+        }
         dao.persist(environment);
     }
 
@@ -37,16 +40,25 @@ public class EnvironmentServiceImpl implements EnvironmentService {
 
     @Override
     public void update(Environment environment) {
+        if (environment == null) {
+            throw new IllegalArgumentException("Environment can not be updated, parameter null.");
+        }
         dao.update(environment);
     }
 
     @Override
     public void remove(Environment environment) {
+        if (environment == null) {
+            throw new IllegalArgumentException("Environment can not be removed, parameter null.");
+        }
         dao.delete(environment);
     }
 
     @Override
     public Collection<Environment> findEnvironmentsForAnimal(Animal animal) {
+        if (animal == null) {
+            throw new IllegalArgumentException("Unable to find environments: null animal.");
+        }
         List<AnimalEnvironment> animalEnvironments = aeDao.findByAnimal(animal);
         List<Environment> environments = new ArrayList<>(animalEnvironments.size());
         
@@ -59,6 +71,9 @@ public class EnvironmentServiceImpl implements EnvironmentService {
 
     @Override
     public Collection<Animal> findAnimalsForEnvironment(Environment environment) {
+        if (environment == null) {
+            throw new IllegalArgumentException("Unable to find animals: null environment.");
+        }
         List<AnimalEnvironment> animalEnvironments = aeDao.findByEnvironment(environment);
         List<Animal> environments = new ArrayList<>(animalEnvironments.size());
         

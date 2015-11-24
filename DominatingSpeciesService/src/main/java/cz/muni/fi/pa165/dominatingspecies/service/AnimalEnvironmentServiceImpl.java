@@ -19,6 +19,9 @@ public class AnimalEnvironmentServiceImpl implements AnimalEnvironmentService {
 
     @Override
     public void create(AnimalEnvironment animalEnvironment) {
+        if (animalEnvironment == null) {
+            throw new IllegalArgumentException("AnimalEnvironment can not be created, parameter null.");
+        }
         animalEnvironmentDao.create(animalEnvironment);
     }
 
@@ -34,11 +37,17 @@ public class AnimalEnvironmentServiceImpl implements AnimalEnvironmentService {
 
     @Override
     public void remove(AnimalEnvironment animalEnvironment) {
+        if (animalEnvironment == null) {
+            throw new IllegalArgumentException("AnimalEnvironment can not be removed, parameter null.");
+        }
         animalEnvironmentDao.remove(animalEnvironment);
     }
 
     @Override
     public void update(AnimalEnvironment animalEnvironment) {
+        if (animalEnvironment == null) {
+            throw new IllegalArgumentException("AnimalEnvironment can not be removed, parameter null.");
+        }
         animalEnvironmentDao.update(animalEnvironment);
     } 
 }

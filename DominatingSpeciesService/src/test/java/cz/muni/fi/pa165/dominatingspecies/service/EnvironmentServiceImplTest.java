@@ -9,7 +9,6 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
 import java.util.ArrayList;
 import java.util.Collection;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doReturn;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,7 +20,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author Daniel Minarik
@@ -70,6 +73,12 @@ public class EnvironmentServiceImplTest {
         verify(environmentDao).persist(testEnv);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullEnvironment() {
+        environmentService.create(null);
+        verify(environmentDao, never()).persist(null);
+    }
+    
     @Test
     public void testRemoveEnvironment() {
         Environment testEnv = new Environment();
@@ -106,6 +115,12 @@ public class EnvironmentServiceImplTest {
         assertEquals(envs2.size(), ret2.size());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveNullEnvironment() {
+        environmentService.remove(null);
+        verify(environmentDao, never()).delete(null);
+    }
+    
     @Test
     public void testUpdateEnvironment() {
         Environment testEnv = new Environment();
@@ -119,6 +134,12 @@ public class EnvironmentServiceImplTest {
         verify(environmentDao).update(testEnv);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateNullEnvironment() {
+        environmentService.update(null);
+        verify(environmentDao, never()).update(null);
+    }
+    
     @Test
     public void testFindById() {
         Environment testEnv = new Environment();
@@ -134,6 +155,24 @@ public class EnvironmentServiceImplTest {
         
         assertNotNull(returnedEnv);
         assertEquals(testEnv, returnedEnv);
+    }
+
+    @Test
+    public void testFindByNonExistingId() {
+        Environment testEnv = new Environment();
+        testEnv.setName("Les");
+        testEnv.setDescription("Les");
+        testEnv.setMaxAnimalCount(10L);
+        environmentService.create(testEnv);
+
+        Long realId = 1L;
+        Long nonExistingId = 456L;
+        doReturn(testEnv).when(environmentDao).findById(realId);
+        
+        Environment returnedEnv = environmentService.findById(nonExistingId);
+        verify(environmentDao).findById(nonExistingId);
+        
+        assertNull(returnedEnv);
     }
 
     @Test
@@ -167,6 +206,17 @@ public class EnvironmentServiceImplTest {
         assertTrue(ret.contains(testEnv));
     }
     
+    @Test
+    public void testFindAllWhenEmpty() {
+        Collection<Environment> envs = new ArrayList<>();
+                
+        doReturn(envs).when(environmentDao).listAll();
+        
+        Collection<Environment> ret = environmentService.findAll();
+        assertNotNull(ret);
+        assertEquals(envs, ret);
+    }
+
     @Test
     public void testFindEnvironmentsForAnimal() {
         Animal animal = new Animal("Zajac", "Hlodavec");
@@ -203,6 +253,43 @@ public class EnvironmentServiceImplTest {
     }
 
     @Test
+    public void testFindEnvironmentsForUnusedAnimal() {
+        Animal animal = new Animal("Zajac", "Hlodavec");
+        animalService.create(animal);
+        Animal unusedAnimal = new Animal("Kralik", "Hlodavec");
+        animalService.create(unusedAnimal);
+        Environment environment = new Environment();
+        environment.setName("Lesy");
+        environment.setDescription("popis");
+        environment.setMaxAnimalCount(56L);
+        environmentService.create(environment);
+        Environment environment2 = new Environment();
+        environment2.setName("Luky");
+        environment2.setDescription("popis");
+        environment2.setMaxAnimalCount(20L);
+        environmentService.create(environment2);
+
+        AnimalEnvironment animalEnv = new AnimalEnvironment(animal, environment);
+        animalEnvironmentService.create(animalEnv);
+        AnimalEnvironment animalEnv2 = new AnimalEnvironment(animal, environment2);
+        animalEnvironmentService.create(animalEnv2);
+
+        Collection<AnimalEnvironment> anEnvs = new ArrayList<>();
+
+        doReturn(anEnvs).when(animalEnvironmentDao).findByAnimal(unusedAnimal);
+        
+        Collection<Environment> ret = environmentService.findEnvironmentsForAnimal(unusedAnimal);
+        assertNotNull(ret);
+        assertEquals(ret.size(), 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindEnvironmentsForNullAnimal() {
+        environmentService.findEnvironmentsForAnimal(null);
+        verify(animalEnvironmentDao, never()).findByAnimal(null);
+    }
+
+    @Test
     public void testFindAnimalsForEnvironment() {
         Animal animal = new Animal("Zajac", "Hlodavec");
         animalService.create(animal);
@@ -234,4 +321,43 @@ public class EnvironmentServiceImplTest {
         assertNotNull(ret);
         assertEquals(animals, ret);
     }
+
+    @Test
+    public void testFindAnimalsForUnusedEnvironment() {
+        Animal animal = new Animal("Zajac", "Hlodavec");
+        animalService.create(animal);
+        Animal animal2 = new Animal("Kralik", "Hlodavec");
+        animalService.create(animal2);
+        
+        Environment environment = new Environment();
+        environment.setName("Lesy");
+        environment.setDescription("popis");
+        environment.setMaxAnimalCount(56L);
+        environmentService.create(environment);
+        Environment unusedEnv = new Environment();
+        unusedEnv.setName("Luky");
+        unusedEnv.setDescription("popis");
+        unusedEnv.setMaxAnimalCount(20L);
+        environmentService.create(unusedEnv);
+
+        AnimalEnvironment animalEnv = new AnimalEnvironment(animal, environment);
+        animalEnvironmentService.create(animalEnv);
+        AnimalEnvironment animalEnv2 = new AnimalEnvironment(animal2, environment);
+        animalEnvironmentService.create(animalEnv2);
+
+        Collection<AnimalEnvironment> anEnvs = new ArrayList<>();
+
+        doReturn(anEnvs).when(animalEnvironmentDao).findByEnvironment(unusedEnv);
+        
+        Collection<Animal> ret = environmentService.findAnimalsForEnvironment(unusedEnv);
+        assertNotNull(ret);
+        assertEquals(ret.size(), 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindAnimalsForNullEnvironment() {
+        environmentService.findAnimalsForEnvironment(null);
+        verify(animalEnvironmentDao, never()).findByEnvironment(null);
+    }
+
 }
