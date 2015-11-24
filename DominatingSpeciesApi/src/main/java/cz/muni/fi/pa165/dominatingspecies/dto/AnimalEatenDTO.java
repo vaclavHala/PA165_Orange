@@ -10,14 +10,16 @@ public class AnimalEatenDTO {
 
     private Long id;
     private Double animalCount;
-    private AnimalBriefDTO other;
+    private AnimalBriefDTO predator;
+    private AnimalBriefDTO prey;
 
     public AnimalEatenDTO() {
     }
 
-    public AnimalEatenDTO(double animalCount, AnimalBriefDTO other) {
-        this.animalCount = animalCount;
-        this.other = other;
+    public AnimalEatenDTO(long id, AnimalBriefDTO predator, AnimalBriefDTO prey) {
+        this.id = id;
+        this.predator = predator;
+        this.prey = prey;
     }
 
     public Long getId() {
@@ -28,12 +30,20 @@ public class AnimalEatenDTO {
         this.id = id;
     }
 
-    public AnimalBriefDTO getOther() {
-        return other;
+    public AnimalBriefDTO getPredator() {
+        return predator;
     }
 
-    public void setOther(AnimalBriefDTO other) {
-        this.other = other;
+    public void setPredator(AnimalBriefDTO predator) {
+        this.predator = predator;
+    }
+
+    public AnimalBriefDTO getPrey() {
+        return prey;
+    }
+
+    public void setPrey(AnimalBriefDTO prey) {
+        this.prey = prey;
     }
 
     public Double getAnimalCount() {
@@ -46,7 +56,7 @@ public class AnimalEatenDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(other);
+        return Objects.hash(predator, prey);
     }
 
     @Override
@@ -54,7 +64,9 @@ public class AnimalEatenDTO {
         if (!(obj instanceof AnimalEatenDTO)) {
             return false;
         }
-        return ((AnimalEatenDTO) obj).getOther().equals(this.other);
+        AnimalEatenDTO other = (AnimalEatenDTO) obj;
+        return other.getPredator().equals(this.getPredator())
+            && other.getPrey().equals(this.getPrey());
     }
 
 }

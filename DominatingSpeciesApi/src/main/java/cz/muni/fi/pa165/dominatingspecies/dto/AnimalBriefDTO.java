@@ -11,7 +11,8 @@ public class AnimalBriefDTO {
     public AnimalBriefDTO() {
     }
 
-    public AnimalBriefDTO(String name, String species) {
+    public AnimalBriefDTO(long id, String name, String species) {
+        this.id = id;
         this.name = name;
         this.species = species;
     }

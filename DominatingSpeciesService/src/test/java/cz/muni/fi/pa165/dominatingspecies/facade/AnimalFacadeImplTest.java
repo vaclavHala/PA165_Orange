@@ -1,14 +1,14 @@
 package cz.muni.fi.pa165.dominatingspecies.facade;
 
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
 import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
-import static java.util.Arrays.asList;
 import java.util.Collection;
 import javax.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,47 +28,73 @@ public class AnimalFacadeImplTest {
     private AnimalFacade animalFacade;
 
     @Test
-    public void deleteAnimalTest() {
-        long animalId = animalFacade.createAnimal(giraffeDTO());
-        assertEquals(animalFacade.findAllAnimals().size(), 1);
-        animalFacade.deleteAnimal(animalId);
+    public void createAnimalTest() {
+        long id = animalFacade.createAnimal(newGiraffe());
+        assertThat(animalFacade.findAllAnimals()).hasSize(1);
+        AnimalDetailDTO newAnimal = animalFacade.findAnimalDetail(id);
+        assertThat(newAnimal.getId()).isNotNull();
+        assertThat(newAnimal.getName()).isEqualTo(newGiraffe().getName());
+        assertThat(newAnimal.getSpecies()).isEqualTo(newGiraffe().getSpecies());
+    }
 
+    @Test
+    public void deleteAnimalTest() {
+        long animalId = animalFacade.createAnimal(newGiraffe());
+        animalFacade.deleteAnimal(animalId);
         assertEquals(animalFacade.findAllAnimals().size(), 0);
     }
 
     @Test
     public void findAllanimalsTest() {
-        animalFacade.createAnimal(giraffeDTO());
-        animalFacade.createAnimal(dogDTO());
+        long giraffeId = animalFacade.createAnimal(newGiraffe());
+        long dogId = animalFacade.createAnimal(newDog());
 
         assertThat(animalFacade.findAllAnimals())
-            .containsExactly(giraffeDTO(), dogDTO());
+            .extracting("id")
+            .containsOnly(giraffeId, dogId);
     }
 
     @Test
-    public void findPredatorsOfTest() {
-        long giraffeId = animalFacade.createAnimal(giraffeDTO());
-        long dogId = animalFacade.createAnimal(dogDTO());
-        System.out.println("all" + animalFacade.findAllAnimals());
-        AnimalDetailDTO giraffeDetail = animalFacade.findAnimalDetail(giraffeId);
-        Collection<AnimalEatenDTO> giraffeEats = asList(
-            new AnimalEatenDTO(10, animalFacade.findAnimalBrief(dogId)),
-            new AnimalEatenDTO(2, animalFacade.findAnimalBrief(giraffeId))
-        );
-        giraffeDetail.setPrey(giraffeEats);
-        animalFacade.updateAnimal(giraffeDetail);
-        assertThat(animalFacade.findPredatorsOf(giraffeId))
-            .containsExactly(animalFacade.findAnimalBrief(giraffeId));
-        assertThat(animalFacade.findPredatorsOf(dogId))
-            .containsExactly(animalFacade.findAnimalBrief(dogId));
+    public void addAnimalEaten() {
+        long giraffeId = animalFacade.createAnimal(newGiraffe());
+        long dogId = animalFacade.createAnimal(newDog());
+        animalFacade.createAnimalEaten(giraffeId, dogId);
+        Collection<AnimalEatenDTO> giraffeEats = animalFacade.findAnimalDetail(giraffeId).getPrey();
+        assertThat(giraffeEats).hasSize(1);
     }
 
-    private AnimalBriefDTO giraffeDTO() {
-        return new AnimalBriefDTO("Giraffe", "Mammal");
+    @Test
+    public void testFindAnimalDetail() {
+        long giraffeId = animalFacade.createAnimal(newGiraffe());
+        long dogId = animalFacade.createAnimal(newDog());
+        animalFacade.createAnimalEaten(giraffeId, dogId);
+        AnimalEatenDTO giraffeEats = animalFacade.findAnimalDetail(giraffeId).getPrey()
+            .iterator().next();
+        assertThat(giraffeEats.getPredator().getId()).isEqualTo(giraffeId);
+        assertThat(giraffeEats.getPrey().getId()).isEqualTo(dogId);
     }
 
-    private AnimalBriefDTO dogDTO() {
-        return new AnimalBriefDTO("Dog", "Mammal");
+    @Test
+    public void testDeleteAnimal() {
+        long giraffeId = animalFacade.createAnimal(newGiraffe());
+        long dogId = animalFacade.createAnimal(newDog());
+        animalFacade.createAnimalEaten(giraffeId, dogId);
+        animalFacade.deleteAnimal(giraffeId);
+        assertThat(animalFacade.findAllAnimals()).hasSize(1);
+    }
+
+    @Test
+    public void testUpdateAnimal() {
+        long giraffeId = animalFacade.createAnimal(newGiraffe());
+        fail();
+    }
+
+    private AnimalNewDTO newGiraffe() {
+        return new AnimalNewDTO("Giraffe", "Mammal");
+    }
+
+    private AnimalNewDTO newDog() {
+        return new AnimalNewDTO("Dog", "Mammal");
     }
 
 }

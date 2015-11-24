@@ -8,10 +8,19 @@ public class AnimalDetailDTO {
     private long id;
     private String name;
     private String species;
-    private long foodNeeded;
-    private double repreductionRate;
+    private Long foodNeeded;
+    private Double repreductionRate;
     private Collection<AnimalEatenDTO> prey;
     private Collection<AnimalEatenDTO> predators;
+
+    public AnimalDetailDTO() {
+    }
+
+    public AnimalDetailDTO(long id, String name, String species) {
+        this.id = id;
+        this.name = name;
+        this.species = species;
+    }
 
     public long getId() {
         return id;
@@ -37,7 +46,7 @@ public class AnimalDetailDTO {
         this.species = species;
     }
 
-    public long getFoodNeeded() {
+    public Long getFoodNeeded() {
         return foodNeeded;
     }
 
@@ -45,7 +54,7 @@ public class AnimalDetailDTO {
         this.foodNeeded = foodNeeded;
     }
 
-    public double getRepreductionRate() {
+    public Double getRepreductionRate() {
         return repreductionRate;
     }
 

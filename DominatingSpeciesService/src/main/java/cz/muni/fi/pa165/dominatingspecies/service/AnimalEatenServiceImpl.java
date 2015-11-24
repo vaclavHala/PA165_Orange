@@ -25,26 +25,33 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     private AnimalEatenDao animalEatenDao;
 
     @Override
-    public Collection<Animal> findPredatorOf(Animal animal) {
-        List<Animal> predators = new ArrayList<>();
+    public AnimalEaten finaById(long animalEatenId) {
+        return animalEatenDao.findById(animalEatenId);
+    }
+
+    @Override
+    public Collection<AnimalEaten> findPredatorsOf(Animal animal) {
+
+        //could be done with a JPQL query but if performance is not
+        //at issue, this should suffice (would need more methods on dao etc.)
+        List<AnimalEaten> predators = new ArrayList<>();
         for (AnimalEaten ae : animalEatenDao.findAll()) {
             if (ae.getPrey().equals(animal)) {
-                predators.add(ae.getPrey());
+                predators.add(ae);
             }
         }
         return predators;
     }
 
     @Override
-    public Collection<Animal> findPreyOf(Animal animal) {
-        List<AnimalEaten> animalsEaten = animalEatenDao.findAll();
-        List<Animal> filtered = new ArrayList<>();
-        for (AnimalEaten ae : animalsEaten) {
+    public Collection<AnimalEaten> findPreyOf(Animal animal) {
+        List<AnimalEaten> prey = new ArrayList<>();
+        for (AnimalEaten ae : animalEatenDao.findAll()) {
             if (ae.getPredator().equals(animal)) {
-                filtered.add(ae.getPrey());
+                prey.add(ae);
             }
         }
-        return filtered;
+        return prey;
     }
 
     @Override

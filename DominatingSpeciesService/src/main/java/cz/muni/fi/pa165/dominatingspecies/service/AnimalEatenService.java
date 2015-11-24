@@ -16,6 +16,8 @@ public interface AnimalEatenService {
      */
     public void createAnimalEaten(AnimalEaten animalEaten);
 
+    public AnimalEaten finaById(long animalEatenId);
+
     /**
      * Remove animalEaton
      * @param animalEaten
@@ -35,13 +37,13 @@ public interface AnimalEatenService {
      * @param animal
      * @return
      */
-    public Collection<Animal> findPredatorOf(Animal animal);
+    public Collection<AnimalEaten> findPredatorsOf(Animal animal);
 
     /**
      * Find All animals which are prey of animal
      * @param animal
      * @return
      */
-    public Collection<Animal> findPreyOf(Animal animal);
+    public Collection<AnimalEaten> findPreyOf(Animal animal);
 
 }
