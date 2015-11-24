@@ -3,34 +3,26 @@ package cz.muni.fi.pa165.dominatingspecies.service;
 import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.dao.EnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
-import org.springframework.beans.factory.annotation.Autowired;
-import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
-import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
+import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.ArrayList;
 import java.util.Collection;
-import static org.mockito.Mockito.doReturn;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import org.mockito.MockitoAnnotations;
 
 /**
  * @author Daniel Minarik
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DominatingSpeciesServiceConfig.class)
 public class EnvironmentServiceImplTest {
 
     @Mock
@@ -39,24 +31,20 @@ public class EnvironmentServiceImplTest {
     @Mock
     private AnimalEnvironmentDao animalEnvironmentDao;
 
-    @Autowired
     @InjectMocks
-    private EnvironmentService environmentService;
+    private EnvironmentServiceImpl environmentService;
 
-    @Autowired
     @InjectMocks
-    private AnimalEnvironmentService animalEnvironmentService;
+    private AnimalEnvironmentServiceImpl animalEnvironmentService;
 
-    @Autowired
     @InjectMocks
-    private AnimalService animalService;
+    private AnimalServiceImpl animalService;
 
     @Before
-    public void setup()
-    {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
     }
-    
+
     @Test
     public void testCreateEnvironment() {
         Environment testEnv = new Environment();
@@ -69,7 +57,7 @@ public class EnvironmentServiceImplTest {
         testEnv2.setDescription("Pust");
         testEnv2.setMaxAnimalCount(19L);
         environmentService.create(testEnv2);
-        
+
         verify(environmentDao).persist(testEnv);
     }
 
@@ -78,7 +66,7 @@ public class EnvironmentServiceImplTest {
         environmentService.create(null);
         verify(environmentDao, never()).persist(null);
     }
-    
+
     @Test
     public void testRemoveEnvironment() {
         Environment testEnv = new Environment();
@@ -107,7 +95,7 @@ public class EnvironmentServiceImplTest {
 
         Collection<Environment> envs2 = new ArrayList<>();
         envs2.add(testEnv2);
-        
+
         doReturn(envs2).when(environmentDao).listAll();
 
         Collection<Environment> ret2 = environmentService.findAll();
@@ -120,7 +108,7 @@ public class EnvironmentServiceImplTest {
         environmentService.remove(null);
         verify(environmentDao, never()).delete(null);
     }
-    
+
     @Test
     public void testUpdateEnvironment() {
         Environment testEnv = new Environment();
@@ -130,7 +118,7 @@ public class EnvironmentServiceImplTest {
         environmentService.create(testEnv);
         testEnv.setName("Lesy");
         environmentService.update(testEnv);
-        
+
         verify(environmentDao).update(testEnv);
     }
 
@@ -139,7 +127,7 @@ public class EnvironmentServiceImplTest {
         environmentService.update(null);
         verify(environmentDao, never()).update(null);
     }
-    
+
     @Test
     public void testFindById() {
         Environment testEnv = new Environment();
@@ -149,10 +137,10 @@ public class EnvironmentServiceImplTest {
         environmentService.create(testEnv);
 
         doReturn(testEnv).when(environmentDao).findById(1L);
-        
+
         Environment returnedEnv = environmentService.findById(1L);
         verify(environmentDao).findById(1L);
-        
+
         assertNotNull(returnedEnv);
         assertEquals(testEnv, returnedEnv);
     }
@@ -168,10 +156,10 @@ public class EnvironmentServiceImplTest {
         Long realId = 1L;
         Long nonExistingId = 456L;
         doReturn(testEnv).when(environmentDao).findById(realId);
-        
+
         Environment returnedEnv = environmentService.findById(nonExistingId);
         verify(environmentDao).findById(nonExistingId);
-        
+
         assertNull(returnedEnv);
     }
 
@@ -197,21 +185,21 @@ public class EnvironmentServiceImplTest {
         envs.add(testEnv);
         envs.add(testEnv2);
         envs.add(testEnv3);
-                
+
         doReturn(envs).when(environmentDao).listAll();
-        
+
         Collection<Environment> ret = environmentService.findAll();
         assertNotNull(ret);
         assertEquals(envs, ret);
         assertTrue(ret.contains(testEnv));
     }
-    
+
     @Test
     public void testFindAllWhenEmpty() {
         Collection<Environment> envs = new ArrayList<>();
-                
+
         doReturn(envs).when(environmentDao).listAll();
-        
+
         Collection<Environment> ret = environmentService.findAll();
         assertNotNull(ret);
         assertEquals(envs, ret);
@@ -246,7 +234,7 @@ public class EnvironmentServiceImplTest {
         anEnvs.add(animalEnv2);
 
         doReturn(anEnvs).when(animalEnvironmentDao).findByAnimal(animal);
-        
+
         Collection<Environment> ret = environmentService.findEnvironmentsForAnimal(animal);
         assertNotNull(ret);
         assertEquals(envs, ret);
@@ -277,7 +265,7 @@ public class EnvironmentServiceImplTest {
         Collection<AnimalEnvironment> anEnvs = new ArrayList<>();
 
         doReturn(anEnvs).when(animalEnvironmentDao).findByAnimal(unusedAnimal);
-        
+
         Collection<Environment> ret = environmentService.findEnvironmentsForAnimal(unusedAnimal);
         assertNotNull(ret);
         assertEquals(ret.size(), 0);
@@ -295,7 +283,7 @@ public class EnvironmentServiceImplTest {
         animalService.create(animal);
         Animal animal2 = new Animal("Kralik", "Hlodavec");
         animalService.create(animal2);
-        
+
         Environment environment = new Environment();
         environment.setName("Lesy");
         environment.setDescription("popis");
@@ -316,7 +304,7 @@ public class EnvironmentServiceImplTest {
         anEnvs.add(animalEnv2);
 
         doReturn(anEnvs).when(animalEnvironmentDao).findByEnvironment(environment);
-        
+
         Collection<Animal> ret = environmentService.findAnimalsForEnvironment(environment);
         assertNotNull(ret);
         assertEquals(animals, ret);
@@ -328,7 +316,7 @@ public class EnvironmentServiceImplTest {
         animalService.create(animal);
         Animal animal2 = new Animal("Kralik", "Hlodavec");
         animalService.create(animal2);
-        
+
         Environment environment = new Environment();
         environment.setName("Lesy");
         environment.setDescription("popis");
@@ -348,7 +336,7 @@ public class EnvironmentServiceImplTest {
         Collection<AnimalEnvironment> anEnvs = new ArrayList<>();
 
         doReturn(anEnvs).when(animalEnvironmentDao).findByEnvironment(unusedEnv);
-        
+
         Collection<Animal> ret = environmentService.findAnimalsForEnvironment(unusedEnv);
         assertNotNull(ret);
         assertEquals(ret.size(), 0);

@@ -2,51 +2,42 @@ package cz.muni.fi.pa165.dominatingspecies.service;
 
 import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
-import org.springframework.beans.factory.annotation.Autowired;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
-import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
 import java.util.ArrayList;
 import java.util.Collection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.doReturn;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * @author Daniel Minarik
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DominatingSpeciesServiceConfig.class)
 public class AnimalEnvironmentServiceImplTest {
 
     @Mock
     private AnimalEnvironmentDao animalEnvironmentDao;
 
-    @Autowired
     @InjectMocks
-    private AnimalEnvironmentService animalEnvironmentService;
-    
+    private AnimalEnvironmentServiceImpl animalEnvironmentService;
+
     private Animal animal;
     private Animal animal2;
     private Animal animal3;
     private Environment environment;
     private Environment environment2;
     private Environment environment3;
-    
+
     @Before
-    public void setup()
-    {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
         animal = new Animal("Zajac", "Hlodavec");
         animal2 = new Animal("Mys", "Hlodavec");
@@ -64,13 +55,13 @@ public class AnimalEnvironmentServiceImplTest {
         environment3.setDescription("popis");
         environment3.setMaxAnimalCount(99L);
     }
-    
+
     @Test
     public void testCreateAnimalEnvironment() {
         AnimalEnvironment testAnimalEnv = new AnimalEnvironment(animal, environment);
         testAnimalEnv.setPercentage(35);
         animalEnvironmentService.create(testAnimalEnv);
-        
+
         verify(animalEnvironmentDao).create(testAnimalEnv);
     }
 
@@ -104,7 +95,7 @@ public class AnimalEnvironmentServiceImplTest {
 
         Collection<AnimalEnvironment> envs2 = new ArrayList<>();
         envs2.add(testAnimalEnv2);
-        
+
         doReturn(envs2).when(animalEnvironmentDao).findAll();
 
         Collection<AnimalEnvironment> ret2 = animalEnvironmentService.findAll();
@@ -123,7 +114,7 @@ public class AnimalEnvironmentServiceImplTest {
         AnimalEnvironment testAnimalEnv = new AnimalEnvironment(animal, environment);
         testAnimalEnv.setPercentage(35);
         animalEnvironmentService.update(testAnimalEnv);
-        
+
         verify(animalEnvironmentDao).update(testAnimalEnv);
     }
 
@@ -140,10 +131,10 @@ public class AnimalEnvironmentServiceImplTest {
         animalEnvironmentService.create(testAnimalEnv);
 
         doReturn(testAnimalEnv).when(animalEnvironmentDao).findById(1L);
-        
+
         AnimalEnvironment returnedEnv = animalEnvironmentService.findById(1L);
         verify(animalEnvironmentDao).findById(1L);
-        
+
         assertNotNull(returnedEnv);
         assertEquals(testAnimalEnv, returnedEnv);
     }
@@ -157,10 +148,10 @@ public class AnimalEnvironmentServiceImplTest {
         Long realId = 1L;
         Long nonExistingId = 456L;
         doReturn(testAnimalEnv).when(animalEnvironmentDao).findById(realId);
-        
+
         AnimalEnvironment returnedEnv = animalEnvironmentService.findById(nonExistingId);
         verify(animalEnvironmentDao).findById(nonExistingId);
-        
+
         assertNull(returnedEnv);
     }
 
@@ -180,9 +171,9 @@ public class AnimalEnvironmentServiceImplTest {
         envs.add(testAnimalEnv);
         envs.add(testAnimalEnv2);
         envs.add(testAnimalEnv3);
-                
+
         doReturn(envs).when(animalEnvironmentDao).findAll();
-        
+
         Collection<AnimalEnvironment> ret = animalEnvironmentService.findAll();
         assertNotNull(ret);
         assertEquals(envs, ret);
@@ -191,9 +182,9 @@ public class AnimalEnvironmentServiceImplTest {
     @Test
     public void testFindAllWhenEmpty() {
         Collection<AnimalEnvironment> envs = new ArrayList<>();
-                
+
         doReturn(envs).when(animalEnvironmentDao).findAll();
-        
+
         Collection<AnimalEnvironment> ret = animalEnvironmentService.findAll();
         assertNotNull(ret);
         assertEquals(envs, ret);
