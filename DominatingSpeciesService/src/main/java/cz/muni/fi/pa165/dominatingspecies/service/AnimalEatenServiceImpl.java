@@ -33,7 +33,7 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     public Collection<AnimalEaten> findPredatorsOf(Animal animal) {
 
         //could be done with a JPQL query but if performance is not
-        //at issue, this should suffice (would need more methods on dao etc.)
+        //an issue, this should suffice (would need more methods on dao etc.)
         List<AnimalEaten> predators = new ArrayList<>();
         for (AnimalEaten ae : animalEatenDao.findAll()) {
             if (ae.getPrey().equals(animal)) {

@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.dominatingspecies.facade;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
+import cz.muni.fi.pa165.dominatingspecies.service.AnimalService;
 import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
 import java.util.Collection;
 import javax.inject.Inject;
@@ -11,20 +12,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Petr
  */
-@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DominatingSpeciesServiceConfig.class})
 public class AnimalFacadeImplTest {
 
+    @Mock
+    private AnimalService animalService;
+
     @Inject
+    @InjectMocks
     private AnimalFacade animalFacade;
 
     @Test
