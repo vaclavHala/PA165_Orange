@@ -85,6 +85,6 @@ public class AnimalFacadeImpl implements AnimalFacade {
 
     @Override
     public void deleteAnimalEaten(long animalEatenId) {
-        animalEatenService.remove(animalEatenService.finaById(animalEatenId));
+        animalEatenService.remove(animalEatenService.findById(animalEatenId));
     }
 }

@@ -21,7 +21,7 @@ public interface AnimalEatenService {
      * @param animalEatenId
      * @return
      */
-    public AnimalEaten finaById(long animalEatenId);
+    public AnimalEaten findById(long animalEatenId);
 
     /**
      * Remove animalEaton

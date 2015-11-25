@@ -44,7 +44,7 @@ public class AnimalEaten {
         if (obj == this) {
             return true;
         }
-        
+
         if (obj == null) {
             return false;
         }
@@ -66,10 +66,7 @@ public class AnimalEaten {
         return id;
     }
 
-    /**
-     * To be used in tests only
-     */
-    void setId(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

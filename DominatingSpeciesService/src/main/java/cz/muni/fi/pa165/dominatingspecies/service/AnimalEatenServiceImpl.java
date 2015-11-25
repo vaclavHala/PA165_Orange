@@ -11,6 +11,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     private AnimalEatenDao animalEatenDao;
 
     @Override
-    public AnimalEaten finaById(long animalEatenId) {
+    public AnimalEaten findById(long animalEatenId) {
         return animalEatenDao.findById(animalEatenId);
     }
 
@@ -56,12 +57,21 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
 
     @Override
     public void createAnimalEaten(AnimalEaten animalEaten) {
+        Objects.requireNonNull(animalEaten);
+        Objects.requireNonNull(animalEaten.getPredator());
+        Objects.requireNonNull(animalEaten.getPrey());
+        if (animalEaten.getPredator().getId() == null) {
+            throw new IllegalArgumentException("Predator must be persisted first, got: " + animalEaten);
+        }
+        if (animalEaten.getPrey().getId() == null) {
+            throw new IllegalArgumentException("Prey must be persisted first, got: " + animalEaten);
+        }
         animalEatenDao.create(animalEaten);
     }
 
     @Override
     public void update(AnimalEaten animalEaten) {
-
+        animalEatenDao.update(animalEaten);
     }
 
     @Override
