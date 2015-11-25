@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalEatenService;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalService;
 import cz.muni.fi.pa165.dominatingspecies.service.BeanMappingService;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
@@ -86,5 +87,20 @@ public class AnimalFacadeImpl implements AnimalFacade {
     @Override
     public void deleteAnimalEaten(long animalEatenId) {
         animalEatenService.remove(animalEatenService.findById(animalEatenId));
+    }
+    
+    @Override
+    public List<AnimalBriefDTO> findPredatorsOf(long animalId) {
+        Animal animal = animalService.findById(animalId);
+        Collection<AnimalEaten> predators = animalEatenService.findPredatorsOf(animal);
+        return beanMappingService.map(predators, AnimalBriefDTO.class);
+    }
+
+    @Override
+    public List<AnimalBriefDTO> findPreyOf(long animalId) {
+        List<AnimalBriefDTO> prey = new ArrayList<>();
+        Animal a = animalService.findById(animalId);
+        prey.addAll(beanMappingService.map(animalEatenService.findPreyOf(a), AnimalBriefDTO.class));
+        return prey;
     }
 }

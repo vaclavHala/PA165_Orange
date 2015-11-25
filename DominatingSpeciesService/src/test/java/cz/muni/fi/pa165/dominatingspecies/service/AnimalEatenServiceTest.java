@@ -4,6 +4,8 @@ import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEatenDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import static java.util.Arrays.asList;
+import java.util.Collection;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
@@ -109,10 +111,15 @@ public class AnimalEatenServiceTest {
             new AnimalEaten(existingFish(), existingHorse()),
             new AnimalEaten(existingFish(), existingFish())
         ));
-        assertThat(animalEatenService.findPredatorsOf(existingFish()))
+        
+        Collection<AnimalEaten> preys = animalEatenService.findPredatorsOf(existingFish());
+        assertThat(preys).hasSize(2);
+        assertThat(preys).containsOnly(new AnimalEaten(existingCat(), existingFish()), new AnimalEaten(existingFish(), existingFish()));
+        
+       /* assertThat(animalEatenService.findPredatorsOf(existingFish()))
             .extracting("id")
             .containsOnly(existingCat().getId(),
-                          existingFish().getId());
+                          existingFish().getId());*/
     }
 
     @Test
@@ -127,6 +134,21 @@ public class AnimalEatenServiceTest {
             .extracting("id")
             .containsOnly(existingCat().getId(),
                           existingFish().getId());
+    }
+    
+    @Test
+    public void testFindPrey() {
+        AnimalEaten aeCF =  new AnimalEaten(existingCat(), existingFish());
+        AnimalEaten aeCH =  new AnimalEaten(existingCat(), existingHorse());
+        AnimalEaten aeFH =  new AnimalEaten(existingFish(), existingHorse());
+        AnimalEaten aeFF =  new AnimalEaten(existingFish(), existingFish());
+        when(animalEatenDao.findAll()).thenReturn(asList(
+            aeCF, aeCH, aeFH, aeFF
+        ));
+        
+        Collection<AnimalEaten> preys = animalEatenService.findPreyOf(existingCat());
+        assertThat(preys).hasSize(2);
+        assertThat(preys).containsOnly(aeCF, aeCH);
     }
 
     private Animal existingCat() {

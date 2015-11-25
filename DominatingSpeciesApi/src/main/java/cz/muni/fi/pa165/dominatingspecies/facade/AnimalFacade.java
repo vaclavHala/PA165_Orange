@@ -22,4 +22,8 @@ public interface AnimalFacade {
     void updateAnimalEaten(AnimalEatenDTO animalEaten);
 
     void deleteAnimalEaten(long animalEatenId);
+    
+    List<AnimalBriefDTO> findPreyOf(long animalId);
+    
+    List<AnimalBriefDTO> findPredatorsOf(long animalId);
 }
