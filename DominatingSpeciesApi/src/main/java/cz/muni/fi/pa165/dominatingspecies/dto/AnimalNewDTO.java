@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
+import java.util.Objects;
+
 public class AnimalNewDTO {
 
     private String name;
@@ -29,20 +31,21 @@ public class AnimalNewDTO {
         this.species = species;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (!(obj instanceof AnimalNewDTO)) {
-//            return false;
-//        }
-//        AnimalNewDTO other = (AnimalNewDTO) obj;
-//        return this.name.equals(other.getName())
-//            && this.species.equals(other.species);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, species);
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AnimalNewDTO)) {
+            return false;
+        }
+        AnimalNewDTO other = (AnimalNewDTO) obj;
+        return this.name.equals(other.getName())
+            && this.species.equals(other.species);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, species);
+    }
+
     @Override
     public String toString() {
         return "AnimalBriefDTO{"

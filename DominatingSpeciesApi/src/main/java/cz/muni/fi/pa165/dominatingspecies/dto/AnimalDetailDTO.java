@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 public class AnimalDetailDTO {
 
@@ -83,4 +84,20 @@ public class AnimalDetailDTO {
     public void setPredators(Collection<AnimalEatenDTO> predators) {
         this.predators = predators;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AnimalDetailDTO)) {
+            return false;
+        }
+        AnimalDetailDTO other = (AnimalDetailDTO) obj;
+        return this.name.equals(other.name)
+            && this.species.equals(other.species);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, species);
+    }
+
 }
