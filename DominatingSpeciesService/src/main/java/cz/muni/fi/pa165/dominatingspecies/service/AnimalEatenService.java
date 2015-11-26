@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.dominatingspecies.service;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *

@@ -44,10 +44,13 @@ public class AnimalFacadeImpl implements AnimalFacade {
     public AnimalDetailDTO findAnimalDetail(long animalId) {
         Animal animal = animalService.findById(animalId);
         AnimalDetailDTO detail = beanMappingService.map(animal, AnimalDetailDTO.class);
+        
         Collection<AnimalEaten> predators = animalEatenService.findPredatorsOf(animal);
         detail.setPredators(beanMappingService.map(predators, AnimalEatenDTO.class));
+        
         Collection<AnimalEaten> prey = animalEatenService.findPreyOf(animal);
         detail.setPrey(beanMappingService.map(prey, AnimalEatenDTO.class));
+       
         return detail;
     }
 
@@ -72,6 +75,7 @@ public class AnimalFacadeImpl implements AnimalFacade {
 
     @Override
     public long createAnimalEaten(long predatorId, long preyId) {
+        Animal animal = animalService.findById(predatorId);
         AnimalEaten ae = new AnimalEaten(
             animalService.findById(predatorId),
             animalService.findById(preyId));
@@ -88,19 +92,5 @@ public class AnimalFacadeImpl implements AnimalFacade {
     public void deleteAnimalEaten(long animalEatenId) {
         animalEatenService.remove(animalEatenService.findById(animalEatenId));
     }
-    
-    @Override
-    public List<AnimalBriefDTO> findPredatorsOf(long animalId) {
-        Animal animal = animalService.findById(animalId);
-        Collection<AnimalEaten> predators = animalEatenService.findPredatorsOf(animal);
-        return beanMappingService.map(predators, AnimalBriefDTO.class);
-    }
 
-    @Override
-    public List<AnimalBriefDTO> findPreyOf(long animalId) {
-        List<AnimalBriefDTO> prey = new ArrayList<>();
-        Animal a = animalService.findById(animalId);
-        prey.addAll(beanMappingService.map(animalEatenService.findPreyOf(a), AnimalBriefDTO.class));
-        return prey;
-    }
 }

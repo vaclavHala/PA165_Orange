@@ -67,17 +67,4 @@ public interface AnimalFacade {
      */
     void deleteAnimalEaten(long animalEatenId);
 
-    /**
-     * Find all Animals which are eaten by Animal with animalId
-     * @param animalId id of Animal to find prey for, must be positive
-     * @return list on Animals eaten
-     */
-    List<AnimalBriefDTO> findPreyOf(long animalId);
-
-    /**
-     * Find all Animals which eat the Animal with animalId
-     * @param animalId must be positive
-     * @return list on animals which eat the Animal
-     */
-    List<AnimalBriefDTO> findPredatorsOf(long animalId);
 }
