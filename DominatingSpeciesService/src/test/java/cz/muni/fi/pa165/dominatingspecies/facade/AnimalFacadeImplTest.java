@@ -124,6 +124,13 @@ public class AnimalFacadeImplTest {
 
 
     @Test
+    public void testFindAnimalBrief() {
+        when(beanMappingService.map(a1, AnimalBriefDTO.class)).thenReturn(aB1);
+        animalFacade.findAnimalBrief(ID_1);
+        verify(animalService).findById(ID_1);
+    }
+    
+    @Test
     public void testFindAnimalDetail() {
         when(animalService.findById(ID_1)).thenReturn(a1);
         when(animalEatenService.findPredatorsOf(a1)).thenReturn(listPredators);
