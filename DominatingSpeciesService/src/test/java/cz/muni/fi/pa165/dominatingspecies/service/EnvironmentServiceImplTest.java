@@ -1,10 +1,12 @@
 package cz.muni.fi.pa165.dominatingspecies.service;
 
+import cz.muni.fi.pa165.dominatingspecies.dao.AnimalDao;
 import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.dao.EnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
+import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
 import java.util.ArrayList;
 import java.util.Collection;
 import static org.junit.Assert.assertEquals;
@@ -13,20 +15,28 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Daniel Minarik
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = DominatingSpeciesServiceConfig.class)
 public class EnvironmentServiceImplTest {
 
     @Mock
     private EnvironmentDao environmentDao;
+    
+    @Mock
+    private AnimalDao animaldaDao;
 
     @Mock
     private AnimalEnvironmentDao animalEnvironmentDao;

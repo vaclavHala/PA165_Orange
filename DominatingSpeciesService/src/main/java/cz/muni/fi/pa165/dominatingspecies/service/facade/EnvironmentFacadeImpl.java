@@ -23,17 +23,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
-    @Inject
-    private EnvironmentService environmentService;
+    private final EnvironmentService environmentService;
     
-    @Inject
-    private AnimalService animalService;
+    private final AnimalService animalService;
     
-    @Inject
-    private AnimalEnvironmentService aeService;
+    private final AnimalEnvironmentService aeService;
     
+    private final BeanMappingService mappingService;
+
     @Inject
-    private BeanMappingService mappingService;
+    public EnvironmentFacadeImpl(EnvironmentService environmentService, AnimalService animalService, AnimalEnvironmentService aeService, BeanMappingService mappingService) {
+        this.environmentService = environmentService;
+        this.animalService = animalService;
+        this.aeService = aeService;
+        this.mappingService = mappingService;
+    }
     
     @Override
     public Collection<EnvironmentDTO> findAllEnvironments() {
