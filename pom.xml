@@ -12,5 +12,6 @@
         <module>DominatingSpeciesDao</module>
         <module>DominatingSpeciesService</module>
         <module>DominatingSpeciesApi</module>
+        <module>DominatingSpeciesWeb</module>
     </modules>
 </project>
