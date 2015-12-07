@@ -1,12 +1,13 @@
+package cz.muni.fi.pa165.dominatingspecies.web.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
 public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String ROLE_ADMIN = "ADMIN";
@@ -15,8 +16,8 @@ public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapte
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .regexMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
