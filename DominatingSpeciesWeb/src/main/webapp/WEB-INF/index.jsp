@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : Dec 3, 2015, 11:30:40 PM
-    Author     : hala
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
