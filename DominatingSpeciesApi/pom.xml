@@ -15,4 +15,10 @@
         <artifactId>DominatingSpecies</artifactId>
         <version>1</version>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

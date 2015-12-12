@@ -1,6 +1,9 @@
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * @author Ivan Kralik
@@ -9,10 +12,14 @@ public class EnvironmentDTO {
     
     private Long id;
     
+    @NotNull
+    @Size(min = 1, max = 255)
     private String name;
     
     private String description;
     
+    @NotNull
+    @Min(1)
     private Long maxAnimalCount;
 
     public Long getId() {
