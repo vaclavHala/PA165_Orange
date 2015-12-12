@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.dominatingspecies.service;
 
+import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import java.util.Collection;
 
@@ -8,6 +9,7 @@ import java.util.Collection;
  * @author Daniel Minarik
  */
 public interface AnimalEnvironmentService {
+
     /**
      * Creates record for specified animalEnvironment
      * @param animalEnvironment The environment to create
@@ -32,6 +34,12 @@ public interface AnimalEnvironmentService {
      * @throws IllegalArgumentException If parameter is null
      */
     public void remove(AnimalEnvironment animalEnvironment);
+
+    /**
+     * Remove all AnimalEatens for animal
+     * @param animal
+     */
+    public void removeAllFor(Animal animal);
 
     /**
      * Updates specified animalEnvironment

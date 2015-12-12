@@ -50,7 +50,7 @@
                                     <a class="btn btn-primary btn-xs" href="${pageContext.request.contextPath}/animal/${animal.id}">Detail</a>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ADMIN')">
-                                    <form style="display: inline-block" method="post" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
+                                    <form style="display: inline-block" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
                                         <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure wish to to delete this animal?');">Delete</button>
                                     </form>
                                 </sec:authorize>

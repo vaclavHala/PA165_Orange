@@ -5,9 +5,9 @@ import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalEatenService;
+import cz.muni.fi.pa165.dominatingspecies.service.AnimalEnvironmentService;
 import cz.muni.fi.pa165.dominatingspecies.service.AnimalService;
 import cz.muni.fi.pa165.dominatingspecies.service.BeanMappingService;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
@@ -23,6 +23,9 @@ public class AnimalFacadeImpl implements AnimalFacade {
 
     @Inject
     private AnimalEatenService animalEatenService;
+
+    @Inject
+    private AnimalEnvironmentService animalEnvironmentService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -44,13 +47,13 @@ public class AnimalFacadeImpl implements AnimalFacade {
     public AnimalDetailDTO findAnimalDetail(long animalId) {
         Animal animal = animalService.findById(animalId);
         AnimalDetailDTO detail = beanMappingService.map(animal, AnimalDetailDTO.class);
-        
+
         Collection<AnimalEaten> predators = animalEatenService.findPredatorsOf(animal);
         detail.setPredators(beanMappingService.map(predators, AnimalEatenDTO.class));
-        
+
         Collection<AnimalEaten> prey = animalEatenService.findPreyOf(animal);
         detail.setPrey(beanMappingService.map(prey, AnimalEatenDTO.class));
-       
+
         return detail;
     }
 
@@ -63,8 +66,9 @@ public class AnimalFacadeImpl implements AnimalFacade {
     @Override
     public void deleteAnimal(long animalId) {
         Animal animal = animalService.findById(animalId);
-        animalService.remove(animal);
+        animalEnvironmentService.removeAllFor(animal);
         animalEatenService.removeAllFor(animal);
+        animalService.remove(animal);
     }
 
     @Override
@@ -75,10 +79,9 @@ public class AnimalFacadeImpl implements AnimalFacade {
 
     @Override
     public long createAnimalEaten(long predatorId, long preyId) {
-        Animal animal = animalService.findById(predatorId);
         AnimalEaten ae = new AnimalEaten(
-            animalService.findById(predatorId),
-            animalService.findById(preyId));
+                animalService.findById(predatorId),
+                animalService.findById(preyId));
         animalEatenService.createAnimalEaten(ae);
         return ae.getId();
     }
