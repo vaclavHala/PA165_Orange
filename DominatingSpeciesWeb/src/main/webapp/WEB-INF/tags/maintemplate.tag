@@ -1,5 +1,5 @@
 <%@tag pageEncoding="utf-8" dynamic-attributes="dynattrs" trimDirectiveWhitespaces="true" %>
-<%@attribute name="title" required="false" %>
+<%@attribute name="title" required="true" %>
 <%@attribute name="head" fragment="true" %>
 <%@attribute name="content" fragment="true" required="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -19,17 +19,12 @@
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
                     <a class="navbar-brand" href="${pageContext.request.contextPath}">DominatingSpecies</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/environment/">Environments</a></li>
+                        <li><a href="${pageContext.request.contextPath}/animal/">Animals</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a><sec:authentication property="principal.username"/></a></li>
@@ -40,6 +35,9 @@
         </nav>
 
         <div class="container">
+
+            <h2><c:out value="${title}"/></h2>
+
             <c:if test="${not empty alert_danger}">
                 <div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

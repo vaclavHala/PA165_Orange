@@ -4,11 +4,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <dominatingspicies:maintemplate>
+    <jsp:attribute name="title">Environment</jsp:attribute>
     <jsp:attribute name="content">
         <div class="pull-right">
             <a href="${pageContext.request.contextPath}/environment/new" class="btn btn-success">New environment</a>
         </div>
-        <h2>Environments</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
