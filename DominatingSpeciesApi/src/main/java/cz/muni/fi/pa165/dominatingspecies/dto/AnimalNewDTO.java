@@ -1,10 +1,14 @@
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.Size;
 
 public class AnimalNewDTO {
 
+    @Size(min = 1, max = 255)
     private String name;
+
+    @Size(min = 1, max = 255)
     private String species;
 
     public AnimalNewDTO() {
@@ -38,7 +42,7 @@ public class AnimalNewDTO {
         }
         AnimalNewDTO other = (AnimalNewDTO) obj;
         return this.name.equals(other.getName())
-            && this.species.equals(other.species);
+                && this.species.equals(other.species);
     }
 
     @Override
@@ -49,9 +53,9 @@ public class AnimalNewDTO {
     @Override
     public String toString() {
         return "AnimalBriefDTO{"
-            + "name=" + name
-            + ", species=" + species
-            + '}';
+                + "name=" + name
+                + ", species=" + species
+                + '}';
     }
 
 }

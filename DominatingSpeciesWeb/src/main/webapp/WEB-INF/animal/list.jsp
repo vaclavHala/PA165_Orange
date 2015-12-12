@@ -3,43 +3,64 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<domspec:maintemplate title="Categories">
+<domspec:maintemplate title="Animals">
     <jsp:attribute name="content">
-        <sec:authorize access="hasRole('ADMIN')">
-            <div class="pull-right">
-                <a href="${pageContext.request.contextPath}/environment/new" class="btn btn-success">New Animal</a>
-            </div>
-        </sec:authorize>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Species</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${animals}" var="animal">
+
+        <div class="container">
+
+            <sec:authorize access="hasRole('ADMIN')">
+                <hr/>
+                <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
+                    <div class="form-group">
+                        <label class="control-label col-xs-2">New animal</label>
+                        <div class="col-xs-4">
+                            <input type="text" name="name" class="form-control" placeholder="Name" value="${newAnimal.name}"/>
+                            <c:if test="${not empty name_error}"><label class="text-error">${name_error_message}</label></c:if>
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="text" name="species" class="form-control"  placeholder="Species" value="${newAnimal.species}"/>
+                            <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-default">Create</button>
+                            </div>
+                        </div>
+                    </form>
+            </sec:authorize>
+
+            <hr/>
+            <table class="table table-striped">
+
+                <thead>
                     <tr>
-                        <td>${animal.id}</td>
-                        <td><c:out value="${animal.name}"/></td>
-                        <td><c:out value="${animal.species}"/></td>
-                        <td>
-                            <sec:authorize access="hasRole('USER')">
-                                <a class="btn btn-primary btn-xs" href="${pageContext.request.contextPath}/animal/${animal.id}">View</a>
-                            </sec:authorize>
-                            <sec:authorize access="hasRole('ADMIN')">
-                                <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/animal/${animal.id}/edit">Edit</a>
-                                <form style="display: inline-block" method="post" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
-                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure wish to to delete this animal?');">Delete</button>
-                                </form>
-                            </sec:authorize>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th>Options</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${animals}" var="animal">
+                        <tr>
+                            <td>${animal.id}</td>
+                            <td><c:out value="${animal.name}"/></td>
+                            <td><c:out value="${animal.species}"/></td>
+                            <td>
+                                <sec:authorize access="hasRole('USER')">
+                                    <a class="btn btn-primary btn-xs" href="${pageContext.request.contextPath}/animal/${animal.id}">Detail</a>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ADMIN')">
+                                    <form style="display: inline-block" method="post" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
+                                        <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure wish to to delete this animal?');">Delete</button>
+                                    </form>
+                                </sec:authorize>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                </tbody>
+            </table>
+        </div>
     </jsp:attribute>
 </domspec:maintemplate>>
 
