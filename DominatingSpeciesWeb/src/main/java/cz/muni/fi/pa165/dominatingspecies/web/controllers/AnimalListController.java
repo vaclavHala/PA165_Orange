@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ public class AnimalListController {
 
     @RequestMapping(value = "/list", method = GET)
     public String list(Model model) {
+        animalFacade.createAnimal(new AnimalNewDTO("Cat", "Cats"));
+
         model.addAttribute("animals", animalFacade.findAllAnimals());
         return "animal/list";
     }
