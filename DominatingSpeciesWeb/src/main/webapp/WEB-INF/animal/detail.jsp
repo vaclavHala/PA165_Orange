@@ -235,21 +235,18 @@
 
                         </tbody>
                     </table>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Add environment</label>
-                            <div class="col-sm-9">
-                                <select id="env" name="env" class="form-control" path="env">
-                                    <c:forEach items="${allEnvironments}" var="environment">
-                                        <option value="${environment.id}">${environment.name}</option>
-                                    </c:forEach>
-                                </select>
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animalenvironment/${animal.id}/envId/addEnvironment">
+                            <div class="form-group">
+                                <div class="col-xs-10" >
+                                    <select class="form-control" name="envId">
+                                        <c:forEach items="${allEnvironments}" var="environment">
+                                            <option value="${environment.id}">${environment.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-default">Add Environment</button>
                             </div>
-                            <div class="col-xs-1">
-                                <a href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${env}/add/animal" class="btn btn-success">Add</a>
-                            </div>
-                        </div>
-
+                        </form>                    
                 </div>
             </div>
         </div>

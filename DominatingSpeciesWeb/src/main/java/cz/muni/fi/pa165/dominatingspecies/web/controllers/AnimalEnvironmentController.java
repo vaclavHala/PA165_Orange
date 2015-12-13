@@ -35,19 +35,22 @@ public class AnimalEnvironmentController {
     @Inject
     private AnimalFacade animalFacade;
 
-    @RequestMapping(value = "/{animalId}/{envId}/add/{redirectTo}", method = RequestMethod.GET)
-    public String add(@PathVariable long animalId, @PathVariable long envId, @PathVariable String redirectTo, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/{animalId}/envId/addEnvironment", method = RequestMethod.POST)
+    public String addEnvironment(@PathVariable long animalId, long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
         ae.setAnimal(animalFacade.findAnimalBrief(animalId));
         ae.setEnvironment(environmentFacade.findEnvironment(envId));
         environmentFacade.addAnimalEnvironment(ae);
-        String ret = "redirect:";
-        if (redirectTo.equals("animal")) {
-            ret += uriBuilder.path("/animal/{animalId}").buildAndExpand(animalId).encode().toUriString();
-        } if (redirectTo.equals("environment")) {
-            ret += uriBuilder.path("/environment/{envId}/edit").buildAndExpand(animalId).encode().toUriString();
-        }
-        return ret;
+        return "redirect:" + uriBuilder.path("/animal/{animalId}").buildAndExpand(animalId).encode().toUriString();
+    }
+
+    @RequestMapping(value = "/animalId/{envId}/addAnimal", method = RequestMethod.POST)
+    public String addAnimal(long animalId, @PathVariable long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
+        ae.setAnimal(animalFacade.findAnimalBrief(animalId));
+        ae.setEnvironment(environmentFacade.findEnvironment(envId));
+        environmentFacade.addAnimalEnvironment(ae);
+        return "redirect:" + uriBuilder.path("/environment/{envId}/edit").buildAndExpand(envId).encode().toUriString();
     }
 
     @RequestMapping(value = "/{animalId}/{envId}/remove/{redirectTo}", method = RequestMethod.GET)

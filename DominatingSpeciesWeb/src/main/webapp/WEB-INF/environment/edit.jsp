@@ -37,52 +37,50 @@
                 <form:errors path="maxAnimalCount" cssClass="help-block"/>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Environment's animals</div>
-
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Species</th>
-                            <th>Percentage</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${animals}" var="animal">
-                            <tr>
-                                <td><c:out value="${animal.name}"/></td>
-                                <td><c:out value="${animal.species}"/></td>
-                                <td>TODO</td>
-                                <td>
-                                    <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/environment">Remove for this environment</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Add animal</label>
-                            <div class="col-sm-9">
-                                <select id="animal" name="animal" class="form-control" path="env">
-                                    <c:forEach items="${allAnimals}" var="animal">
-                                        <option value="${animal.id}">${animal.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-xs-1">
-                                <a href="${pageContext.request.contextPath}/animalenvironment/${animal}/${environment.id}/add/environment" class="btn btn-success">Add</a>
-                            </div>
-                        </div>
-                
-            </div>
-        </div>
         <div class="text-center">
             <button class="btn btn-primary" type="submit">Save environment</button>
             <a href="${pageContext.request.contextPath}/environment/" class="btn btn-default">Back</a>
         </div>
     </form:form>
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">Environment's animals</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th>Percentage</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${animals}" var="animal">
+                        <tr>
+                            <td><c:out value="${animal.name}"/></td>
+                            <td><c:out value="${animal.species}"/></td>
+                            <td>TODO</td>
+                            <td>
+                                <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/environment">Remove for this environment</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animalenvironment/animalId/${environment.id}/addAnimal">
+                <div class="form-group">
+                    <div class="col-xs-10" >
+                        <select class="form-control" name="animalId">
+                            <c:forEach items="${allAnimals}" var="animal">
+                                <option value="${animal.id}">${animal.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Add Animal</button>
+                </div>
+            </form>                    
+        </div>
+    </div>
     </jsp:attribute>
 </dominatingspicies:maintemplate>
