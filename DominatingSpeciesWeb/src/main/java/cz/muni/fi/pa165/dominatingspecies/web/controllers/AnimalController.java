@@ -72,7 +72,16 @@ public class AnimalController {
         model.addAttribute("animal", animal);
         model.addAttribute("environments", environmentFacade.findEnvironmentsForAnimal(id));
         model.addAttribute("allEnvironments", environmentFacade.findAllEnvironments());
+        model.addAttribute("allAnimals", this.animalFacade.findAllAnimals());
         return "animal/detail";
+    }
+
+    @RequestMapping(value = "/{id}/prey", method = RequestMethod.POST)
+    public String addPrey(@PathVariable long id,
+                          long prey,
+                          Model model) {
+        this.animalFacade.createAnimalEaten(id, prey);
+        return "redirect:/animal/" + id;
     }
 
     private String formatAnimal(AnimalBriefDTO existingAnimal) {
