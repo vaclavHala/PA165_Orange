@@ -226,9 +226,19 @@
                                     <td><c:out value="${environment.name}"/></td>
                                     <td><c:out value="${environment.description}"/></td>
                                     <td><c:out value="${environment.maxAnimalCount}"/></td>
-                                    <td>TODO</td>
                                     <td>
-                                        <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/animal">Remove for this animal</a>
+                                        <form class="form-inline" method="POST" action="">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="number" step="any" name="count" style="width: 100px;" class="form-control" placeholder="unknown" value="${prey.animalCount}"/>
+                                                    <span class="input-group-addon">%</span>
+                                                </div>
+                                                <button  type="submit" class="btn btn-default">Update</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/animal">Remove for this animal</a>
                                     </td>
                                 </tr>
                             </c:forEach>
