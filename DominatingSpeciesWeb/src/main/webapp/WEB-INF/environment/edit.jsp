@@ -5,8 +5,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <dominatingspicies:maintemplate>
+    <jsp:attribute name="title">Environment</jsp:attribute>
     <jsp:attribute name="content">
-        <h2>Environment</h2>
         <c:choose>
             <c:when test="${not empty environment.id}">
                 <c:set var="action" scope="request" value="${pageContext.request.contextPath}/environment/${environment.id}"/>

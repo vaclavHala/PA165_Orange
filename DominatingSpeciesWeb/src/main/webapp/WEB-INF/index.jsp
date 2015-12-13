@@ -4,7 +4,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <dominatingspicies:maintemplate>
+    <jsp:attribute name="title">Dominating Species</jsp:attribute>
     <jsp:attribute name="content">
-    <h1>Hello World!</h1>
+    <p class="lead">Hello world</p>
     </jsp:attribute>
 </dominatingspicies:maintemplate>

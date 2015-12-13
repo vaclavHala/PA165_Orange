@@ -4,10 +4,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <dominatingspicies:maintemplate>
-    <jsp:attribute name="title">Environment</jsp:attribute>
+    <jsp:attribute name="title">Environments</jsp:attribute>
     <jsp:attribute name="content">
         <div class="pull-right">
-            <a href="${pageContext.request.contextPath}/environment/new" class="btn btn-success">New environment</a>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <a href="${pageContext.request.contextPath}/environment/new" class="btn btn-success">New environment</a>
+            </sec:authorize>
         </div>
         <table class="table table-striped">
             <thead>
@@ -28,10 +30,12 @@
                         <td><c:out value="${environment.maxAnimalCount}"/></td>
                         <td>
                             <a class="btn btn-primary btn-xs" href="${pageContext.request.contextPath}/environment/${environment.id}">View</a>
-                            <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/environment/${environment.id}/edit">Edit</a>
-                            <form style="display: inline-block" method="post" action="${pageContext.request.contextPath}/environment/${environment.id}/delete">
-                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete this environment?');">Delete</button>
-                            </form>
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/environment/${environment.id}/edit">Edit</a>
+                                <form style="display: inline-block" method="post" action="${pageContext.request.contextPath}/environment/${environment.id}/delete">
+                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete this environment?');">Delete</button>
+                                </form>
+                            </sec:authorize>
                         </td>
                     </tr>
                 </c:forEach>

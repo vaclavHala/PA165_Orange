@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
+import cz.muni.fi.pa165.dominatingspecies.web.config.DominatingSpeciesSecurityConfig;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,7 @@ public class EnvironmentController {
         return "environment/edit";
     }
     
+    @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String update(@PathVariable long id, @Valid @ModelAttribute("environment") EnvironmentDTO formBean, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
@@ -54,6 +57,7 @@ public class EnvironmentController {
         return "redirect:" + uriBuilder.path("/environment/{id}/edit").buildAndExpand(id).encode().toUriString();
     }
     
+    @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("environment") EnvironmentDTO formBean, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
@@ -71,6 +75,7 @@ public class EnvironmentController {
         return "redirect:" + uriBuilder.path("/environment/{id}/edit").buildAndExpand(id).encode().toUriString();
     }
     
+    @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         EnvironmentDTO environment = facade.findEnvironment(id);
@@ -78,6 +83,13 @@ public class EnvironmentController {
         
         redirectAttributes.addFlashAttribute("alert_success", "Environment \"" + environment.getName() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/environment/").toUriString();
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String view(@PathVariable long id, Model model) {
+        model.addAttribute("environment", facade.findEnvironment(id));
+        
+        return "environment/view";
     }
     
     @RequestMapping(value = "/", method = GET)
