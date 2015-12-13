@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import static java.lang.String.format;
@@ -56,8 +57,16 @@ public class AnimalController {
         AnimalBriefDTO deletedAnimal = this.animalFacade.findAnimalBrief(id);
         this.animalFacade.deleteAnimal(id);
         redirectAttributes.addFlashAttribute("alert_success",
-                                             formatAnimal(deletedAnimal));
+                                             formatAnimal(deletedAnimal) + " was deleted");
         return "redirect:/animal/";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String detail(@PathVariable long id,
+                         Model model) {
+        AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
+        model.addAttribute("animal", animal);
+        return "animal/detail";
     }
 
     private String formatAnimal(AnimalBriefDTO existingAnimal) {
