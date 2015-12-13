@@ -18,6 +18,13 @@ public interface AnimalEnvironmentService {
     public void create(AnimalEnvironment animalEnvironment);
 
     /**
+     * Returns animalEnvironment for animal id and environment id
+     * @param animalId Id of animal
+     * @param envId Id of environment
+     */
+    public AnimalEnvironment findByIdAnimalEnvironment(long animalId, long envId);
+
+    /**
      * Returns animalEnvironment for id
      * @param id Id of AnimalEnvironment
      */

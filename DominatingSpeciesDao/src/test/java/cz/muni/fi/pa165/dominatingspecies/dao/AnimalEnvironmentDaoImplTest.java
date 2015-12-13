@@ -48,6 +48,23 @@ public class AnimalEnvironmentDaoImplTest {
     }
 
     @Test
+    public void testFindByIdAnimalEnvironment() {
+        Animal dog = new Animal("dog", "dogs");
+        Environment e = new Environment();
+        e.setName("Forest");
+        e.setMaxAnimalCount(100L);
+        
+        AnimalEnvironment aeFirst = new AnimalEnvironment();
+        aeFirst.setAnimal(dog);
+        aeFirst.setEnvironment(e);
+        dao.create(aeFirst);
+
+        AnimalEnvironment returned = dao.findByIdAnimalEnvironment(dog, e);
+        assertEquals(aeFirst, returned);
+    }
+
+
+    @Test
     public void testCreateWithExistingIdThrows() {
         AnimalEnvironment ae = new AnimalEnvironment();
         ae.setAnimal(dog());

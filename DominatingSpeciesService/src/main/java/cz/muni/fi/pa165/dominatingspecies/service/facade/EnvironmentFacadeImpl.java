@@ -72,6 +72,13 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
     }
 
     @Override
+    public void deleteAnimalEnvironment(long animalId, long envId) {
+        AnimalEnvironment entity = aeService.findByIdAnimalEnvironment(animalId, envId);
+        
+        aeService.remove(entity);
+    }
+
+    @Override
     public void deleteEnvironment(long id) {
         Environment entity = environmentService.findById(id);
         

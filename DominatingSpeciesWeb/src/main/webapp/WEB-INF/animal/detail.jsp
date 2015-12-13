@@ -124,6 +124,53 @@
                     </table>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Animal's environments</div>
+
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Max. animal count</th>
+                                <th>Percentage</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${environments}" var="environment">
+                                <tr>
+                                    <td><c:out value="${environment.name}"/></td>
+                                    <td><c:out value="${environment.description}"/></td>
+                                    <td><c:out value="${environment.maxAnimalCount}"/></td>
+                                    <td>TODO</td>
+                                    <td>
+                                        <a class="btn btn-warning btn-xs" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/animal">Remove for this animal</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+
+                        </tbody>
+                    </table>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Add environment</label>
+                            <div class="col-sm-9">
+                                <select id="env" name="env" class="form-control" path="env">
+                                    <c:forEach items="${allEnvironments}" var="environment">
+                                        <option value="${environment.id}">${environment.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-xs-1">
+                                <a href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${env}/add/animal" class="btn btn-success">Add</a>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </jsp:attribute>

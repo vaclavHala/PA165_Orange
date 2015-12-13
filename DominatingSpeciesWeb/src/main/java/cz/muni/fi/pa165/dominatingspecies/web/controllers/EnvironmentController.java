@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
+import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import cz.muni.fi.pa165.dominatingspecies.web.config.DominatingSpeciesSecurityConfig;
 import javax.annotation.security.RolesAllowed;
@@ -25,6 +26,9 @@ public class EnvironmentController {
     @Inject
     private EnvironmentFacade facade;
 
+    @Inject
+    private AnimalFacade animalFacade;
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProduct(Model model) {
         model.addAttribute("environment", new EnvironmentDTO());
@@ -35,6 +39,8 @@ public class EnvironmentController {
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String edit(@PathVariable long id, Model model) {
         model.addAttribute("environment", facade.findEnvironment(id));
+        model.addAttribute("animals", facade.findAnimalsInEnvironment(id));
+        model.addAttribute("allAnimals", animalFacade.findAllAnimals());
         
         return "environment/edit";
     }
@@ -88,6 +94,7 @@ public class EnvironmentController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         model.addAttribute("environment", facade.findEnvironment(id));
+        model.addAttribute("animals", facade.findAnimalsInEnvironment(id));
         
         return "environment/view";
     }

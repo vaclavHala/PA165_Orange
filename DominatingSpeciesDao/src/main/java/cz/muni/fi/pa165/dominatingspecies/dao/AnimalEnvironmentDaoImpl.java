@@ -30,6 +30,13 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     }
 
     @Override
+    public AnimalEnvironment findByIdAnimalEnvironment(Animal animal, Environment env) throws DataAccessException {
+        System.out.println(animal.getName());
+        System.out.println(env.getName());
+        return em.createQuery("from AnimalEnvironment ae where ae.animal=:arg1 and ae.environment=:arg2", AnimalEnvironment.class).setParameter("arg1", animal).setParameter("arg2", env).getSingleResult();
+    }
+
+    @Override
     public List<AnimalEnvironment> findAll() throws DataAccessException {
         return em.createQuery("from AnimalEnvironment ae", AnimalEnvironment.class).getResultList();
     }

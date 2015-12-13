@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
+import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import static java.lang.String.format;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -25,6 +26,9 @@ public class AnimalController {
 
     @Inject
     private AnimalFacade animalFacade;
+
+    @Inject
+    private EnvironmentFacade environmentFacade;
 
     @RequestMapping(value = "/", method = GET)
     public String list(Model model) {
@@ -66,6 +70,8 @@ public class AnimalController {
                          Model model) {
         AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
         model.addAttribute("animal", animal);
+        model.addAttribute("environments", environmentFacade.findEnvironmentsForAnimal(id));
+        model.addAttribute("allEnvironments", environmentFacade.findAllEnvironments());
         return "animal/detail";
     }
 

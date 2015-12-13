@@ -27,7 +27,17 @@ public interface AnimalEnvironmentDao {
      * @throws DataAccessException On persistent storage error
      */
     public AnimalEnvironment findById(Long id);
-    
+
+    /**
+     * Retrieves animal environment record with specified animal and environment
+     * 
+     * @param animal animal
+     * @param env environment
+     * @return Animal environment with specified id or null, if no such exists
+     * @throws DataAccessException On persistent storage error
+     */
+    public AnimalEnvironment findByIdAnimalEnvironment(Animal animal, Environment env);
+
     /**
      * Retrieves all animal environment records from persistent storage
      * 

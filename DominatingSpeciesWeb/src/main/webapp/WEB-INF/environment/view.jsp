@@ -24,5 +24,29 @@
                 <td><c:out value="${environment.maxAnimalCount}" /></td>
             </tr>
         </table>
+            <div class="panel panel-default">
+                <div class="panel-heading">Environment's animals</div>
+
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Species</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${animals}" var="animal">
+                                <tr>
+                                    <td><c:out value="${animal.name}"/></td>
+                                    <td><c:out value="${animal.species}"/></td>
+                                    <td>TODO</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </jsp:attribute>
 </dominatingspicies:maintemplate>

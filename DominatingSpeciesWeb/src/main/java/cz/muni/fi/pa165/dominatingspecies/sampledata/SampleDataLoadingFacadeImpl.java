@@ -35,13 +35,25 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     public void loadData() {
         Animal cat = createAnimal("Mačka domáca", "Mačky", 10d, 1d);
         Animal mouse = createAnimal("Myš domová", "Myši", 100d, 1d);
+        Animal hamster = createAnimal("Škrečok", "Hlodavce", 45d, 6d);
+        Animal rabbit = createAnimal("Zajac obyčajný", "Hlodavce", 21d, 3d);
+        Animal camel = createAnimal("Ťava dvojhrbá", "Prežúvavce", 4d, 2d);
         
         Environment home = createEnvironment("Domácnosti", "Domy, statky", 10l);
         Environment field = createEnvironment("Polia", "Obhospodarované polia", 100l);
+        Environment forest = createEnvironment("Lesy", "Ihlicnate lesy", 40l);
+        Environment desert = createEnvironment("Púšte", "Kamenisté púšte", 23l);
+        Environment mountains = createEnvironment("Hory", "Vysoké hory", 190l);
         
         AnimalEnvironment catHome = createAnimalEnvironment(cat, home, 1);
+        AnimalEnvironment hamsterHome = createAnimalEnvironment(hamster, home, 1);
+        AnimalEnvironment rabbitHome = createAnimalEnvironment(rabbit, home, 1);
+        AnimalEnvironment camelHome = createAnimalEnvironment(camel, home, 1);
         AnimalEnvironment mouseHome = createAnimalEnvironment(mouse, home, 0.4);
         AnimalEnvironment mouseField = createAnimalEnvironment(mouse, field, 0.6);
+        AnimalEnvironment mouseForest = createAnimalEnvironment(mouse, forest, 0.2);
+        AnimalEnvironment mouseDesert = createAnimalEnvironment(mouse, desert, 0.9);
+        AnimalEnvironment mouseMountains = createAnimalEnvironment(mouse, mountains, 0.8);
         
         AnimalEaten catMouse = createAnimalEaten(cat, mouse, 10l);
     }

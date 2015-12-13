@@ -47,6 +47,14 @@ public interface EnvironmentFacade {
     public void deleteEnvironment(long id);
     
     /**
+     * Removes animal environment with specified identifier from system
+     * 
+     * @param animalId Identifier of the animal
+     * @param envId Identifier of the environment
+     */
+    public void deleteAnimalEnvironment(long animalId, long envId);
+
+    /**
      * Assigns specified environment to specified animal with specified data
      * 
      * @param animalEnvironment The animal, environment and assignment data
