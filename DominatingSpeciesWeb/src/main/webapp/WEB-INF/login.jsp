@@ -27,13 +27,22 @@
                                 <label class="col-xs-4 text-right">Password:</label>
                                 <input class="col-xs-6" type="password" name="password"/>
                             </div>
+                            <c:if test="${not empty error}">
+                                <div class="form-group">
+                                    <div class="col-xs-4"></div>
+                                    <div class="text-danger">${error}</div>
+                                </div>
+                            </c:if>
+                            <c:if test="${not empty msg}">
+                                <div class="form-group">
+                                    <div class="col-xs-4"></div>
+                                    <div class="text-info">${msg}</div>
+                                </div>
+                            </c:if>
                             <div class="form-group">
                                 <div class="col-xs-4"></div>
                                 <input type="submit" value="Sign In"/>
                             </div>
-                            <c:if test="${not empty alert_warning}">
-                                <div class="alert alert-warning" role="alert"><c:out value="${alert_warning}"/></div>
-                            </c:if>
                         </form>
                     </div>
                 </div>

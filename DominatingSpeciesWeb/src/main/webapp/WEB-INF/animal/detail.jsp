@@ -14,91 +14,92 @@
             <hr/>
 
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#identity" data-toggle="tab">Identity</a></li>
-                <li><a href="#characteristics" data-toggle="tab">Characteristics</a></li>
+                <li class="active"><a href="#characteristics" data-toggle="tab">Characteristics</a></li>
                 <li><a href="#food" data-toggle="tab">Food Chain</a></li>
                 <li><a href="#enviro" data-toggle="tab">Environment</a></li>
             </ul>
             <div class="tab-content">
-                <div class="panel panel-default tab-pane active" id="identity">
-                    <div class="panel-heading">Identity</div>
-                    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
-                        <div class="form-group panel-body">
-                            <label class="control-label col-xs-1">Name:</label>
-                            <div class="col-xs-4">
-                                <sec:authorize access="hasRole('ADMIN')">
-                                    <input type="text" name="name" class="form-control" value="${animal.name}"/>
-                                </sec:authorize>
-                                <sec:authorize access="not hasRole('ADMIN')">
-                                    <input disabled type="text" name="name" class="form-control" value="${animal.name}"/>
-                                </sec:authorize>
-                                <c:if test="${not empty name_error}"><label class="text-error">${name_error_message}</label></c:if>
-                                </div>
-                                <label class="control-label col-xs-1">Species:</label>
-                                <div class="col-xs-4">
-                                <sec:authorize access="hasRole('ADMIN')">
-                                    <input type="text" name="species" class="form-control" value="${animal.species}"/>
-                                </sec:authorize>
-                                <sec:authorize access="not hasRole('ADMIN')">
-                                    <input disabled type="text" name="species" class="form-control" value="${animal.species}"/>
-                                </sec:authorize>
-                                <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
-                                </div>
-                            <sec:authorize access="hasRole('ADMIN')">
-                                <div class="col-xs-2">
-                                    <button type="submit" class="btn btn-default">Save Changes</button>
-                                </div>
-                            </sec:authorize>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="panel panel-default tab-pane" id="characteristics">
+                <div class="panel panel-default tab-pane active" id="characteristics">
                     <div class="panel-heading">Characteristics</div>
-                    <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
-                        <div class="form-group panel-body">
-                            <label class="control-label col-xs-1">Food Needed:</label>
-                            <div class="col-xs-4">
-                                <sec:authorize access="hasRole('USER')">
-                                    <div class="input-group">
-                                        <input type="number" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
-                                        <span class="input-group-addon">kg/day</span>
-                                    </div>
-                                </sec:authorize>
-                                <sec:authorize access="not hasRole('USER')">
-                                    <div class="input-group">
-                                        <input disabled type="text" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
-                                        <span class="input-group-addon">kg/day</span>
-                                    </div>
-                                </sec:authorize>
-                                <c:if test="${not empty foodNeeded_error}"><label class="text-error">${foodNeeded_error_message}</label></c:if>
-                                </div>
-                                <label class="control-label col-xs-1">Reproduction Rate:</label>
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
+                            <div class="form-group">
+                                <label class="control-label col-xs-1">Name:</label>
                                 <div class="col-xs-4">
+                                    <sec:authorize access="hasRole('ADMIN')">
+                                        <input type="text" name="name" class="form-control" value="${animal.name}"/>
+                                    </sec:authorize>
+                                    <sec:authorize access="not hasRole('ADMIN')">
+                                        <input disabled type="text" name="name" class="form-control" value="${animal.name}"/>
+                                    </sec:authorize>
+                                    <c:if test="${not empty name_error}"><label class="text-error">${name_error_message}</label></c:if>
+                                    </div>
+                                    <label class="control-label col-xs-1">Species:</label>
+                                    <div class="col-xs-4">
+                                    <sec:authorize access="hasRole('ADMIN')">
+                                        <input type="text" name="species" class="form-control" value="${animal.species}"/>
+                                    </sec:authorize>
+                                    <sec:authorize access="not hasRole('ADMIN')">
+                                        <input disabled type="text" name="species" class="form-control" value="${animal.species}"/>
+                                    </sec:authorize>
+                                    <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
+                                    </div>
+                                <sec:authorize access="hasRole('ADMIN')">
+                                    <div class="col-xs-2">
+                                        <button type="submit" class="btn btn-default">Save Changes</button>
+                                    </div>
+                                </sec:authorize>
+                            </div>
+                        </form>
+                        <hr/>
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
+                            <div class="form-group">
+                                <label class="control-label col-xs-2">Food Needed:</label>
+                                <div class="col-xs-5">
+                                    <sec:authorize access="hasRole('USER')">
+                                        <div class="input-group">
+                                            <input type="number" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
+                                            <span class="input-group-addon">kg/day</span>
+                                        </div>
+                                    </sec:authorize>
+                                    <sec:authorize access="not hasRole('USER')">
+                                        <div class="input-group">
+                                            <input disabled type="text" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
+                                            <span class="input-group-addon">kg/day</span>
+                                        </div>
+                                    </sec:authorize>
+                                    <c:if test="${not empty foodNeeded_error}"><label class="text-error">${foodNeeded_error_message}</label></c:if>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-2">Reproduction Rate:</label>
+                                    <div class="col-xs-5">
+                                    <sec:authorize access="hasRole('USER')">
+                                        <div class="input-group">
+                                            <input type="number" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
+                                            <span class="input-group-addon">%/year</span>
+                                        </div>
+                                    </sec:authorize>
+                                    <sec:authorize access="not hasRole('USER')">
+                                        <div class="input-group">
+                                            <input disabled type="text" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
+                                            <span class="input-group-addon">%/year</span>
+                                        </div>
+                                    </sec:authorize>
+                                    <c:if test="${not empty reproductionRate_error}"><label class="text-error">${reproductionRate_error_message}</label></c:if>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                 <sec:authorize access="hasRole('USER')">
-                                    <div class="input-group">
-                                        <input type="number" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
-                                        <span class="input-group-addon">%/year</span>
+                                    <div class="col-xs-2"></div>
+                                    <div class="col-xs-3">
+                                        <button type="submit" class="btn btn-default">Save Changes</button>
                                     </div>
                                 </sec:authorize>
-                                <sec:authorize access="not hasRole('USER')">
-                                    <div class="input-group">
-                                        <input disabled type="text" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
-                                        <span class="input-group-addon">%/year</span>
-                                    </div>
-                                </sec:authorize>
-                                <c:if test="${not empty reproductionRate_error}"><label class="text-error">${reproductionRate_error_message}</label></c:if>
-                                </div>
-                            <sec:authorize access="hasRole('USER')">
-                                <div class="col-xs-2">
-                                    <button type="submit" class="btn btn-default">Save Changes</button>
-                                </div>
-                            </sec:authorize>
-                        </div>
-                    </form>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <hr/>
 
                 <div class="panel panel-default tab-pane" id="food">
                     <div class="panel-heading">Food Chain</div>
