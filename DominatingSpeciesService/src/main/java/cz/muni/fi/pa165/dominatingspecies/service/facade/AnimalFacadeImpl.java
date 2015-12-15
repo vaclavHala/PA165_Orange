@@ -79,6 +79,10 @@ public class AnimalFacadeImpl implements AnimalFacade {
 
     @Override
     public long createAnimalEaten(long predatorId, long preyId) {
+        AnimalEaten aeExisting = animalEatenService.findByAnimalsInvolved(predatorId, preyId);
+        if (aeExisting != null) {
+            return aeExisting.getId();
+        }
         AnimalEaten ae = new AnimalEaten(
                 animalService.findById(predatorId),
                 animalService.findById(preyId));

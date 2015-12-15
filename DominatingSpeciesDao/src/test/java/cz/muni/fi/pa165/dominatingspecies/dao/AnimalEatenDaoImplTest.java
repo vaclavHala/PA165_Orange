@@ -3,31 +3,25 @@ package cz.muni.fi.pa165.dominatingspecies.dao;
 /**
  * Created by Petr Domkař on 28. 10. 2015.
  */
-
 import cz.muni.fi.pa165.dominatingspecies.DominatingSpeciesConfig;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
+import java.util.List;
+import javax.inject.Inject;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.List;
-import javax.validation.ConstraintViolationException;
-import org.springframework.dao.DataAccessException;
-
-
-
 /**
  * @author Petr Domkař
  */
-
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DominatingSpeciesConfig.class})
@@ -40,7 +34,7 @@ public class AnimalEatenDaoImplTest {
     private AnimalDao animalDao;
     @Inject
     private AnimalEatenDao animalEatenDao;
-    
+
     Animal a1;
     Animal a2;
     Animal a3;
@@ -49,11 +43,11 @@ public class AnimalEatenDaoImplTest {
     public void testCreateAnimalEatenWithoutFillRequiredData() {
         Animal a1 = new Animal("Slon", "Savec");
         animalDao.create(a1);
-        AnimalEaten ae1 = new AnimalEaten(a1, null);        
-        expectedException.expect(ConstraintViolationException.class);
+        AnimalEaten ae1 = new AnimalEaten(a1, null);
+        expectedException.expect(NullPointerException.class);
         animalEatenDao.create(ae1);
     }
-    
+
     @Test
     public void testCreateAnimalEaten() {
         createAnimal();
@@ -64,7 +58,7 @@ public class AnimalEatenDaoImplTest {
         assertEquals(animalEatenDao.findAll().size(), 1);
         assertEquals(ae1, animalEatenDao.findById(ae1.getId()));
     }
-    
+
     @Test
     public void testInitFindAllEmpty() {
         assertTrue(animalEatenDao.findAll().isEmpty());
@@ -86,12 +80,10 @@ public class AnimalEatenDaoImplTest {
         assertTrue(animalEatenList.contains(ae2));
     }
 
-
     @Test
     public void testFindByNotExistId() {
         assertEquals(null, animalEatenDao.findById(50L));
     }
-
 
     @Test
     public void testFindById() {
@@ -106,8 +98,6 @@ public class AnimalEatenDaoImplTest {
         assertEquals(animalEaten, ae1);
     }
 
-    
-    
     @Test
     public void testRemoveNotExistingAnimalEaten() {
         createAnimal();

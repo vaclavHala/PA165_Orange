@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -18,10 +19,15 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
-    public void create(AnimalEnvironment environment) throws DataAccessException {
-        em.persist(environment);
+    public void create(AnimalEnvironment ae) throws DataAccessException {
+        AnimalEnvironment aeExisting = findByIdAnimalEnvironment(ae.getAnimal().getId(),
+                                                                 ae.getEnvironment().getId());
+        System.out.println("aeEx" + aeExisting);
+        if (aeExisting == null) {
+            em.persist(ae);
+        }
     }
 
     @Override
@@ -30,10 +36,16 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     }
 
     @Override
-    public AnimalEnvironment findByIdAnimalEnvironment(Animal animal, Environment env) throws DataAccessException {
-        System.out.println(animal.getName());
-        System.out.println(env.getName());
-        return em.createQuery("from AnimalEnvironment ae where ae.animal=:arg1 and ae.environment=:arg2", AnimalEnvironment.class).setParameter("arg1", animal).setParameter("arg2", env).getSingleResult();
+    public AnimalEnvironment findByIdAnimalEnvironment(long animalId, long envId) throws DataAccessException {
+        try {
+            return em.createQuery("SELECT ae FROM AnimalEnvironment ae "
+                    + "WHERE ae.animal.id=:animal and ae.environment.id=:enviro", AnimalEnvironment.class)
+                    .setParameter("animal", animalId)
+                    .setParameter("enviro", envId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
@@ -46,7 +58,7 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
         if (!em.contains(environment)) {
             throw new DataRetrievalFailureException("Entity " + environment + " does not exist in the persistent storage");
         }
-        
+
         em.remove(environment);
     }
 

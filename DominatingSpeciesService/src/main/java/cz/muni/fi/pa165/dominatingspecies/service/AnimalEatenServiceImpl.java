@@ -31,6 +31,11 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     }
 
     @Override
+    public AnimalEaten findByAnimalsInvolved(long predatorId, long preyId) {
+        return animalEatenDao.findByAnimalsInvolved(predatorId, preyId);
+    }
+
+    @Override
     public Collection<AnimalEaten> findPredatorsOf(Animal animal) {
 
         //could be done with a JPQL query but if performance is not
@@ -83,7 +88,7 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     public void removeAllFor(Animal animal) {
         for (AnimalEaten ae : animalEatenDao.findAll()) {
             if (ae.getPredator().equals(animal)
-                || ae.getPrey().equals(animal)) {
+                    || ae.getPrey().equals(animal)) {
                 animalEatenDao.remove(ae);
             }
         }
