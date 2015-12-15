@@ -26,29 +26,21 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-1">Name:</label>
                                 <div class="col-xs-4">
-                                    <sec:authorize access="hasRole('ADMIN')">
-                                        <input type="text" name="name" class="form-control" value="${animal.name}"/>
-                                    </sec:authorize>
-                                    <sec:authorize access="not hasRole('ADMIN')">
-                                        <input disabled type="text" name="name" class="form-control" value="${animal.name}"/>
-                                    </sec:authorize>
+                                    <domspec:authorized_textbox role="ADMIN" name="name" value="${animal.name}"/>
                                     <c:if test="${not empty name_error}"><label class="text-error">${name_error_message}</label></c:if>
                                     </div>
                                     <label class="control-label col-xs-1">Species:</label>
                                     <div class="col-xs-4">
-                                    <sec:authorize access="hasRole('ADMIN')">
-                                        <input type="text" name="species" class="form-control" value="${animal.species}"/>
-                                    </sec:authorize>
-                                    <sec:authorize access="not hasRole('ADMIN')">
-                                        <input disabled type="text" name="species" class="form-control" value="${animal.species}"/>
-                                    </sec:authorize>
+                                    <domspec:authorized_textbox role="ADMIN" name="species" value="${animal.species}"/>
                                     <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
                                     </div>
-                                <sec:authorize access="hasRole('ADMIN')">
-                                    <div class="col-xs-2">
-                                        <button type="submit" class="btn btn-default">Save Changes</button>
-                                    </div>
-                                </sec:authorize>
+                                <domspec:authorized_hidden role="ADMIN">
+                                    <jsp:attribute name="content">
+                                        <div class="col-xs-2">
+                                            <button type="submit" class="btn btn-default">Save Changes</button>
+                                        </div>
+                                    </jsp:attribute>
+                                </domspec:authorized_hidden>
                             </div>
                         </form>
                         <hr/>
