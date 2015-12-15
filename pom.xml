@@ -13,7 +13,8 @@
         <module>DominatingSpeciesService</module>
         <module>DominatingSpeciesApi</module>
         <module>DominatingSpeciesWeb</module>
-    </modules>
+    <module>DominatingSpeciesRest</module>
+  </modules>
     <parent>
         <groupId>io.spring.platform</groupId>
         <artifactId>platform-bom</artifactId>

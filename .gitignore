@@ -8,3 +8,5 @@ nbactions.xml
 /DominatingSpeciesService/target/
 /DominatingSpeciesService (copy)/target/
 /DominatingSpeciesWeb/target/
+/DominatingSpeciesRest/nbproject/private/
+/DominatingSpeciesRest/target/
