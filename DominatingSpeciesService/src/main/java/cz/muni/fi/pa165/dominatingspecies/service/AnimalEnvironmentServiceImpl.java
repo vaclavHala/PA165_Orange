@@ -1,13 +1,12 @@
 package cz.muni.fi.pa165.dominatingspecies.service;
 
-import javax.inject.Inject;
-
+import cz.muni.fi.pa165.dominatingspecies.dao.AnimalDao;
 import cz.muni.fi.pa165.dominatingspecies.dao.AnimalEnvironmentDao;
 import cz.muni.fi.pa165.dominatingspecies.dao.EnvironmentDao;
-import cz.muni.fi.pa165.dominatingspecies.dao.AnimalDao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import java.util.Collection;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -36,7 +35,7 @@ public class AnimalEnvironmentServiceImpl implements AnimalEnvironmentService {
 
     @Override
     public AnimalEnvironment findByIdAnimalEnvironment(long animalId, long envId) {
-        return animalEnvironmentDao.findByIdAnimalEnvironment(animalDao.getById(animalId), environmentDao.findById(envId));
+        return animalEnvironmentDao.findByIdAnimalEnvironment(animalId, envId);
     }
 
     @Override

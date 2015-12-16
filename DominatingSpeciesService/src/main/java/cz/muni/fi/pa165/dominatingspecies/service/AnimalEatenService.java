@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.dominatingspecies.service;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEaten;
 import java.util.Collection;
-import java.util.List;
 
 /**
  *
@@ -23,6 +22,12 @@ public interface AnimalEatenService {
      * @return
      */
     public AnimalEaten findById(long animalEatenId);
+
+    /**
+     * Finds AnimalEaten which has the given combination of predator and prey
+     * @return the AnimalEaten or null if no such exists
+     */
+    public AnimalEaten findByAnimalsInvolved(long predatorId, long preyId);
 
     /**
      * Remove animalEaton

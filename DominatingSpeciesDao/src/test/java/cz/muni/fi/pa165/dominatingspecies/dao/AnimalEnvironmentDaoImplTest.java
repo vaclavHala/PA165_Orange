@@ -6,9 +6,9 @@ import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
 import java.util.Collection;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -32,11 +32,32 @@ public class AnimalEnvironmentDaoImplTest {
     @Inject
     private AnimalEnvironmentDao dao;
 
+    @Inject
+    private AnimalDao animalDao;
+    @Inject
+    private EnvironmentDao enviroDao;
+
+    private Animal dog;
+    private Animal cat;
+    private Environment enviro;
+
+    @Before
+    public void initDb() {
+        this.dog = new Animal("dog", "dogs");
+        this.cat = new Animal("cat", "cats");
+        this.enviro = new Environment();
+        this.enviro.setName("house");
+        this.enviro.setMaxAnimalCount(100L);
+        this.animalDao.create(dog);
+        this.animalDao.create(cat);
+        this.enviroDao.persist(enviro);
+    }
+
     @Test
     public void testAnimalEnvironmentPersistedByCreate() {
         AnimalEnvironment ae = new AnimalEnvironment();
-        ae.setAnimal(dog());
-        ae.setEnvironment(environment());
+        ae.setAnimal(dog);
+        ae.setEnvironment(enviro);
         dao.create(ae);
 
         assertEquals(ae, dao.findById(ae.getId()));
@@ -49,26 +70,21 @@ public class AnimalEnvironmentDaoImplTest {
 
     @Test
     public void testFindByIdAnimalEnvironment() {
-        Animal dog = new Animal("dog", "dogs");
-        Environment e = new Environment();
-        e.setName("Forest");
-        e.setMaxAnimalCount(100L);
-        
+
         AnimalEnvironment aeFirst = new AnimalEnvironment();
         aeFirst.setAnimal(dog);
-        aeFirst.setEnvironment(e);
+        aeFirst.setEnvironment(enviro);
         dao.create(aeFirst);
 
-        AnimalEnvironment returned = dao.findByIdAnimalEnvironment(dog, e);
+        AnimalEnvironment returned = dao.findByIdAnimalEnvironment(dog.getId(), enviro.getId());
         assertEquals(aeFirst, returned);
     }
-
 
     @Test
     public void testCreateWithExistingIdThrows() {
         AnimalEnvironment ae = new AnimalEnvironment();
-        ae.setAnimal(dog());
-        ae.setEnvironment(environment());
+        ae.setAnimal(dog);
+        ae.setEnvironment(enviro);
         ae.setId(13);
 
         expectedException.expect(DataAccessException.class);
@@ -78,23 +94,23 @@ public class AnimalEnvironmentDaoImplTest {
     @Test
     public void testCreateWithMissingRequiredField() {
         AnimalEnvironment ae = new AnimalEnvironment();
-        ae.setAnimal(dog());
+        ae.setAnimal(dog);
         ae.setEnvironment(null);
 
-        expectedException.expect(ConstraintViolationException.class);
+        expectedException.expect(NullPointerException.class);
         dao.create(ae);
     }
 
     @Test
-    public void testExceptionOnSameAnimaEnvironmentTwice() {
-        Animal a = dog();
-        Environment e = environment();
+    public void testIgnoredOnSameAnimaEnvironmentTwice() {
+        Animal a = dog;
+        Environment e = enviro;
         AnimalEnvironment aeFirst = new AnimalEnvironment(a, e);
         AnimalEnvironment aeSecond = new AnimalEnvironment(a, e);
 
         dao.create(aeFirst);
-        expectedException.expect(DataAccessException.class);
         dao.create(aeSecond);
+        assertEquals(1, dao.findAll().size());
     }
 
     @Test
@@ -105,11 +121,11 @@ public class AnimalEnvironmentDaoImplTest {
     @Test
     public void testFindAllReturnsAllRecords() {
         AnimalEnvironment aeFirst = new AnimalEnvironment();
-        aeFirst.setAnimal(dog());
-        aeFirst.setEnvironment(environment());
+        aeFirst.setAnimal(dog);
+        aeFirst.setEnvironment(enviro);
         AnimalEnvironment aeSecond = new AnimalEnvironment();
-        aeSecond.setAnimal(cat());
-        aeSecond.setEnvironment(environment());
+        aeSecond.setAnimal(cat);
+        aeSecond.setEnvironment(enviro);
         dao.create(aeFirst);
         dao.create(aeSecond);
 
@@ -122,8 +138,8 @@ public class AnimalEnvironmentDaoImplTest {
     @Test
     public void testDeleteRemovesEntity() {
         AnimalEnvironment ae = new AnimalEnvironment();
-        ae.setAnimal(dog());
-        ae.setEnvironment(environment());
+        ae.setAnimal(dog);
+        ae.setEnvironment(enviro);
         dao.create(ae);
         dao.remove(ae);
         assertTrue(dao.findAll().isEmpty());
@@ -143,20 +159,4 @@ public class AnimalEnvironmentDaoImplTest {
         expectedException.expect(DataAccessException.class);
         dao.remove(aeNotInDb);
     }
-
-    private static Animal dog() {
-        return new Animal("dog", "dogs");
-    }
-
-    private static Animal cat() {
-        return new Animal("cat", "cats");
-    }
-
-    private static Environment environment() {
-        Environment e = new Environment();
-        e.setName("Forest");
-        e.setMaxAnimalCount(100L);
-        return e;
-    }
-
 }

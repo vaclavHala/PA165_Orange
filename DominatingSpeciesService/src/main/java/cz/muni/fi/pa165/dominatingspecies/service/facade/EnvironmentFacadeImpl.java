@@ -24,11 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
     private final EnvironmentService environmentService;
-    
+
     private final AnimalService animalService;
-    
+
     private final AnimalEnvironmentService aeService;
-    
+
     private final BeanMappingService mappingService;
 
     @Inject
@@ -38,7 +38,7 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
         this.aeService = aeService;
         this.mappingService = mappingService;
     }
-    
+
     @Override
     public Collection<EnvironmentDTO> findAllEnvironments() {
         return mappingService.map(environmentService.findAll(), EnvironmentDTO.class);
@@ -47,78 +47,90 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
     @Override
     public EnvironmentDTO findEnvironment(long id) {
         Environment environment = environmentService.findById(id);
-        
+
         if (environment == null) {
             return null;
         }
-        
+
         return mappingService.map(environment, EnvironmentDTO.class);
     }
 
     @Override
     public long createEnvironment(EnvironmentDTO environment) {
         Environment entity = mappingService.map(environment, Environment.class);
-        
+
         environmentService.create(entity);
-        
+
         return entity.getId();
     }
 
     @Override
     public void updateEnvironment(EnvironmentDTO environment) {
         Environment entity = mappingService.map(environment, Environment.class);
-        
+
         environmentService.update(entity);
     }
 
     @Override
     public void deleteAnimalEnvironment(long animalId, long envId) {
         AnimalEnvironment entity = aeService.findByIdAnimalEnvironment(animalId, envId);
-        
+
         aeService.remove(entity);
     }
 
     @Override
     public void deleteEnvironment(long id) {
         Environment entity = environmentService.findById(id);
-        
+
         environmentService.remove(entity);
     }
 
     @Override
     public long addAnimalEnvironment(AnimalEnvironmentDTO animalEnvironment) {
         AnimalEnvironment entity = mappingService.map(animalEnvironment, AnimalEnvironment.class);
-        
+
         Animal managedAnimal = animalService.findById(animalEnvironment.getAnimal().getId());
         Environment managedEnvironment = environmentService.findById(animalEnvironment.getEnvironment().getId());
-        
+
         entity.setAnimal(managedAnimal);
         entity.setEnvironment(managedEnvironment);
-        
+
         aeService.create(entity);
-        
+
         return entity.getId();
     }
 
     @Override
     public void removeAnimalEnvironment(long id) {
         AnimalEnvironment entity = aeService.findById(id);
-        
+
         aeService.remove(entity);
     }
 
     @Override
     public Collection<AnimalDetailDTO> findAnimalsInEnvironment(long environmentId) {
         Environment environment = environmentService.findById(environmentId);
-        
+
         return mappingService.map(environmentService.findAnimalsForEnvironment(environment), AnimalDetailDTO.class);
     }
 
     @Override
     public Collection<EnvironmentDTO> findEnvironmentsForAnimal(long animalId) {
         Animal animal = animalService.findById(animalId);
-        
+
         return mappingService.map(environmentService.findEnvironmentsForAnimal(animal), EnvironmentDTO.class);
     }
-    
+
+    public long createAnimalEnvironment(long animalId, long environmentId) {
+        AnimalEnvironment aeExisting = aeService.findByIdAnimalEnvironment(animalId, environmentId);
+        if (aeExisting != null) {
+            return aeExisting.getId();
+        }
+        AnimalEnvironment ae = new AnimalEnvironment(
+                animalService.findById(animalId),
+                environmentService.findById(environmentId));
+        aeService.create(ae);
+        return ae.getId();
+    }
+
 }

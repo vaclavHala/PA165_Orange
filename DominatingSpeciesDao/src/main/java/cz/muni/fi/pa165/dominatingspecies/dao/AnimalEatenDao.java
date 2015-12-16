@@ -8,12 +8,13 @@ import java.util.List;
  * @author Daniel Minarik
  */
 public interface AnimalEatenDao {
+
     /**
      * Creates new instance of AnimalEaten
      * @param animalEaten Instance of AnimalEaten
      */
     public void create(AnimalEaten animalEaten);
-    
+
     /**
      * Returns list of all AnimalEaten
      * @return List List of AnimalEaten
@@ -25,14 +26,20 @@ public interface AnimalEatenDao {
      * @param id Id of an animal
      * @return AnimalEaten Instance of AnimalEaten
      */
-    public AnimalEaten findById(Long id);
-    
+    public AnimalEaten findById(long id);
+
+    /**
+     * Finds AnimalEaten which has the given combination of predator and prey
+     * @return the AnimalEaten or null if no such exists
+     */
+    public AnimalEaten findByAnimalsInvolved(long predatorId, long preyId);
+
     /**
      * Removes AnimalEaten
      * @param animalEaten Instance of AnimalEaten
      */
     public void remove(AnimalEaten animalEaten);
-    
+
     /**
      * Updates record for AnimalEaten in persistent storage
      * @param animal

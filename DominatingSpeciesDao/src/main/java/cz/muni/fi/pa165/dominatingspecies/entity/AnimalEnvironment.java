@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by Petr Domkař on 25. 10. 2015.
  */
-
 /**
  * Entity representing relationship between Animal and Environment.
  * Property percentage determines, how many environment animal needed.
@@ -20,53 +19,57 @@ public class AnimalEnvironment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "fk_animal_id")
     @NotNull
     private Animal animal;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "fk_environment_id")
     @NotNull
     private Environment environment;
 
     private double percentage;
 
-    public AnimalEnvironment() {}
+    public AnimalEnvironment() {
+    }
 
     public AnimalEnvironment(Animal animal, Environment environment) {
         this.animal = animal;
         this.environment = environment;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null)
+        }
+        if (o == null) {
             return false;
-        if (!(o instanceof AnimalEnvironment))
+        }
+        if (!(o instanceof AnimalEnvironment)) {
             return false;
+        }
 
         AnimalEnvironment animalEnv = (AnimalEnvironment) o;
 
         if (this.animal == null) {
-            if (animalEnv.getAnimal() != null)
+            if (animalEnv.getAnimal() != null) {
                 return false;
+            }
         } else if (!this.animal.equals(animalEnv.getAnimal())) {
             return false;
         }
         if (this.environment == null) {
-            if (animalEnv.getEnvironment() != null)
+            if (animalEnv.getEnvironment() != null) {
                 return false;
+            }
         } else if (!this.environment.equals(animalEnv.getEnvironment())) {
             return false;
         }
 
         return true;
     }
-
 
     @Override
     public int hashCode() {
