@@ -1,8 +1,7 @@
-package cz.muni.fi.pa165.orange.dominatingspeciesrest.config;
+package cz.muni.fi.pa165.dominatingspeciesrest.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -15,10 +14,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import cz.muni.fi.pa165.dominatingspecies.sampledata.DominatingSpeciesSampleDataConfiguration;
 
 @EnableWebMvc
 @Configuration
-@Import({DominatingSpeciesServiceConfig.class})
+@Import({DominatingSpeciesSampleDataConfiguration.class})
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.dominatingspeciesrest.controllers"})
 public class RootWebContext extends WebMvcConfigurerAdapter {
 

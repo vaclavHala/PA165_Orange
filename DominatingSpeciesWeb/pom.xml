@@ -27,6 +27,12 @@
             <version>4.2.3.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>cz.muni.fi.pa165.orange</groupId>
+            <artifactId>DominatingSpeciesSampleData</artifactId>
+            <version>1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>

@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.orange.dominatingspeciesrest.config;
+package cz.muni.fi.pa165.dominatingspeciesrest.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
