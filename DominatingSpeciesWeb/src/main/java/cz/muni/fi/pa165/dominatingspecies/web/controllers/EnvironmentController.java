@@ -25,25 +25,6 @@ public class EnvironmentController {
 
     @Inject
     private EnvironmentFacade facade;
-
-    @Inject
-    private AnimalFacade animalFacade;
-
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newProduct(Model model) {
-        model.addAttribute("environment", new EnvironmentDTO());
-        
-        return "environment/edit";
-    }
-    
-    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-    public String edit(@PathVariable long id, Model model) {
-        model.addAttribute("environment", facade.findEnvironment(id));
-        model.addAttribute("animals", facade.findAnimalsInEnvironment(id));
-        model.addAttribute("allAnimals", animalFacade.findAllAnimals());
-        
-        return "environment/edit";
-    }
     
     @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
@@ -53,32 +34,35 @@ public class EnvironmentController {
                 model.addAttribute(fe.getField() + "_error", true);
             }
             
-            return "environment/edit";
+            return "environment/view";
         }
         
         formBean.setId(id);
         facade.updateEnvironment(formBean);
         redirectAttributes.addFlashAttribute("alert_success", "Environment " + id + " was updated");
         
-        return "redirect:" + uriBuilder.path("/environment/{id}/edit").buildAndExpand(id).encode().toUriString();
+        return "redirect:" + uriBuilder.path("/environment/{id}").buildAndExpand(id).encode().toUriString();
     }
     
     @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("environment") EnvironmentDTO formBean, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+    public String create(@Valid @ModelAttribute("newEnvironment") EnvironmentDTO formBean, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
+                model.addAttribute(fe.getField() + "_error_message", fe.getDefaultMessage());
             }
             
-            return "environment/edit";
+            model.addAttribute("environments", facade.findAllEnvironments());
+            
+            return "environment/list";
         }
         
         Long id = facade.createEnvironment(formBean);
         
         redirectAttributes.addFlashAttribute("alert_success", "Environment " + id + " was created");
         
-        return "redirect:" + uriBuilder.path("/environment/{id}/edit").buildAndExpand(id).encode().toUriString();
+        return "redirect:/environment/";
     }
     
     @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
@@ -102,6 +86,7 @@ public class EnvironmentController {
     @RequestMapping(value = "/", method = GET)
     public String list(Model model) {
         model.addAttribute("environments", facade.findAllEnvironments());
+        model.addAttribute("newEnvironment", new EnvironmentDTO());
         
         return "environment/list";
     }

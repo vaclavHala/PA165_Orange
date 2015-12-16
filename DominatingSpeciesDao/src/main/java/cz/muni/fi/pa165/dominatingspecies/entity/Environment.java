@@ -1,11 +1,14 @@
 package cz.muni.fi.pa165.dominatingspecies.entity;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.OneToMany;
 
 /**
  * @author Ivan Kralik
@@ -24,6 +27,9 @@ public class Environment implements Serializable {
     
     @NotNull
     private Long maxAnimalCount;
+    
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "environment")
+    private Set<AnimalEnvironment> animalEnvironments;
 
     public Long getId() {
         return id;
