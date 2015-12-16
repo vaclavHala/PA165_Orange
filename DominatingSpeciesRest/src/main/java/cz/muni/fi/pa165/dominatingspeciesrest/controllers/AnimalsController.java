@@ -36,8 +36,7 @@ public class AnimalsController {
     private AnimalFacade animalFacade;
 
     /**
-     * Get list of Animal curl -i -X GET
-     * http://localhost:8080/pa165/rest/animals
+     * Get list of Animal curl -i -X GET http://localhost:8080/pa165/rest/animals
      *
      * @return ProductDTO
      */
@@ -48,8 +47,7 @@ public class AnimalsController {
     }
     
     /**
-     * Get Detail of Animal with id curl -i -X GET
-     * http://localhost:8080/pa165/rest/animals/1
+     * Get Detail of Animal with id curl -i -X GET http://localhost:8080/pa165/rest/animals/1
      * 
      * @param id identifier for animal
      * @return AnimalDetailDTO
@@ -67,8 +65,7 @@ public class AnimalsController {
     }
     
     /**
-     * Get brief Detail of Animal with id curl -i -X GET
-     * http://localhost:8080/pa165/rest/animals/1/brief
+     * Get brief Detail of Animal with id curl -i -X GET http://localhost:8080/pa165/rest/animals/1/brief
      * 
      * @param id identifier for animal
      * @return AnimalBriefDTO
@@ -86,8 +83,7 @@ public class AnimalsController {
     }
     
     /**
-     * Delete a Animal with id curl -i -X DELETE
-     * http://localhost:8080/pa165/rest/animals/1
+     * Delete a Animal with id curl -i -X DELETE http://localhost:8080/pa165/rest/animals/1
      * 
      * @param id identifier for animal
      * @throws ResourceNotFoundException
@@ -103,9 +99,7 @@ public class AnimalsController {
     }
     
     /**
-     * Create a Animal with curl -X POST -i -H "Content-Type: application/json" --data 
-     * '{"name":"test","species":"test"}' 
-     * http://localhost:8080/pa165/rest/animals/create
+     * Create a Animal curl -X POST -i -H "Content-Type: application/json" --data '{"name":"test","species":"test"}'  http://localhost:8080/pa165/rest/animals/create
      * 
      * @param animal AnimalNewDTO with required fields for creation
      * @return the created brief animal
@@ -124,9 +118,7 @@ public class AnimalsController {
     
     
     /**
-     * UPDATE a Animal with curl curl -X PUT -i -H "Content-Type: application/json" --data 
-     * '{"id": "1", "name":"test","species":"test","foodNeeded":"100","repreductionRate":"2.2"}' 
-     * http://localhost:8080/pa165/rest/animals/update
+     * UPDATE a Animal curl -X PUT -i -H "Content-Type: application/json" --data '{"id": "1", "name":"test","species":"test","foodNeeded":"100","repreductionRate":"2.2"}' http://localhost:8080/pa165/rest/animals/update
      * 
      * @param animal AnimalDetailDTO with id
      * @return the created detail animal
