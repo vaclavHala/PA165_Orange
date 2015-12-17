@@ -1,0 +1,87 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building DominatingSpeciesWeb 1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] >>> tomcat7-maven-plugin:2.2:run (default-cli) @ DominatingSpeciesWeb >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ DominatingSpeciesWeb ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 0 resource
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ DominatingSpeciesWeb ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 8 source files to /home/hala/Documents/toy/DominatingSpecies/DominatingSpeciesWeb/target/classes
+[INFO] 
+[INFO] <<< tomcat7-maven-plugin:2.2:run (default-cli) @ DominatingSpeciesWeb <<<
+[INFO] 
+[INFO] --- tomcat7-maven-plugin:2.2:run (default-cli) @ DominatingSpeciesWeb ---
+[INFO] Running war on http://localhost:8080/pa165
+[INFO] Using existing Tomcat server configuration at /home/hala/Documents/toy/DominatingSpecies/DominatingSpeciesWeb/target/tomcat
+[INFO] create webapp with contextPath: /pa165
+00:21:50.579 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+00:21:50.590 [localhost-startStop-1] INFO  o.s.w.c.s.AnnotationConfigWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Fri Dec 18 00:21:50 CET 2015]; root of context hierarchy
+00:21:50.678 [localhost-startStop-1] INFO  o.s.w.c.s.AnnotationConfigWebApplicationContext - Registering annotated classes: [class cz.muni.fi.pa165.dominatingspecies.web.config.DominatingSpeciesWebConfig,class cz.muni.fi.pa165.dominatingspecies.service.config.DominatingSpeciesServiceConfig]
+00:21:51.871 [localhost-startStop-1] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:21:51.952 [localhost-startStop-1] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dominatingSpeciesConfig' of type [class cz.muni.fi.pa165.dominatingspecies.DominatingSpeciesConfig$$EnhancerBySpringCGLIB$$de138bd8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+00:21:52.531 [localhost-startStop-1] INFO  o.s.j.d.e.EmbeddedDatabaseFactory - Starting embedded database: url='jdbc:derby:memory:testdb;create=true', username='sa'
+00:21:53.785 [localhost-startStop-1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Building JPA container EntityManagerFactory for persistence unit 'default'
+00:21:56.557 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table AnimalEaten drop constraint FK_fpennslguudyf5x522uc0coia
+00:21:56.561 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.565 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table AnimalEaten drop constraint FK_8mw5efvdaidk75v86ggkhb4m4
+00:21:56.566 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.568 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table AnimalEnvironment drop constraint FK_7fp6q8m6y3jkpsd821uqnwjuc
+00:21:56.568 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.569 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: alter table AnimalEnvironment drop constraint FK_15fbgpxjpmagohpr0kc2iobec
+00:21:56.570 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.573 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: drop table Animal
+00:21:56.574 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.578 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: drop table AnimalEaten
+00:21:56.579 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.580 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: drop table AnimalEnvironment
+00:21:56.582 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:56.583 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - HHH000389: Unsuccessful: drop table Environment
+00:21:56.584 [localhost-startStop-1] ERROR o.h.tool.hbm2ddl.SchemaExport - Schema 'SA' does not exist
+00:21:57.217 [localhost-startStop-1] INFO  org.dozer.config.GlobalSettings - Trying to find Dozer configuration file: dozer.properties
+00:21:57.228 [localhost-startStop-1] WARN  org.dozer.config.GlobalSettings - Dozer configuration file not found: dozer.properties.  Using defaults for all Dozer global properties.
+00:21:57.232 [localhost-startStop-1] INFO  org.dozer.DozerInitializer - Initializing Dozer. Version: 5.5.0, Thread Name: localhost-startStop-1
+00:21:57.236 [localhost-startStop-1] INFO  org.dozer.jmx.JMXPlatformImpl - Dozer JMX MBean [org.dozer.jmx:type=DozerStatisticsController] auto registered with the Platform MBean Server
+00:21:57.238 [localhost-startStop-1] INFO  org.dozer.jmx.JMXPlatformImpl - Dozer JMX MBean [org.dozer.jmx:type=DozerAdminController] auto registered with the Platform MBean Server
+00:21:57.239 [localhost-startStop-1] INFO  org.dozer.DozerBeanMapper - Initializing a new instance of dozer bean mapper.
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+aeExnull
+00:21:59.256 [localhost-startStop-1] INFO  o.s.s.web.DefaultSecurityFilterChain - Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2fe6392d, org.springframework.security.web.context.SecurityContextPersistenceFilter@2ec02de6, org.springframework.security.web.header.HeaderWriterFilter@70d1a3bd, org.springframework.security.web.authentication.logout.LogoutFilter@38b524bf, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@65e5b39a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f274ae3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4f2bb5ee, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@528d5509, org.springframework.security.web.session.SessionManagementFilter@18c6026c, org.springframework.security.web.access.ExceptionTranslationFilter@64c86f15, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4072c1ca]
+00:21:59.670 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/environment/{id}],methods=[GET]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.EnvironmentController.view(long,org.springframework.ui.Model)
+00:21:59.671 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/environment/{id}],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.EnvironmentController.update(long,cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO,org.springframework.validation.BindingResult,org.springframework.ui.Model,org.springframework.web.servlet.mvc.support.RedirectAttributes,org.springframework.web.util.UriComponentsBuilder)
+00:21:59.672 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/environment/{id}/delete],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.EnvironmentController.delete(long,org.springframework.ui.Model,org.springframework.web.util.UriComponentsBuilder,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.672 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/environment/],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.EnvironmentController.create(cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO,org.springframework.validation.BindingResult,org.springframework.ui.Model,org.springframework.web.servlet.mvc.support.RedirectAttributes,org.springframework.web.util.UriComponentsBuilder)
+00:21:59.672 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/environment/],methods=[GET]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.EnvironmentController.list(org.springframework.ui.Model)
+00:21:59.678 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}/prey],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.addPrey(long,java.lang.Long,org.springframework.ui.Model)
+00:21:59.679 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}/predator],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.addPredator(long,java.lang.Long,org.springframework.ui.Model)
+00:21:59.679 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}/eaten/update],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.updateAnimalEaten(long,javax.servlet.http.HttpServletRequest)
+00:21:59.679 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}/eaten/delete],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.deleteAnimalEaten(long)
+00:21:59.679 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}],methods=[GET]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.detail(long,org.springframework.ui.Model)
+00:21:59.680 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/{id}/delete],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.delete(long,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.680 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.create(cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO,org.springframework.validation.BindingResult,org.springframework.ui.Model,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.680 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animal/],methods=[GET]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalController.list(org.springframework.ui.Model)
+00:21:59.681 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/login],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView cz.muni.fi.pa165.dominatingspecies.web.controllers.LoginController.login(java.lang.String,java.lang.String)
+00:21:59.683 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animalenvironment/animalId/{envId}/addAnimal],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalEnvironmentController.addAnimal(long,long,org.springframework.ui.Model,org.springframework.web.util.UriComponentsBuilder,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.684 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animalenvironment/{animalId}/envId/addEnvironment],methods=[POST]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalEnvironmentController.addEnvironment(long,long,org.springframework.ui.Model,org.springframework.web.util.UriComponentsBuilder,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.684 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/animalenvironment/{animalId}/{envId}/remove/{redirectTo}],methods=[GET]}" onto public java.lang.String cz.muni.fi.pa165.dominatingspecies.web.controllers.AnimalEnvironmentController.remove(long,long,java.lang.String,org.springframework.ui.Model,org.springframework.web.util.UriComponentsBuilder,org.springframework.web.servlet.mvc.support.RedirectAttributes)
+00:21:59.712 [localhost-startStop-1] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+00:21:59.713 [localhost-startStop-1] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/login] onto handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+00:21:59.805 [localhost-startStop-1] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: Root WebApplicationContext: startup date [Fri Dec 18 00:21:50 CET 2015]; root of context hierarchy
+00:22:00.003 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 9419 ms
+00:22:00.087 [localhost-startStop-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcher': initialization started
+00:22:00.107 [localhost-startStop-1] INFO  o.s.w.c.s.AnnotationConfigWebApplicationContext - Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Fri Dec 18 00:22:00 CET 2015]; parent: Root WebApplicationContext
+00:22:00.113 [localhost-startStop-1] INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+00:22:00.177 [localhost-startStop-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcher': initialization completed in 76 ms

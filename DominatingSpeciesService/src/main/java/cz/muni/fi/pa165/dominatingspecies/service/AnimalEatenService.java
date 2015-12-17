@@ -43,9 +43,8 @@ public interface AnimalEatenService {
 
     /**
      * Update animalEaton
-     * @param animalEaten
      */
-    public void update(AnimalEaten animalEaten);
+    public void updateCount(long animalEatenId, Double newCount);
 
     /**
      * Find All animals which are predator of animal

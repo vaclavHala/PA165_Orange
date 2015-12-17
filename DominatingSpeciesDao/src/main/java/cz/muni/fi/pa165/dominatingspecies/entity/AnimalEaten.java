@@ -19,7 +19,7 @@ public class AnimalEaten {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private double animalCount;
+    private Double animalCount;
 
     @OneToOne
     @NotNull
@@ -54,7 +54,7 @@ public class AnimalEaten {
         }
         AnimalEaten other = (AnimalEaten) obj;
         return this.predator.equals(other.getPredator())
-            && this.prey.equals(other.getPrey());
+                && this.prey.equals(other.getPrey());
     }
 
     @Override
@@ -70,11 +70,11 @@ public class AnimalEaten {
         this.id = id;
     }
 
-    public double getAnimalCount() {
+    public Double getAnimalCount() {
         return animalCount;
     }
 
-    public void setAnimalCount(double animalCount) {
+    public void setAnimalCount(Double animalCount) {
         this.animalCount = animalCount;
     }
 

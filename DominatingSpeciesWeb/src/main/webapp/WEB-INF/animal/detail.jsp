@@ -11,6 +11,11 @@
     <jsp:attribute name="content">
         <div class="container">
 
+            <c:set var="disabled" scope="request" value="disabled"/>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <c:set var="disabled" scope="request" value=""/>
+            </sec:authorize>
+
             <hr/>
 
             <ul class="nav nav-tabs">
@@ -26,21 +31,19 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-1">Name:</label>
                                 <div class="col-xs-4">
-                                    <domspec:authorized_textbox role="ADMIN" name="name" value="${animal.name}"/>
+                                    <input ${disabled} type="text" name="name" class="form-control" value="${animal.name}"/>
                                     <c:if test="${not empty name_error}"><label class="text-error">${name_error_message}</label></c:if>
                                     </div>
                                     <label class="control-label col-xs-1">Species:</label>
                                     <div class="col-xs-4">
-                                    <domspec:authorized_textbox role="ADMIN" name="species" value="${animal.species}"/>
+                                        <input ${disabled} type="text" name="species" class="form-control" value="${animal.species}"/>
                                     <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
                                     </div>
-                                <domspec:authorized_hidden role="ADMIN">
-                                    <jsp:attribute name="content">
-                                        <div class="col-xs-2">
-                                            <button type="submit" class="btn btn-default">Save Changes</button>
-                                        </div>
-                                    </jsp:attribute>
-                                </domspec:authorized_hidden>
+                                <c:if test="${disabled}">
+                                    <div class="col-xs-2">
+                                        <button type="submit" class="btn btn-default">Save Changes</button>
+                                    </div>
+                                </c:if>
                             </div>
                         </form>
                         <hr/>
@@ -48,160 +51,136 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-2">Food Needed:</label>
                                 <div class="col-xs-5">
-                                    <sec:authorize access="hasRole('USER')">
-                                        <div class="input-group">
-                                            <input type="number" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
-                                            <span class="input-group-addon">kg/day</span>
-                                        </div>
-                                    </sec:authorize>
-                                    <sec:authorize access="not hasRole('USER')">
-                                        <div class="input-group">
-                                            <input disabled type="text" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
-                                            <span class="input-group-addon">kg/day</span>
-                                        </div>
-                                    </sec:authorize>
+                                    <div class="input-group">
+                                        <input type="number" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
+                                        <span class="input-group-addon">kg/day</span>
+                                    </div>
                                     <c:if test="${not empty foodNeeded_error}"><label class="text-error">${foodNeeded_error_message}</label></c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-xs-2">Reproduction Rate:</label>
                                     <div class="col-xs-5">
-                                    <sec:authorize access="hasRole('USER')">
                                         <div class="input-group">
                                             <input type="number" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
-                                            <span class="input-group-addon">%/year</span>
-                                        </div>
-                                    </sec:authorize>
-                                    <sec:authorize access="not hasRole('USER')">
-                                        <div class="input-group">
-                                            <input disabled type="text" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
-                                            <span class="input-group-addon">%/year</span>
-                                        </div>
-                                    </sec:authorize>
+                                        <span class="input-group-addon">%/year</span>
+                                    </div>
                                     <c:if test="${not empty reproductionRate_error}"><label class="text-error">${reproductionRate_error_message}</label></c:if>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                <sec:authorize access="hasRole('USER')">
                                     <div class="col-xs-2"></div>
                                     <div class="col-xs-3">
                                         <button type="submit" class="btn btn-default">Save Changes</button>
                                     </div>
-                                </sec:authorize>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="panel panel-default tab-pane" id="food">
-                    <div class="panel-heading">Food Chain</div>
-
-                    <div class="panel-body">
-
-                        <div class="col-xs-6">
-
-                            <h4>Prey</h4>
-                            <hr/>
-
-                            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/prey">
-                                <div class="form-group">
-                                    <div class="col-xs-10" >
-                                        <select class="form-control" name="prey">
-                                            <option value="">Choose Prey</option>
-                                            <c:forEach items="${allAnimals}" var="animal">
-                                                <option value="${animal.id}">${animal.name} of ${animal.species}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Add Prey</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
 
-                            </hr>
+                    <div class="panel panel-default tab-pane" id="food">
+                        <div class="panel-heading">Food Chain</div>
 
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Species</th>
-                                        <th>Count</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${animal.prey}" var="prey">
-                                        <tr>
-                                            <td><c:out value="${prey.prey.name}"/></td>
-                                            <td><c:out value="${prey.prey.species}"/></td>
-                                            <td>
-                                                <sec:authorize access="hasRole('USER')">
-                                                    <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="number" step="any" name="count" style="width: 100px;" class="form-control" placeholder="unknown" value="${prey.animalCount}"/>
-                                                                <span class="input-group-addon">pcs/wk</span>
-                                                            </div>
-                                                            <button  type="submit" class="btn btn-default">Update</button>
-                                                        </div>
-                                                    </form>
-                                                </sec:authorize>
-                                            </td>
-                                            <td>
-                                                <sec:authorize access="hasRole('ADMIN')">
-                                                    <form method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure wish to to delete this association?');">Delete</button>
-                                                    </form>
-                                                </sec:authorize>
-                                            </td>
-                                        </tr>
+                        <div class="panel-body">
+
+                            <div class="col-xs-6">
+                                <h4>Prey</h4>
+                                <hr/>
+                                <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/prey">
+                                <select class="form-control" name="prey">
+                                    <option value="">Choose Prey</option>
+                                    <c:forEach items="${addablePrey}" var="animal">
+                                        <option value="${animal.id}">${animal.name} of ${animal.species}</option>
                                     </c:forEach>
+                                </select>
+                                <button type="submit" class="btn btn-default">Add Prey</button>
+                            </form>
+                            <hr/>
+                            <form class="form-inline" method="POST" >
+                                <label class="control-label">Selected Prey:</label>
+                                <button type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath}/animal/${animal.id}/eaten/update" >Update</button>
+                                <button type="submit" class="btn btn-danger" formaction="${pageContext.request.contextPath}/animal/${animal.id}/eaten/delete">Delete</button>
 
-                                </tbody>
-                            </table>
+                                <div class="col-xs-12" style="height:20px;"></div>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Species</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${animal.prey}" var="prey">
+                                            <tr>
+                                                <td><input type="checkbox" name="check_${prey.id}"/></td>
+                                                <td><c:out value="${prey.prey.name}"/></td>
+                                                <td><c:out value="${prey.prey.species}"/></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="number" step="any" name="count_${prey.id}" style="width: 100px;" class="form-control" placeholder="unknown" value="${prey.animalCount}"/>
+                                                            <div class="input-group-addon">pcs/wk</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
 
                         <div class="col-xs-6">
-
-                            <table class="table table-striped">
-                                <caption>Prey</caption>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Species</th>
-                                        <th>Count</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${animal.prey}" var="prey">
-                                        <tr>
-                                            <td><c:out value="${prey.prey.name}"/></td>
-                                            <td><c:out value="${prey.prey.species}"/></td>
-                                            <td>
-                                                <sec:authorize access="hasRole('USER')">
-                                                    <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="number" step="any" name="count" style="width: 100px;" class="form-control" placeholder="unknown" value="${prey.animalCount}"/>
-                                                                <span class="input-group-addon">pcs/wk</span>
-                                                            </div>
-                                                            <button  type="submit" class="btn btn-default">Update</button>
-                                                        </div>
-                                                    </form>
-                                                </sec:authorize>
-                                            </td>
-                                            <td>
-                                                <sec:authorize access="hasRole('ADMIN')">
-                                                    <form method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure wish to to delete this association?');">Delete</button>
-                                                    </form>
-                                                </sec:authorize>
-                                            </td>
-                                        </tr>
+                            <h4>Predators</h4>
+                            <hr/>
+                            <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/predator">
+                                <select class="form-control" name="predator">
+                                    <option value="">Choose Predator</option>
+                                    <c:forEach items="${addablePredators}" var="animal">
+                                        <option value="${animal.id}">${animal.name} of ${animal.species}</option>
                                     </c:forEach>
+                                </select>
+                                <button type="submit" class="btn btn-default">Add Predator</button>
+                            </form>
+                            <hr/>
+                            <form class="form-inline" method="POST" >
+                                <label class="control-label">Selected Predators:</label>
+                                <button type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath}/animal/${animal.id}/eaten/update" >Update</button>
+                                <button type="submit" class="btn btn-danger" formaction="${pageContext.request.contextPath}/animal/${animal.id}/eaten/delete">Delete</button>
 
-                                </tbody>
-                            </table>
+                                <div class="col-xs-12" style="height:20px;"></div>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Species</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${animal.predators}" var="predator">
+                                            <tr>
+                                                <td><input type="checkbox" name="check_${predator.id}"/></td>
+                                                <td><c:out value="${predator.predator.name}"/></td>
+                                                <td><c:out value="${predator.predator.species}"/></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="number" step="any" name="count_${predator.id}" style="width: 100px;" class="form-control" placeholder="unknown" value="${predator.animalCount}"/>
+                                                            <div class="input-group-addon">pcs/wk</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -59,7 +59,7 @@ public interface AnimalFacade {
      * Update info about one Animal eating another
      * @param animalEaten must have id set
      */
-    void updateAnimalEaten(AnimalEatenDTO animalEaten);
+    void updateAnimalEaten(long animalEatenId, Double newCount);
 
     /**
      * Delete info about one Animal eating another

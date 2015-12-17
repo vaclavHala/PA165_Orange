@@ -75,8 +75,13 @@ public class AnimalEatenServiceImpl implements AnimalEatenService {
     }
 
     @Override
-    public void update(AnimalEaten animalEaten) {
-        animalEatenDao.update(animalEaten);
+    public void updateCount(long animalEatenId, Double newCount) {
+        AnimalEaten ae = this.animalEatenDao.findById(animalEatenId);
+        if (ae == null) {
+            throw new IllegalArgumentException("Cant update non-existing animal with id " + animalEatenId);
+        }
+        ae.setAnimalCount(newCount);
+        animalEatenDao.update(ae);
     }
 
     @Override

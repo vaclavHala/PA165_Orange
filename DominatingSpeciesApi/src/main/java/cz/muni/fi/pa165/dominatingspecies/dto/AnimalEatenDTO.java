@@ -50,7 +50,7 @@ public class AnimalEatenDTO {
         return animalCount;
     }
 
-    public void setAnimalCount(double animalCount) {
+    public void setAnimalCount(Double animalCount) {
         this.animalCount = animalCount;
     }
 
@@ -66,7 +66,7 @@ public class AnimalEatenDTO {
         }
         AnimalEatenDTO other = (AnimalEatenDTO) obj;
         return other.getPredator().equals(this.getPredator())
-            && other.getPrey().equals(this.getPrey());
+                && other.getPrey().equals(this.getPrey());
     }
 
 }

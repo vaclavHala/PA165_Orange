@@ -91,8 +91,8 @@ public class AnimalFacadeImpl implements AnimalFacade {
     }
 
     @Override
-    public void updateAnimalEaten(AnimalEatenDTO animalEaten) {
-        animalEatenService.update(beanMappingService.map(animalEaten, AnimalEaten.class));
+    public void updateAnimalEaten(long animalEatenId, Double newCount) {
+        animalEatenService.updateCount(animalEatenId, newCount);
     }
 
     @Override
