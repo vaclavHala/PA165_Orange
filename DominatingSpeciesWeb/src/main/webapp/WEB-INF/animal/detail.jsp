@@ -12,7 +12,7 @@
         <div class="container">
 
             <c:set var="disabled" scope="request" value="disabled"/>
-            <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <sec:authorize access="hasAuthority('ADMIN')">
                 <c:set var="disabled" scope="request" value=""/>
             </sec:authorize>
 

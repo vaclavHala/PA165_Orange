@@ -1,8 +1,12 @@
 package cz.muni.fi.pa165.dominatingspecies.web.config;
 
+import javax.inject.Inject;
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +21,15 @@ public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapte
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
 
+    private static final String USER_QUERY = "SELECT username, password, TRUE FROM usr WHERE username= ?";
+    private static final String ROLE_QUERY = "SELECT username, name FROM role r join role_user ru on r.id = ru.fk_role join usr u on u.id = ru.fk_user where username = ?";
+
+    @Inject
+    private DataSource datasource;
+
+    @Inject
+    private PasswordEncoder passEncoder;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -29,7 +42,12 @@ public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapte
                 .and()
                 .logout().permitAll();
     }
-    
+
+    @Bean
+    public PasswordEncoder passEncoder() {
+        return new ShaPasswordEncoder(512);
+    }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -38,11 +56,11 @@ public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //TODO jdbAuth
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("admin").roles(ROLE_ADMIN, ROLE_USER).and()
-                .withUser("assistant").password("123").roles(ROLE_USER);
-
+        auth.jdbcAuthentication()
+                .dataSource(this.datasource)
+                .usersByUsernameQuery(USER_QUERY)
+                .passwordEncoder(this.passEncoder)
+                .authoritiesByUsernameQuery(ROLE_QUERY);
     }
 
 }
