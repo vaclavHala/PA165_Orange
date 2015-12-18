@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.dominatingspecies.service.facade;
 
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
@@ -115,17 +115,17 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
     public AnimalEnvironmentDTO findAeById(long id) {
         return mappingService.map(aeService.findById(id), AnimalEnvironmentDTO.class);
     }
-    
+
     @Override
     public Collection<AnimalEnvironmentDTO> findAeByAnimalId(long animalId) {
         return mappingService.map(aeService.findByAnimalId(animalId), AnimalEnvironmentDTO.class);
     }
-    
+
     @Override
     public Collection<AnimalEnvironmentDTO> findAeByEnvironmentId(long envId) {
         return mappingService.map(aeService.findByEnvironmentId(envId), AnimalEnvironmentDTO.class);
     }
-    
+
     @Override
     public void removeAnimalEnvironment(long id) {
         AnimalEnvironment entity = aeService.findById(id);
@@ -134,10 +134,10 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
     }
 
     @Override
-    public Collection<AnimalDetailDTO> findAnimalsInEnvironment(long environmentId) {
+    public Collection<AnimalBriefDTO> findAnimalsInEnvironment(long environmentId) {
         Environment environment = environmentService.findById(environmentId);
 
-        return mappingService.map(environmentService.findAnimalsForEnvironment(environment), AnimalDetailDTO.class);
+        return mappingService.map(environmentService.findAnimalsForEnvironment(environment), AnimalBriefDTO.class);
     }
 
     @Override
