@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -8,9 +9,13 @@ import java.util.Objects;
  */
 public class AnimalEatenDTO {
 
+    @NotNull
     private Long id;
+    @NotNull
     private Double animalCount;
+    @NotNull
     private AnimalBriefDTO predator;
+    @NotNull
     private AnimalBriefDTO prey;
 
     public AnimalEatenDTO() {
