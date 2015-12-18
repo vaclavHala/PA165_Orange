@@ -15,7 +15,7 @@ public interface EnvironmentFacade {
     public Collection<EnvironmentDTO> findAllEnvironments();
     
     /**
-     * Finds and returns environment for spevified identifier
+     * Finds and returns environment for specified identifier
      * 
      * @param id Identifier of environment
      * 
@@ -38,6 +38,13 @@ public interface EnvironmentFacade {
      * @param environment New data for environment
      */
     public void updateEnvironment(EnvironmentDTO environment);
+    
+    /**
+     * Updates data for specified AnimalEnvironment in system
+     * 
+     * @param AnimalEnvironment New data for AnimalEnvironment
+     */
+    public void updateAnimalEnvironment(AnimalEnvironmentDTO ae);
     
     /**
      * Removes environment with specified identifier from system
@@ -70,6 +77,30 @@ public interface EnvironmentFacade {
      */
     public void removeAnimalEnvironment(long id);
     
+    /**
+     * Finds and returns AnimalEnvironment for specified identifier
+     * 
+     * @param id Identifier of AnimalEnvironment
+     * @return The AnimalEnvironment
+     */
+    public AnimalEnvironmentDTO findAeById(long id);
+
+    /**
+     * Finds and returns AnimalEnvironment for specified identifier
+     * 
+     * @param animalId Identifier of animal
+     * @return The AnimalEnvironment
+     */
+    public Collection<AnimalEnvironmentDTO> findAeByAnimalId(long animalId);
+
+    /**
+     * Finds and returns AnimalEnvironment for specified identifier
+     * 
+     * @param envId Identifier of environment
+     * @return The AnimalEnvironment
+     */
+    public Collection<AnimalEnvironmentDTO> findAeByEnvironmentId(long envId);
+
     /**
      * Finds and returns animals assigned to environment with specified identifier
      * 

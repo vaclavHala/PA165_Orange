@@ -1,22 +1,17 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEnvironmentDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
-import cz.muni.fi.pa165.dominatingspecies.web.config.DominatingSpeciesSecurityConfig;
-import javax.annotation.security.RolesAllowed;
+import static java.lang.String.format;
 import javax.inject.Inject;
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,21 +31,25 @@ public class AnimalEnvironmentController {
     private AnimalFacade animalFacade;
 
     @RequestMapping(value = "/{animalId}/envId/addEnvironment", method = RequestMethod.POST)
-    public String addEnvironment(@PathVariable long animalId, long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
-        AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
-        ae.setAnimal(animalFacade.findAnimalBrief(animalId));
-        ae.setEnvironment(environmentFacade.findEnvironment(envId));
-        environmentFacade.addAnimalEnvironment(ae);
-        return "redirect:" + uriBuilder.path("/animal/{animalId}").buildAndExpand(animalId).encode().toUriString();
+    public String addEnvironment(@PathVariable long animalId, Long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        if (envId != null) {
+            AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
+            ae.setAnimal(animalFacade.findAnimalBrief(animalId));
+            ae.setEnvironment(environmentFacade.findEnvironment(envId));
+            environmentFacade.addAnimalEnvironment(ae);
+        }
+        return format("redirect:/animal/%s#enviro", animalId);
     }
 
     @RequestMapping(value = "/animalId/{envId}/addAnimal", method = RequestMethod.POST)
-    public String addAnimal(long animalId, @PathVariable long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
-        AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
-        ae.setAnimal(animalFacade.findAnimalBrief(animalId));
-        ae.setEnvironment(environmentFacade.findEnvironment(envId));
-        environmentFacade.addAnimalEnvironment(ae);
-        return "redirect:" + uriBuilder.path("/environment/{envId}/edit").buildAndExpand(envId).encode().toUriString();
+    public String addAnimal(Long animalId, @PathVariable long envId, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        if (animalId != null) {
+            AnimalEnvironmentDTO ae = new AnimalEnvironmentDTO();
+            ae.setAnimal(animalFacade.findAnimalBrief(animalId));
+            ae.setEnvironment(environmentFacade.findEnvironment(envId));
+            environmentFacade.addAnimalEnvironment(ae);
+        }
+        return format("redirect:/environment/%s#animals", envId);
     }
 
     @RequestMapping(value = "/{animalId}/{envId}/remove/{redirectTo}", method = RequestMethod.GET)
@@ -58,10 +57,28 @@ public class AnimalEnvironmentController {
         environmentFacade.deleteAnimalEnvironment(animalId, envId);
         String ret = "redirect:";
         if (redirectTo.equals("animal")) {
-            ret += uriBuilder.path("/animal/{animalId}").buildAndExpand(animalId).encode().toUriString();
+            ret += format("/animal/%s#enviro", animalId);
         } if (redirectTo.equals("environment")) {
-            ret += uriBuilder.path("/environment/{envId}/edit").buildAndExpand(envId).encode().toUriString();
+            ret += format("/environment/%s#animals", envId);
         }
         return ret;
     }
+    
+    @RequestMapping(value = "/{id}/{aeId}/update/{redirectTo}", method = POST)
+    public String updateAnimalEnvironment(@PathVariable long id, @PathVariable long aeId, @PathVariable String redirectTo, HttpServletRequest request) {
+        String percentage = request.getParameter("percentage");
+        if (percentage != null) {
+            AnimalEnvironmentDTO ae = environmentFacade.findAeById(aeId);
+            ae.setPercentage(Double.valueOf(percentage));
+            environmentFacade.updateAnimalEnvironment(ae);
+        }
+        String ret = "redirect:";
+        if (redirectTo.equals("animal")) {
+            ret += format("/animal/%s#enviro", id);
+        } if (redirectTo.equals("environment")) {
+            ret += format("/environment/%s#animals", id);
+        }
+        return ret;
+    }
+
 }

@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.dominatingspecies.dao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -24,7 +25,6 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
     public void create(AnimalEnvironment ae) throws DataAccessException {
         AnimalEnvironment aeExisting = findByIdAnimalEnvironment(ae.getAnimal().getId(),
                                                                  ae.getEnvironment().getId());
-        System.out.println("aeEx" + aeExisting);
         if (aeExisting == null) {
             em.persist(ae);
         }
@@ -48,6 +48,30 @@ public class AnimalEnvironmentDaoImpl implements AnimalEnvironmentDao {
         }
     }
 
+    @Override
+    public Collection<AnimalEnvironment> findByAnimalId(long animalId) throws DataAccessException {
+        try {
+            return em.createQuery("SELECT ae FROM AnimalEnvironment ae "
+                    + "WHERE ae.animal.id=:env", AnimalEnvironment.class)
+                    .setParameter("env", animalId)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public Collection<AnimalEnvironment> findByEnvironmentId(long envId) throws DataAccessException {
+        try {
+            return em.createQuery("SELECT ae FROM AnimalEnvironment ae "
+                    + "WHERE ae.environment.id=:animal", AnimalEnvironment.class)
+                    .setParameter("animal", envId)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
     @Override
     public List<AnimalEnvironment> findAll() throws DataAccessException {
         return em.createQuery("from AnimalEnvironment ae", AnimalEnvironment.class).getResultList();

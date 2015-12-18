@@ -200,16 +200,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${environments}" var="environment">
+                                <c:forEach items="${aes}" var="ae">
                                     <tr>
-                                        <td><c:out value="${environment.name}"/></td>
-                                        <td><c:out value="${environment.description}"/></td>
-                                        <td><c:out value="${environment.maxAnimalCount}"/></td>
+                                        <td><c:out value="${ae.environment.name}"/></td>
+                                        <td><c:out value="${ae.environment.description}"/></td>
+                                        <td><c:out value="${ae.environment.maxAnimalCount}"/></td>
                                         <td>
-                                            <form class="form-inline" method="POST" action="">
+                                            <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${ae.id}/update/animal">
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <input type="number" step="any" name="count" style="width: 100px;" class="form-control" placeholder="unknown" value="${prey.animalCount}"/>
+                                                        <input type="number" step="any" max="100" min="0" name="percentage" style="width: 100px;" class="form-control" placeholder="unknown" value="${ae.percentage}"/>
                                                         <span class="input-group-addon">%</span>
                                                     </div>
                                                     <button  type="submit" class="btn btn-default">Update</button>
@@ -217,7 +217,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${environment.id}/remove/animal">Remove for this animal</a>
+                                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/animalenvironment/${animal.id}/${ae.environment.id}/remove/animal">Remove for this animal</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -228,7 +228,7 @@
                             <div class="form-group">
                                 <div class="col-xs-10" >
                                     <select class="form-control" name="envId">
-                                        <c:forEach items="${allEnvironments}" var="environment">
+                                        <c:forEach items="${addableEnvs}" var="environment">
                                             <option value="${environment.id}">${environment.name}</option>
                                         </c:forEach>
                                     </select>

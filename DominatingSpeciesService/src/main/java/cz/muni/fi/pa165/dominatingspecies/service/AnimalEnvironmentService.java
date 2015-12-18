@@ -25,6 +25,18 @@ public interface AnimalEnvironmentService {
     public AnimalEnvironment findByIdAnimalEnvironment(long animalId, long envId);
 
     /**
+     * Returns animalEnvironment for animal id
+     * @param animalId Id of animal
+     */
+    public Collection<AnimalEnvironment> findByAnimalId(long animalId);
+
+    /**
+     * Returns animalEnvironment for environment id
+     * @param envId Id of environment
+     */
+    public Collection<AnimalEnvironment> findByEnvironmentId(long envId);
+
+    /**
      * Returns animalEnvironment for id
      * @param id Id of AnimalEnvironment
      */

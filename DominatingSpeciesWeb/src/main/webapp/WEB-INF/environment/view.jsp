@@ -58,33 +58,58 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="animals">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Environment's animals</div>
-                        <div class="panel-body">
-                            <table class="table table-striped">
-                                <thead>
+                <div class="panel panel-default tab-pane" id="animals">
+                    <div class="panel-heading">Animals</div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Species</th>
+                                    <th>Percentage</th>
+                                    <th>Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${aes}" var="ae">
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Species</th>
-                                        <th>Percentage</th>
+                                        <td><c:out value="${ae.animal.name}"/></td>
+                                        <td><c:out value="${ae.animal.species}"/></td>
+                                        <td>
+                                            <form class="form-inline" method="POST" action="${pageContext.request.contextPath}/animalenvironment/${environment.id}/${ae.id}/update/environment">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input type="number" step="any" max="100" min="0" name="percentage" style="width: 100px;" class="form-control" placeholder="unknown" value="${ae.percentage}"/>
+                                                        <span class="input-group-addon">%</span>
+                                                    </div>
+                                                    <button  type="submit" class="btn btn-default">Update</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/animalenvironment/${ae.animal.id}/${environment.id}/remove/environment">Remove for this environment</a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${animals}" var="animal">
-                                        <tr>
-                                            <td><c:out value="${animal.name}"/></td>
-                                            <td><c:out value="${animal.species}"/></td>
-                                            <td>TODO</td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animalenvironment/animalId/${environment.id}/addAnimal">
+                            <div class="form-group">
+                                <div class="col-xs-10" >
+                                    <select class="form-control" name="animalId">
+                                        <c:forEach items="${addableAnimals}" var="animal">
+                                            <option value="${animal.id}">${animal.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-default">Add Animal</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-
         </div>
+    </div>
     </jsp:attribute>
 </dominatingspicies:maintemplate>

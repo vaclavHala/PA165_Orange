@@ -72,6 +72,12 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
     }
 
     @Override
+    public void updateAnimalEnvironment(AnimalEnvironmentDTO ae) {
+        AnimalEnvironment entity = mappingService.map(ae, AnimalEnvironment.class);
+        aeService.update(entity);
+    }
+
+    @Override
     public void deleteAnimalEnvironment(long animalId, long envId) {
         AnimalEnvironment entity = aeService.findByIdAnimalEnvironment(animalId, envId);
 
@@ -87,6 +93,11 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
     @Override
     public long addAnimalEnvironment(AnimalEnvironmentDTO animalEnvironment) {
+        AnimalEnvironment aeExisting = aeService.findByIdAnimalEnvironment(animalEnvironment.getAnimal().getId(),
+                                                                           animalEnvironment.getEnvironment().getId());
+        if (aeExisting != null) {
+            return aeExisting.getId();
+        }
         AnimalEnvironment entity = mappingService.map(animalEnvironment, AnimalEnvironment.class);
 
         Animal managedAnimal = animalService.findById(animalEnvironment.getAnimal().getId());
@@ -100,6 +111,21 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
         return entity.getId();
     }
 
+    @Override
+    public AnimalEnvironmentDTO findAeById(long id) {
+        return mappingService.map(aeService.findById(id), AnimalEnvironmentDTO.class);
+    }
+    
+    @Override
+    public Collection<AnimalEnvironmentDTO> findAeByAnimalId(long animalId) {
+        return mappingService.map(aeService.findByAnimalId(animalId), AnimalEnvironmentDTO.class);
+    }
+    
+    @Override
+    public Collection<AnimalEnvironmentDTO> findAeByEnvironmentId(long envId) {
+        return mappingService.map(aeService.findByEnvironmentId(envId), AnimalEnvironmentDTO.class);
+    }
+    
     @Override
     public void removeAnimalEnvironment(long id) {
         AnimalEnvironment entity = aeService.findById(id);

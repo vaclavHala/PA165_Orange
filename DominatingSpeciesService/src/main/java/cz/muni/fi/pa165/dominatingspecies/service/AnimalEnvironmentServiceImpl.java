@@ -39,6 +39,16 @@ public class AnimalEnvironmentServiceImpl implements AnimalEnvironmentService {
     }
 
     @Override
+    public Collection<AnimalEnvironment> findByAnimalId(long animalId) {
+        return animalEnvironmentDao.findByAnimalId(animalId);
+    }
+
+    @Override
+    public Collection<AnimalEnvironment> findByEnvironmentId(long envId) {
+        return animalEnvironmentDao.findByEnvironmentId(envId);
+    }
+
+    @Override
     public AnimalEnvironment findById(long id) {
         return animalEnvironmentDao.findById(id);
     }

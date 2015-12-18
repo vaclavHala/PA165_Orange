@@ -1,9 +1,13 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import cz.muni.fi.pa165.dominatingspecies.web.config.DominatingSpeciesSecurityConfig;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -25,6 +29,9 @@ public class EnvironmentController {
 
     @Inject
     private EnvironmentFacade facade;
+
+    @Inject
+    private AnimalFacade animalFacade;
     
     @RolesAllowed(DominatingSpeciesSecurityConfig.ROLE_ADMIN)
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
@@ -78,8 +85,14 @@ public class EnvironmentController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         model.addAttribute("environment", facade.findEnvironment(id));
-        model.addAttribute("animals", facade.findAnimalsInEnvironment(id));
-        
+        // Animals stuff
+        model.addAttribute("aes", facade.findAeByEnvironmentId(id));
+        List<AnimalBriefDTO> allAnimals = animalFacade.findAllAnimals();
+//        List<AnimalBriefDTO> addableAnimals = new ArrayList<>(allAnimals);
+//        for (AnimalDetailDTO e : facade.findAnimalsInEnvironment(id)) {
+//            addableAnimals.remove((AnimalBriefDTO)e);
+//        }
+        model.addAttribute("addableAnimals", allAnimals);
         return "environment/view";
     }
     

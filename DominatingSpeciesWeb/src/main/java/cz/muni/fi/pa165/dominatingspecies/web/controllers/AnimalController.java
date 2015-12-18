@@ -4,10 +4,12 @@ import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
 import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import static java.lang.String.format;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -79,8 +81,6 @@ public class AnimalController {
         AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
         List<AnimalBriefDTO> allAnimals = this.animalFacade.findAllAnimals();
         model.addAttribute("animal", animal);
-        model.addAttribute("environments", environmentFacade.findEnvironmentsForAnimal(id));
-        model.addAttribute("allEnvironments", environmentFacade.findAllEnvironments());
         List<AnimalBriefDTO> addablePrey = new ArrayList<>(allAnimals);
         for (AnimalEatenDTO ae : animal.getPrey()) {
             addablePrey.remove(ae.getPrey());
@@ -91,6 +91,14 @@ public class AnimalController {
         }
         model.addAttribute("addablePrey", addablePrey);
         model.addAttribute("addablePredators", addablePredators);
+        // Environments stuff
+        model.addAttribute("aes", environmentFacade.findAeByAnimalId(id));
+        Collection<EnvironmentDTO> allEnvironments = environmentFacade.findAllEnvironments();
+        List<EnvironmentDTO> addableEnvs = new ArrayList<>(allEnvironments);
+        for (EnvironmentDTO e : environmentFacade.findEnvironmentsForAnimal(id)) {
+            addableEnvs.remove(e);
+        }
+        model.addAttribute("addableEnvs", addableEnvs);
 
         return "animal/detail";
     }

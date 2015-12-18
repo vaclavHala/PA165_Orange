@@ -51,10 +51,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Environment desert = createEnvironment("Púšte", "Kamenisté púšte", 23l);
         Environment mountains = createEnvironment("Hory", "Vysoké hory", 190l);
 
-        AnimalEnvironment catHome = createAnimalEnvironment(cat, home, 1);
-        AnimalEnvironment hamsterHome = createAnimalEnvironment(hamster, home, 1);
-        AnimalEnvironment rabbitHome = createAnimalEnvironment(rabbit, home, 1);
-        AnimalEnvironment camelHome = createAnimalEnvironment(camel, home, 1);
+        AnimalEnvironment catHome = createAnimalEnvironment(cat, home, 10);
+        AnimalEnvironment hamsterHome = createAnimalEnvironment(hamster, home, 21);
+        AnimalEnvironment rabbitHome = createAnimalEnvironment(rabbit, home, 41);
+        AnimalEnvironment camelHome = createAnimalEnvironment(camel, home, 11);
         AnimalEnvironment mouseHome = createAnimalEnvironment(mouse, home, 0.4);
         AnimalEnvironment mouseField = createAnimalEnvironment(mouse, field, 0.6);
         AnimalEnvironment mouseForest = createAnimalEnvironment(mouse, forest, 0.2);

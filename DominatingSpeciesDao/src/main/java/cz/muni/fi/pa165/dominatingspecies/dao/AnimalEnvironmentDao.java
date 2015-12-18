@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.dominatingspecies.dao;
 import cz.muni.fi.pa165.dominatingspecies.entity.Animal;
 import cz.muni.fi.pa165.dominatingspecies.entity.AnimalEnvironment;
 import cz.muni.fi.pa165.dominatingspecies.entity.Environment;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -31,10 +32,30 @@ public interface AnimalEnvironmentDao {
     /**
      * Retrieves animal environment record with specified animal and environment
      *
+     * @param animalId Identifier (primary key) of the record
+     * @param envId Identifier (primary key) of the record
      * @return Animal environment with specified id or null, if no such exists
      * @throws DataAccessException On persistent storage error
      */
     public AnimalEnvironment findByIdAnimalEnvironment(long animalId, long envId);
+
+    /**
+     * Retrieves animal environment record with specified animal
+     *
+     * @param animalId Identifier (primary key) of the record
+     * @return Animal environment with specified id or null, if no such exists
+     * @throws DataAccessException On persistent storage error
+     */
+    public Collection<AnimalEnvironment> findByAnimalId(long animalId);
+
+    /**
+     * Retrieves animal environment record with specified environment
+     *
+     * @param envId Identifier (primary key) of the record
+     * @return Animal environment with specified id or null, if no such exists
+     * @throws DataAccessException On persistent storage error
+     */
+    public Collection<AnimalEnvironment> findByEnvironmentId(long envId);
 
     /**
      * Retrieves all animal environment records from persistent storage
