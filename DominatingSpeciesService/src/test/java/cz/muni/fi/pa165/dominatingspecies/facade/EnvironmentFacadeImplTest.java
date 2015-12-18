@@ -165,7 +165,7 @@ public class EnvironmentFacadeImplTest {
         Collection<AnimalBriefDTO> result = facade.findAnimalsInEnvironment(1l);
 
         assertEquals(1, result.size());
-        assertAnimalCorrectlyMapped(fish, result.toArray(new AnimalDetailDTO[1])[0]);
+        assertAnimalCorrectlyMapped(fish, result.toArray(new AnimalBriefDTO[result.size()])[0]);
     }
 
     @Test
@@ -211,7 +211,7 @@ public class EnvironmentFacadeImplTest {
         Assert.assertEquals(expected.getDescription(), actual.getDescription());
     }
 
-    private void assertAnimalCorrectlyMapped(Animal expected, AnimalDetailDTO actual) {
+    private void assertAnimalCorrectlyMapped(Animal expected, AnimalBriefDTO actual) {
         Assert.assertEquals(expected.getId(), (Long) actual.getId());
         Assert.assertEquals(expected.getName(), actual.getName());
         Assert.assertEquals(expected.getSpecies(), actual.getSpecies());
