@@ -156,9 +156,13 @@ public class AnimalController {
     }
 
     @RequestMapping(value = "/{id}/eaten/delete", method = POST)
-    public String deleteAnimalEaten(@PathVariable long id
-    ) {
-        //TODO
+    public String deleteAnimalEaten(@PathVariable long id,
+                                    HttpServletRequest request) {
+        for (long aeId : this.selectedIds(request.getParameterNames())) {
+            {
+                this.animalFacade.deleteAnimalEaten(aeId);
+            }
+        }
         return format("redirect:/animal/%s#food", id);
     }
 
