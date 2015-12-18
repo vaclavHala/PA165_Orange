@@ -1,10 +1,6 @@
 package cz.muni.fi.pa165.dominatingspecies.web.controllers;
 
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalBriefDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalDetailDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalEatenDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.AnimalNewDTO;
-import cz.muni.fi.pa165.dominatingspecies.dto.EnvironmentDTO;
+import cz.muni.fi.pa165.dominatingspecies.dto.*;
 import cz.muni.fi.pa165.dominatingspecies.facade.AnimalFacade;
 import cz.muni.fi.pa165.dominatingspecies.facade.EnvironmentFacade;
 import static java.lang.String.format;
@@ -65,20 +61,12 @@ public class AnimalController {
         return "redirect:/animal/";
     }
 
-    @RequestMapping(value = "/{id}/delete", method = POST)
-    public String delete(@PathVariable long id,
-                         RedirectAttributes redirectAttributes) {
-        AnimalBriefDTO deletedAnimal = this.animalFacade.findAnimalBrief(id);
-        this.animalFacade.deleteAnimal(id);
-        redirectAttributes.addFlashAttribute("alert_success",
-                                             formatAnimal(deletedAnimal) + " was deleted");
-        return "redirect:/animal/";
-    }
-
     @RequestMapping(value = "/{id}", method = GET)
     public String detail(@PathVariable long id,
                          Model model) {
         AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
+        System.out.println(animal.getFoodNeeded());
+        System.out.println(animal.getReproductionRate());
         List<AnimalBriefDTO> allAnimals = this.animalFacade.findAllAnimals();
         model.addAttribute("animal", animal);
         List<AnimalBriefDTO> addablePrey = new ArrayList<>(allAnimals);
@@ -101,6 +89,36 @@ public class AnimalController {
         model.addAttribute("addableEnvs", addableEnvs);
 
         return "animal/detail";
+    }
+
+    @RequestMapping(value = "/{id}/delete", method = POST)
+    public String delete(@PathVariable long id,
+                         RedirectAttributes redirectAttributes) {
+        AnimalBriefDTO deletedAnimal = this.animalFacade.findAnimalBrief(id);
+        this.animalFacade.deleteAnimal(id);
+        redirectAttributes.addFlashAttribute("alert_success",
+                                             formatAnimal(deletedAnimal) + " was deleted");
+        return "redirect:/animal/";
+    }
+
+    @RequestMapping(value = "/{id}/characteristics", method = POST)
+    public String update(@PathVariable long id,
+                         AnimalDetailUpdateCharacteristicsDTO updated) {
+        AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
+        animal.setFoodNeeded(updated.getFoodNeeded());
+        animal.setReproductionRate(updated.getReproductionRate());
+        this.animalFacade.updateAnimal(animal);
+        return format("redirect:/animal/%s#characteristics", id);
+    }
+
+    @RequestMapping(value = "/{id}/identity", method = POST)
+    public String update(@PathVariable long id,
+                         AnimalDetailUpdateIdentificationDTO updated) {
+        AnimalDetailDTO animal = this.animalFacade.findAnimalDetail(id);
+        animal.setName(updated.getName());
+        animal.setSpecies(updated.getSpecies());
+        this.animalFacade.updateAnimal(animal);
+        return format("redirect:/animal/%s#characteristics", id);
     }
 
     @RequestMapping(value = "/{id}/prey", method = POST)

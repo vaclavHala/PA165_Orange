@@ -24,9 +24,9 @@ public class Animal implements Serializable {
     @NotNull
     private String species;
 
-    private double foodNeeded;
+    private Double foodNeeded;
 
-    private double reproductionRate;
+    private Double reproductionRate;
 
     public Animal() {
     }
@@ -46,17 +46,17 @@ public class Animal implements Serializable {
         if (obj == this) {
             return true;
         }
-        
+
         if (obj == null) {
             return false;
         }
-        
+
         if (!(obj instanceof Animal)) {
             return false;
         }
-        
+
         Animal other = (Animal) obj;
-        
+
         return this.getId() != null && other.getId() != null && this.getId().equals(other.getId());
     }
 
@@ -72,11 +72,11 @@ public class Animal implements Serializable {
         return species;
     }
 
-    public double getFoodNeeded() {
+    public Double getFoodNeeded() {
         return foodNeeded;
     }
 
-    public double getReproductionRate() {
+    public Double getReproductionRate() {
         return reproductionRate;
     }
 
@@ -92,23 +92,23 @@ public class Animal implements Serializable {
         this.species = species;
     }
 
-    public void setFoodNeeded(double foodNeeded) {
+    public void setFoodNeeded(Double foodNeeded) {
         this.foodNeeded = foodNeeded;
     }
 
-    public void setReproductionRate(double reproductionRate) {
+    public void setReproductionRate(Double reproductionRate) {
         this.reproductionRate = reproductionRate;
     }
 
     @Override
     public String toString() {
         return "Animal{"
-            + "id=" + id
-            + ", name=" + name
-            + ", species=" + species
-            + ", foodNeeded=" + foodNeeded
-            + ", reproductionRate=" + reproductionRate
-            + '}';
+                + "id=" + id
+                + ", name=" + name
+                + ", species=" + species
+                + ", foodNeeded=" + foodNeeded
+                + ", reproductionRate=" + reproductionRate
+                + '}';
     }
 
 }

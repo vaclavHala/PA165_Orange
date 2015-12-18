@@ -27,7 +27,7 @@
                 <div class="panel panel-default tab-pane active" id="characteristics">
                     <div class="panel-heading">Characteristics</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/identity">
                             <div class="form-group">
                                 <label class="control-label col-xs-1">Name:</label>
                                 <div class="col-xs-4">
@@ -39,20 +39,20 @@
                                         <input ${disabled} type="text" name="species" class="form-control" value="${animal.species}"/>
                                     <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
                                     </div>
-                                <c:if test="${disabled}">
+                                <sec:authorize access="hasAuthority('ADMIN')">
                                     <div class="col-xs-2">
                                         <button type="submit" class="btn btn-default">Save Changes</button>
                                     </div>
-                                </c:if>
+                                </sec:authorize>
                             </div>
                         </form>
                         <hr/>
-                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/characteristics">
                             <div class="form-group">
                                 <label class="control-label col-xs-2">Food Needed:</label>
                                 <div class="col-xs-5">
                                     <div class="input-group">
-                                        <input type="number" name="name" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
+                                        <input type="number" name="foodNeeded" class="form-control" placeholder="unknown" value="${animal.foodNeeded}"/>
                                         <span class="input-group-addon">kg/day</span>
                                     </div>
                                     <c:if test="${not empty foodNeeded_error}"><label class="text-error">${foodNeeded_error_message}</label></c:if>
@@ -62,7 +62,7 @@
                                     <label class="control-label col-xs-2">Reproduction Rate:</label>
                                     <div class="col-xs-5">
                                         <div class="input-group">
-                                            <input type="number" name="species" class="form-control" placeholder="unknown" value="${animal.repreductionRate}"/>
+                                            <input type="number" name="reproductionRate" class="form-control" placeholder="unknown" value="${animal.reproductionRate}"/>
                                         <span class="input-group-addon">%/year</span>
                                     </div>
                                     <c:if test="${not empty reproductionRate_error}"><label class="text-error">${reproductionRate_error_message}</label></c:if>

@@ -9,8 +9,8 @@ public class AnimalDetailDTO {
     private long id;
     private String name;
     private String species;
-    private Long foodNeeded;
-    private Double repreductionRate;
+    private Double foodNeeded;
+    private Double reproductionRate;
     private Collection<AnimalEatenDTO> prey;
     private Collection<AnimalEatenDTO> predators;
 
@@ -47,20 +47,20 @@ public class AnimalDetailDTO {
         this.species = species;
     }
 
-    public Long getFoodNeeded() {
+    public Double getFoodNeeded() {
         return foodNeeded;
     }
 
-    public void setFoodNeeded(long foodNeeded) {
+    public void setFoodNeeded(Double foodNeeded) {
         this.foodNeeded = foodNeeded;
     }
 
-    public Double getRepreductionRate() {
-        return repreductionRate;
+    public Double getReproductionRate() {
+        return reproductionRate;
     }
 
-    public void setRepreductionRate(double repreductionRate) {
-        this.repreductionRate = repreductionRate;
+    public void setReproductionRate(Double repreductionRate) {
+        this.reproductionRate = repreductionRate;
     }
 
     public Collection<AnimalEatenDTO> getPrey() {
@@ -92,7 +92,7 @@ public class AnimalDetailDTO {
         }
         AnimalDetailDTO other = (AnimalDetailDTO) obj;
         return this.name.equals(other.name)
-            && this.species.equals(other.species);
+                && this.species.equals(other.species);
     }
 
     @Override
