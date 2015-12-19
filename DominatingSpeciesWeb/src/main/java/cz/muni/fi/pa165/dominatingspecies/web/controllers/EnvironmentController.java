@@ -88,11 +88,11 @@ public class EnvironmentController {
         // Animals stuff
         model.addAttribute("aes", facade.findAeByEnvironmentId(id));
         List<AnimalBriefDTO> allAnimals = animalFacade.findAllAnimals();
-//        List<AnimalBriefDTO> addableAnimals = new ArrayList<>(allAnimals);
-//        for (AnimalDetailDTO e : facade.findAnimalsInEnvironment(id)) {
-//            addableAnimals.remove((AnimalBriefDTO)e);
-//        }
-        model.addAttribute("addableAnimals", allAnimals);
+        List<AnimalBriefDTO> addableAnimals = new ArrayList<>(allAnimals);
+        for (AnimalBriefDTO e : facade.findAnimalsInEnvironment(id)) {
+            addableAnimals.remove(e);
+        }
+        model.addAttribute("addableAnimals", addableAnimals);
         return "environment/view";
     }
     
