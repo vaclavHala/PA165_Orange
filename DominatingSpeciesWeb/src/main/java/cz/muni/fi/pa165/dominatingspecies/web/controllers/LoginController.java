@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Provides feedback to user in case he failed to log in or has logged out
+ */
 @Controller
 @RequestMapping("/")
 public class LoginController {

@@ -12,7 +12,7 @@
         <div class="container">
 
             <c:set var="disabled" scope="request" value="disabled"/>
-            <sec:authorize access="hasAuthority('ADMIN')">
+            <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                 <c:set var="disabled" scope="request" value=""/>
             </sec:authorize>
 
@@ -39,7 +39,7 @@
                                         <input ${disabled} type="text" name="species" class="form-control" value="${animal.species}"/>
                                     <c:if test="${not empty species_error}"><label class="text-error">${species_error_message}</label></c:if>
                                     </div>
-                                <sec:authorize access="hasAuthority('ADMIN')">
+                                <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                                     <div class="col-xs-2">
                                         <button type="submit" class="btn btn-default">Save Changes</button>
                                     </div>

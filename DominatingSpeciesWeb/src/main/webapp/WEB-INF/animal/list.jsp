@@ -8,7 +8,7 @@
 
         <div class="container">
 
-            <sec:authorize access="hasAuthority('ADMIN')">
+            <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                 <hr/>
                 <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/animal/">
                     <div class="form-group">
@@ -46,10 +46,10 @@
                             <td><c:out value="${animal.name}"/></td>
                             <td><c:out value="${animal.species}"/></td>
                             <td>
-                                <sec:authorize access="hasAuthority('USER')">
+                                <sec:authorize access="hasAuthority('ROLE_USER')">
                                     <a class="btn btn-primary btn-xs" href="${pageContext.request.contextPath}/animal/${animal.id}">Detail</a>
                                 </sec:authorize>
-                                <sec:authorize access="hasAuthority('ADMIN')">
+                                <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                                     <form style="display: inline-block" method="POST" action="${pageContext.request.contextPath}/animal/${animal.id}/delete">
                                         <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure wish to to delete this animal?');">Delete</button>
                                     </form>

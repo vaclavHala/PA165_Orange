@@ -1,20 +1,21 @@
 package cz.muni.fi.pa165.dominatingspecies.dto;
 
 import java.util.Objects;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 /**
  * DTO for entity representing relationship between animal and environment.
  * @author Daniel Minarik
  */
 public class AnimalEnvironmentDTO {
+
     private long id;
     private AnimalBriefDTO animal;
     private EnvironmentDTO environment;
     @Min(0)
     @Max(100)
-    private double percentage;
+    private Double percentage;
 
     public long getId() {
         return id;
@@ -40,11 +41,11 @@ public class AnimalEnvironmentDTO {
         this.environment = environment;
     }
 
-    public double getPercentage() {
+    public Double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(double percentage) {
+    public void setPercentage(Double percentage) {
         this.percentage = percentage;
     }
 

@@ -65,8 +65,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         EntityManager em = db.createEntityManager();
         em.getTransaction().begin();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ADMIN')").executeUpdate();
-        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'USER')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (1, 'ROLE_ADMIN')").executeUpdate();
+        em.createNativeQuery("INSERT INTO role (id, name) VALUES (2, 'ROLE_USER')").executeUpdate();
         em.createNativeQuery("INSERT INTO usr (id, username, password) VALUES (1, 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec')").executeUpdate();
         em.createNativeQuery("INSERT INTO usr (id, username, password) VALUES (2, 'assistant', '3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2')").executeUpdate();
         em.createNativeQuery("INSERT INTO role_user (fk_user, fk_role) VALUES (1,1)").executeUpdate();

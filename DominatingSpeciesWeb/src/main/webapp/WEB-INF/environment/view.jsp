@@ -8,7 +8,7 @@
     <jsp:attribute name="title"><c:out value="${environment.name}" /></jsp:attribute>
     <jsp:attribute name="content">
         <c:set var="disabled" scope="request" value="true"/>
-        <sec:authorize access="hasAuthority('ADMIN')">
+        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
             <c:set var="disabled" scope="request" value="false"/>
         </sec:authorize>
         <div>
@@ -49,7 +49,7 @@
                                         <form:errors path="description" cssClass="help-block"/>
                                     </div>
                                 </div>
-                                <sec:authorize access="hasAuthority('ADMIN')">
+                                <sec:authorize access="hasAuthority('ROLE_ADMIN')">
                                     <div class="text-center">
                                         <button class="btn btn-primary" type="submit">Save environment</button>
                                     </div>

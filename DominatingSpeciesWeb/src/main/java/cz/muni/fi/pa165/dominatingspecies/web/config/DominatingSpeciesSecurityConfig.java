@@ -18,8 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class DominatingSpeciesSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String ROLE_ADMIN = "ADMIN";
-    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
 
     private static final String USER_QUERY = "SELECT username, password, TRUE FROM usr WHERE username= ?";
     private static final String ROLE_QUERY = "SELECT username, name FROM role r join role_user ru on r.id = ru.fk_role join usr u on u.id = ru.fk_user where username = ?";
