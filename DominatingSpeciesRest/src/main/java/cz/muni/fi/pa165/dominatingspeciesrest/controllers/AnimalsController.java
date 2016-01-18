@@ -54,7 +54,7 @@ public class AnimalsController {
      * @throws ResourceNotFoundException
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final AnimalDetailDTO getAnimal(@PathVariable("id") long id) throws Exception{
+    public final AnimalDetailDTO getAnimal(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest getAnimal({})", id);
         AnimalDetailDTO animalDetailDTO = animalFacade.findAnimalDetail(id);
         if(animalDetailDTO != null) {
@@ -72,7 +72,7 @@ public class AnimalsController {
      * @throws ResourceNotFoundException
      */
     @RequestMapping(value = "/{id}/brief", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final AnimalBriefDTO getBriefAnimal(@PathVariable("id") long id) throws Exception{
+    public final AnimalBriefDTO getBriefAnimal(@PathVariable("id") long id) throws ResourceNotFoundException {
         logger.debug("rest getBriefAnimal({})", id);
         AnimalBriefDTO animalBriefDTO = animalFacade.findAnimalBrief(id);
         if(animalBriefDTO != null) {
@@ -86,16 +86,11 @@ public class AnimalsController {
      * Delete a Animal with id curl -i -X DELETE http://localhost:8080/pa165/rest/animals/1
      * 
      * @param id identifier for animal
-     * @throws ResourceNotFoundException
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final void deleteAnimal(@PathVariable("id") long id) throws Exception {
+    public final void deleteAnimal(@PathVariable("id") long id) {
         logger.debug("deleteAnimal({})", id);
-        try {
-            animalFacade.deleteAnimal(id);
-        } catch(Exception ex) {
-            throw new ResourceNotFoundException();
-        }
+        animalFacade.deleteAnimal(id);
     }
     
     /**
@@ -103,17 +98,12 @@ public class AnimalsController {
      * 
      * @param animal AnimalNewDTO with required fields for creation
      * @return the created brief animal
-     * @throws ResourceAlreadyExistingException
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final AnimalBriefDTO createAnimal(@RequestBody AnimalNewDTO animalNewDTO) throws Exception {
+    public final AnimalBriefDTO createAnimal(@RequestBody AnimalNewDTO animalNewDTO){
         logger.debug("createAnimal()");
-        try {
-            Long id = animalFacade.createAnimal(animalNewDTO);
-            return animalFacade.findAnimalBrief(id);
-        } catch(Exception ex) {
-            throw new ResourceNotFoundException();
-        }
+        Long id = animalFacade.createAnimal(animalNewDTO);
+        return animalFacade.findAnimalBrief(id);
     }
     
     
@@ -122,17 +112,12 @@ public class AnimalsController {
      * 
      * @param animal AnimalDetailDTO with id
      * @return the created detail animal
-     * @throws ResourceAlreadyExistingException
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final AnimalDetailDTO updateAnimal(@RequestBody AnimalDetailDTO animalDetailDTO) throws Exception{
+    public final AnimalDetailDTO updateAnimal(@RequestBody AnimalDetailDTO animalDetailDTO){
         logger.debug("updateAnimal()");        
-        try {
-            animalFacade.updateAnimal(animalDetailDTO);
-            return animalFacade.findAnimalDetail(animalDetailDTO.getId());
-        } catch(Exception ex) {
-            throw new ResourceNotFoundException();
-        }
+        animalFacade.updateAnimal(animalDetailDTO);
+        return animalFacade.findAnimalDetail(animalDetailDTO.getId());
     }
     
     
